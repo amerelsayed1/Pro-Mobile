@@ -1,6 +1,3 @@
-# This branch is still under development
-
-
 # ProMobile Project
 
 ## How to Use
