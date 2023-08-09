@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:dartz/dartz.dart';
 import 'package:unknown/src/core/state/test_base_state.dart';
 import 'package:unknown/src/feature/category/data/model/category_model.dart';
 import 'package:unknown/src/feature/experts/data/data_sources/experts_data_source.dart';
