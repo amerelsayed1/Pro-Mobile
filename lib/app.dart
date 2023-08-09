@@ -14,6 +14,7 @@ class App extends ConsumerWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
