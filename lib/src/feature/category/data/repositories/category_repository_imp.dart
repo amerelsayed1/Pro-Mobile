@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:unknown/src/core/state/base_state.dart';
 import 'package:unknown/src/feature/category/data/model/category_model.dart';
 
 import '../../../../core/state/test_base_state.dart';
