@@ -1,4 +1,4 @@
 enum Routes {
   expertPage,
-  productDetails,
+  expertDetails,
 }

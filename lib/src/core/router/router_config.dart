@@ -4,6 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:unknown/src/core/router/routers.dart';
 import 'package:unknown/src/feature/experts/presentation/pages/experts_page.dart';
 
+import '../../feature/details/presentation/pages/expert_details_page.dart';
+
 final goRouterProvider = Provider((ref) => _router);
 
 final GoRouter _router = GoRouter(
@@ -17,20 +19,18 @@ final GoRouter _router = GoRouter(
           child: const ExpertsPage(),
         );
       },
-      /*routes: [
+      routes: [
         GoRoute(
-          path: Routes.productList.name,
-          name: Routes.productDetails.name,
+          path: Routes.expertPage.name,
+          name: Routes.expertDetails.name,
           pageBuilder: (context, state) {
             return MaterialPage(
               key: state.pageKey,
-              child: ProductDetailsPage(
-                productId: int.parse(state.queryParameters['id']!),
-              ),
+              child: const ExpertDetailsPage(),
             );
           },
         ),
-      ],*/
+      ],
     ),
   ],
 );

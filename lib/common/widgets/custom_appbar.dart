@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
@@ -57,36 +58,25 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
       ),
       titleSpacing: showTitleSpacing ? 20 : 5,
-      /* leading: InkWell(
+      leading: InkWell(
         child: showBackArrow
             ? Container(
                 margin: const EdgeInsets.all(12),
                 padding: const EdgeInsets.all(3),
-                child: Icon(
+                child: const Icon(
                   Icons.arrow_back_ios,
-                  color: appColor.blueColor,
+                  color: Colors.black,
                 ),
               )
-            : Container(
-                margin: const EdgeInsets.all(12),
-                padding: const EdgeInsets.all(3),
-                color: appColor.lightBlueColor,
-                child: Icon(
-                  //your preferred icon
-                  showBackArrow
-                      ? Icons.arrow_back_ios
-                      : Icons.format_align_center_rounded,
-                  color: Colors.white,
-                ),
-              ),
+            : Container(),
         onTap: () {
           if (showBackArrow) {
-            Get.back();
+            context.pop();
           } else {
             Scaffold.of(context).openDrawer();
           }
         },
-      ),*/
+      ),
       actions: actionsWidget,
     );
   }

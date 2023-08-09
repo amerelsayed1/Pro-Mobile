@@ -2,12 +2,14 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:unknown/common/widgets/custom_appbar.dart';
 import 'package:unknown/src/core/state/test_base_state.dart';
 import 'package:unknown/src/feature/category/data/model/category_model.dart';
 import 'package:unknown/src/feature/experts/data/models/expert_model.dart';
 import 'package:unknown/src/feature/experts/presentation/providers/providers.dart';
 
+import '../../../../core/router/routers.dart';
 import '../../../category/presentation/provider/category_list_provider.dart';
 import '../widget/expert_item_builder.dart';
 
@@ -56,6 +58,7 @@ class _ExpertsState extends ConsumerState<ExpertsPage> {
             ),
           ),
         ],
+        showBackArrow: false,
       ),
       body: Column(
         children: [
@@ -95,7 +98,13 @@ class _ExpertsState extends ConsumerState<ExpertsPage> {
                           crossAxisSpacing: 15,
                         ),
                         itemBuilder: (context, position) {
-                          return ExpertItemBuilder(state.data![position]);
+                          return GestureDetector(
+                              onTap: () {
+                                context.goNamed(
+                                  Routes.expertDetails.name,
+                                );
+                              },
+                              child: ExpertItemBuilder(state.data![position]));
                         },
                       ),
                     )
