@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:unknown/src/core/router/routers.dart';
+import 'package:unknown/src/feature/details/presentation/pages/book_expert_page.dart';
 import 'package:unknown/src/feature/experts/presentation/pages/experts_page.dart';
 
 import '../../feature/details/presentation/pages/expert_details_page.dart';
@@ -27,6 +28,17 @@ final GoRouter _router = GoRouter(
             return MaterialPage(
               key: state.pageKey,
               child: const ExpertDetailsPage(),
+            );
+          },
+        ),
+        GoRoute(
+          path: Routes.bookExpert.name,
+          name: Routes.bookExpert.name,
+
+          pageBuilder: (context, state) {
+            return MaterialPage(
+              key: state.pageKey,
+              child: const BookExpertPage(),
             );
           },
         ),

@@ -1,8 +1,9 @@
-import 'package:flutter/rendering.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../../common/widgets/custom_appbar.dart';
+import '../../../../core/router/routers.dart';
 
 class ExpertDetailsPage extends ConsumerStatefulWidget {
   const ExpertDetailsPage({Key? key}) : super(key: key);
@@ -178,7 +179,11 @@ class _ExpertDetailsState extends ConsumerState<ExpertDetailsPage> {
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(Colors.red),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      context.goNamed(
+                        Routes.bookExpert.name,
+                      );
+                    },
                     child: const Text(
                       "See Plans",
                       style: TextStyle(
