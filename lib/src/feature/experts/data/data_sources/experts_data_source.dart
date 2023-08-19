@@ -14,4 +14,5 @@ final expertsDataSourceProvider = Provider<ExpertsDataSource>(
 
 abstract class ExpertsDataSource {
   Future<Response> getExperts();
+  Future<Response> getSingleExpertInfo(int id);
 }

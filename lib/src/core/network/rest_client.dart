@@ -15,19 +15,9 @@ final dioProvider = Provider(
           compact: true,
         ),
       )
-      ..options.baseUrl = "http://192.168.1.10:8080"
+      ..options.baseUrl = "http://192.168.1.12:8080/api"
       //..options.headers = _headers
       ..options.connectTimeout = const Duration(seconds: 5) // 5 seconds
       ..options.receiveTimeout = const Duration(seconds: 3); // 3 seconds
-
-    /*return Dio(
-        BaseOptions(
-            connectTimeout: const Duration(milliseconds: 5000),
-            receiveTimeout: const Duration(milliseconds: 5000),
-            baseUrl: "http://localhost:8080"
-        )
-    );*/
-
-    //return Dio();
   },
 );

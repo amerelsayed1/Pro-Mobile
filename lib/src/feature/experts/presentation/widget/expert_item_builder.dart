@@ -3,7 +3,7 @@ import 'package:unknown/src/feature/experts/data/models/expert_model.dart';
 
 
 class ExpertItemBuilder extends StatelessWidget {
-  final ExpertModel _model;
+  final ExpertModel? _model;
 
   const ExpertItemBuilder(this._model, {Key? key}) : super(key: key);
 
@@ -29,7 +29,7 @@ class ExpertItemBuilder extends StatelessWidget {
               )),
         ),
         Text(
-          _model.nameEn ?? "",
+          _model?.nameEn ?? "",
           style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 15,
@@ -46,7 +46,7 @@ class ExpertItemBuilder extends StatelessWidget {
         ),
         Expanded(
           child: Text(
-            _model.bioEn ?? "",
+            _model?.bioEn ?? "",
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:unknown/src/feature/details/presentation/widget/slots_builder.dart';
+import 'package:unknown/src/feature/experts/presentation/widget/slots_builder.dart';
 
-import '../../../../../common/widgets/custom_appbar.dart';
-import '../widget/available_times_builder.dart';
+import '../../../../../../common/widgets/custom_appbar.dart';
+import '../../widget/available_times_builder.dart';
 
 class BookExpertPage extends ConsumerStatefulWidget {
   const BookExpertPage({Key? key}) : super(key: key);
@@ -94,7 +94,7 @@ class _BookExpertState extends ConsumerState<BookExpertPage> {
                         shrinkWrap: true,
                         itemCount: testList.length,
                         itemBuilder: (BuildContext context, int index) {
-                          return  AvailableTimesBuilder(testList[index]);
+                          return AvailableTimesBuilder(testList[index]);
                         }),
                   )
                 ],

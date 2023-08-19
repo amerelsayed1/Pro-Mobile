@@ -5,9 +5,10 @@ import 'package:unknown/src/core/state/test_base_state.dart';
 import 'package:unknown/src/feature/experts/data/models/expert_model.dart';
 
 import '../../domain/user_case/experts_use_case.dart';
+import '../../domain/user_case/single_expert_use_case.dart';
 
-class ExpertsNotifier extends StateNotifier<DataState> {
-  ExpertsNotifier({
+class ExpertDetailsNotifier extends StateNotifier<DataState> {
+  ExpertDetailsNotifier({
     required this.ref,
     required this.useCase,
   }) : super(InitialState()) {
@@ -17,20 +18,20 @@ class ExpertsNotifier extends StateNotifier<DataState> {
   }
 
   final Ref ref;
-  final ExpertsUseCase useCase;
+  final SingleExpertsUseCase useCase;
 
-  final List<ExpertModel> _products = [];
+  //final List<ExpertModel> _products = [];
 
-  Future<void> productList() async {
+  Future<void> getSingleExpertInfo(int id) async {
     if (state is DataSuccess) {
       // if (category.isNotEmpty) {
-      List<ExpertModel> filteredProducts = _products.toList();
+      //ExpertModel expert = _products.toList();
 
       state = LoadingState();
       await Future.delayed(const Duration(milliseconds: 100));
 
       state = DataSuccess(
-        data: filteredProducts.isEmpty ? _products : filteredProducts,
+        data: ExpertModel,
       );
       // }
 
@@ -39,7 +40,7 @@ class ExpertsNotifier extends StateNotifier<DataState> {
 
     state = LoadingState();
     try {
-      final result = await useCase.getExpertList();
+      final result = await useCase.getSingleExpertInfo(id);
       state = result;
     } catch (e, stacktrace) {
       log(

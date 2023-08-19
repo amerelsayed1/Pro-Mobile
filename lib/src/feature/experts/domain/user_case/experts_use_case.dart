@@ -1,7 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:unknown/src/core/state/test_base_state.dart';
-import 'package:unknown/src/feature/experts/data/models/expert_model.dart';
 import 'package:unknown/src/feature/experts/domain/repositories/experts_repository.dart';
+
+import '../../data/models/expert_response.dart';
 
 final expertsUseCaseProvider = Provider(
   (ref) {
@@ -16,7 +17,7 @@ class ExpertsUseCase {
 
   final ExpertsRepository _repository;
 
-  Future<DataState<List<ExpertModel>>> productList() async {
+  Future<DataState<ExpertResponse>> getExpertList() async {
     return await _repository.getExperts();
   }
 }

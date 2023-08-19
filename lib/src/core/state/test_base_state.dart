@@ -1,6 +1,6 @@
 abstract class DataState<T> {
   final T? data;
-  final Exception? error;
+  final String? error;
 
   DataState({this.data, this.error});
 }
@@ -14,5 +14,5 @@ class DataSuccess<R> extends DataState<R> {
 }
 
 class DataFailure<T> extends DataState<T> {
-  DataFailure({Exception? error}) : super(error: error);
+  DataFailure({String? error}) : super(error: error);
 }

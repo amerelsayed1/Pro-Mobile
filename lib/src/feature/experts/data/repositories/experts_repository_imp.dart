@@ -5,6 +5,7 @@ import 'package:unknown/src/feature/experts/data/data_sources/experts_data_sourc
 import 'package:unknown/src/feature/experts/data/models/expert_model.dart';
 
 import '../../domain/repositories/experts_repository.dart';
+import '../models/expert_response.dart';
 
 class ExpertsRepositoryImpl implements ExpertsRepository {
   ExpertsRepositoryImpl({
@@ -14,20 +15,35 @@ class ExpertsRepositoryImpl implements ExpertsRepository {
   final ExpertsDataSource dataSource;
 
   @override
-  Future<DataState<List<ExpertModel>>> getExperts() async {
+  Future<DataState<ExpertResponse>> getExperts() async {
     try {
       final response = await dataSource.getExperts();
       List<ExpertModel> list = [];
-      response.data.forEach(
-          (_onBoarding) => list.add(ExpertModel.fromJson(_onBoarding)));
-      return DataSuccess(data: list);
+      /*response.data.forEach(
+          (_onBoarding) => list.add(ExpertModel.fromJson(_onBoarding)));*/
+      return DataSuccess(data: ExpertResponse.fromJson(response.data));
     } catch (e, stacktrace) {
-      log(
+      /*log(
         'CategoryRepositoryImpl.categories',
         error: e,
         stackTrace: stacktrace,
-      );
-      return DataFailure(error:e as Exception);
+      );*/
+      return DataFailure(error: e.toString());
+    }
+  }
+
+  @override
+  Future<DataState<ExpertModel>> getSingleExpertInfo(int id) async {
+    try {
+      final response = await dataSource.getSingleExpertInfo(id);
+      return DataSuccess(data: ExpertModel.fromJson(response.data));
+    } catch (e, stacktrace) {
+     /* log(
+        'CategoryRepositoryImpl.categories',
+        error: e,
+        stackTrace: stacktrace,
+      );*/
+      return DataFailure(error: e.toString());
     }
   }
 }

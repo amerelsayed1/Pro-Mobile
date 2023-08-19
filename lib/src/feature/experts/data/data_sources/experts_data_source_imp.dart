@@ -13,7 +13,16 @@ class ExpertsDataSourceImpl implements ExpertsDataSource {
   @override
   Future<Response> getExperts() async {
     final response = await client.get(
-      '/experts',
+      '/expert/v1/experts',
+    );
+    return response;
+  }
+
+  @override
+  Future<Response> getSingleExpertInfo(int id) async{
+    final response = await client.get(
+      '/expert/v1/experts?page=0&size=15&sortBy=id'
+      //'/catalog/v1/experts/$id',
     );
     return response;
   }

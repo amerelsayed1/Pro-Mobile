@@ -30,7 +30,7 @@ class CategoryRepositoryImpl implements CategoryRepository {
         );
       }
     } on DioException catch (error) {
-      return DataFailure(error: error);
+      return DataFailure(error: error.toString());
     }
 
     /* try {

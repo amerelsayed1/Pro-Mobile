@@ -7,6 +7,7 @@ import 'package:unknown/common/widgets/custom_appbar.dart';
 import 'package:unknown/src/core/state/test_base_state.dart';
 import 'package:unknown/src/feature/category/data/model/category_model.dart';
 import 'package:unknown/src/feature/experts/data/models/expert_model.dart';
+import 'package:unknown/src/feature/experts/data/models/expert_response.dart';
 import 'package:unknown/src/feature/experts/presentation/providers/providers.dart';
 
 import '../../../../core/router/routers.dart';
@@ -79,7 +80,7 @@ class _ExpertsState extends ConsumerState<ExpertsPage> {
           state is LoadingState
               ? const Expanded(
                   child: Center(child: CircularProgressIndicator()))
-              : state is DataSuccess<List<ExpertModel>>
+              : state is DataSuccess<ExpertResponse>
                   ? Expanded(
                       child: GridView.builder(
                         padding: const EdgeInsetsDirectional.fromSTEB(
@@ -88,7 +89,7 @@ class _ExpertsState extends ConsumerState<ExpertsPage> {
                           20,
                           10,
                         ),
-                        itemCount: state.data?.length,
+                        itemCount: state.data?.items?.length,
                         shrinkWrap: true,
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
@@ -99,18 +100,21 @@ class _ExpertsState extends ConsumerState<ExpertsPage> {
                         ),
                         itemBuilder: (context, position) {
                           return GestureDetector(
-                              onTap: () {
-                                context.goNamed(
-                                  Routes.expertDetails.name,
-                                );
-                              },
-                              child: ExpertItemBuilder(state.data![position]));
+                            onTap: () {
+                              context.goNamed(
+                                Routes.expertDetails.name,
+                              );
+                            },
+                            child: ExpertItemBuilder(
+                              state.data?.items?[position],
+                            ),
+                          );
                         },
                       ),
                     )
-                  : const Center(
+                  : Center(
                       child: Text(
-                        'Error',
+                        state.error ?? "",
                       ),
                     ),
         ],

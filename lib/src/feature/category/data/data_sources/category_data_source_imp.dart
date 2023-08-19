@@ -12,7 +12,7 @@ class CategoryDataSourceImpl implements CategoryDataSource {
   @override
   Future<Response> categories() async {
     final response = await client.get(
-      '/categories',
+      '/catalog/v1/categories',
     );
     return response;
   }

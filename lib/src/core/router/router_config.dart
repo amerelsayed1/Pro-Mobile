@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:unknown/src/core/router/routers.dart';
-import 'package:unknown/src/feature/details/presentation/pages/book_expert_page.dart';
+import 'package:unknown/src/feature/experts/presentation/pages/details/book_expert_page.dart';
 import 'package:unknown/src/feature/experts/presentation/pages/experts_page.dart';
 
-import '../../feature/details/presentation/pages/expert_details_page.dart';
+import '../../feature/experts/presentation/pages/details/expert_details_page.dart';
+
 
 final goRouterProvider = Provider((ref) => _router);
 

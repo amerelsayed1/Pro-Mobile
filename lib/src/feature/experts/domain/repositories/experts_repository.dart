@@ -3,6 +3,7 @@ import 'package:unknown/src/feature/experts/data/data_sources/experts_data_sourc
 import 'package:unknown/src/feature/experts/data/models/expert_model.dart';
 
 import '../../../../core/state/test_base_state.dart';
+import '../../data/models/expert_response.dart';
 import '../../data/repositories/experts_repository_imp.dart';
 
 final expertsRepositoryProvider = Provider<ExpertsRepository>(
@@ -12,5 +13,6 @@ final expertsRepositoryProvider = Provider<ExpertsRepository>(
 );
 
 abstract class ExpertsRepository {
-  Future<DataState<List<ExpertModel>>> getExperts();
+  Future<DataState<ExpertResponse>> getExperts();
+  Future<DataState<ExpertModel>> getSingleExpertInfo(int id);
 }

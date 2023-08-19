@@ -40,7 +40,7 @@ class CategoriesNotifier extends StateNotifier<DataState> {
         error: e,
         stackTrace: stacktrace,
       );
-      state = DataFailure(error: e as Exception);
+      state = DataFailure(error: e.toString());
     }
   }
 }
