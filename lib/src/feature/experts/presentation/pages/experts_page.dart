@@ -1,44 +1,41 @@
-import 'dart:developer';
-
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import 'package:unknown/common/widgets/custom_appbar.dart';
-import 'package:unknown/src/core/state/test_base_state.dart';
 import 'package:unknown/src/feature/category/data/model/category_model.dart';
-import 'package:unknown/src/feature/experts/data/models/expert_model.dart';
 import 'package:unknown/src/feature/experts/data/models/expert_response.dart';
-import 'package:unknown/src/feature/experts/presentation/providers/providers.dart';
-
-import '../../../../core/router/routers.dart';
-import '../../../category/presentation/provider/category_list_provider.dart';
+import '../../../../core/router/app_router.dart';
+import '../../../../core/state/test_base_state.dart';
+import '../providers/test_class.dart';
 import '../widget/expert_item_builder.dart';
 
 part '../widget/category_builder.dart';
 
-class ExpertsPage extends ConsumerStatefulWidget {
+@RoutePage()
+class ExpertsPage extends StatefulWidget {
   const ExpertsPage({Key? key}) : super(key: key);
 
   @override
-  ConsumerState<ExpertsPage> createState() => _ExpertsState();
+  State<StatefulWidget> createState() => _ExpertsState();
 }
 
-class _ExpertsState extends ConsumerState<ExpertsPage> {
+class _ExpertsState extends State<ExpertsPage> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() {
-      ref.read(categoriesProvider.notifier).getCategoriesList();
-      ref.read(expertsProvider.notifier).productList();
-    });
+    Provider.of<TestPattern>(context, listen: false).getCategoriesList().then(
+      (value) {
+        Provider.of<TestPattern>(context, listen: false).getExperts();
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    final categoriesState = ref.watch(categoriesProvider);
-    final state = ref.watch(expertsProvider);
-
-    log(categoriesState.toString());
+    DataState<List<CategoryModel>> apiResponse =
+        Provider.of<TestPattern>(context).categoriesResponse;
+    DataState<ExpertResponse> expertsResponse =
+        Provider.of<TestPattern>(context).expertsResponse;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -64,61 +61,96 @@ class _ExpertsState extends ConsumerState<ExpertsPage> {
       body: Column(
         children: [
           /// Categories
-          categoriesState is LoadingState
-              ? Container()
-              : categoriesState is DataSuccess<List<CategoryModel>>
-                  ? _CategoryBuilder(
-                      categories: categoriesState.data ?? [],
-                    )
-                  : const Center(
-                      child: Text(
-                        "Check ",
-                      ),
-                    ),
+          categoriesWidget(context, apiResponse),
 
           /// Experts
-          state is LoadingState
-              ? const Expanded(
-                  child: Center(child: CircularProgressIndicator()))
-              : state is DataSuccess<ExpertResponse>
-                  ? Expanded(
-                      child: GridView.builder(
-                        padding: const EdgeInsetsDirectional.fromSTEB(
-                          20,
-                          10,
-                          20,
-                          10,
-                        ),
-                        itemCount: state.data?.items?.length,
-                        shrinkWrap: true,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          childAspectRatio: 0.75,
-                          mainAxisSpacing: 10,
-                          crossAxisSpacing: 15,
-                        ),
-                        itemBuilder: (context, position) {
-                          return GestureDetector(
-                            onTap: () {
-                              context.goNamed(
-                                Routes.expertDetails.name,
-                              );
-                            },
-                            child: ExpertItemBuilder(
-                              state.data?.items?[position],
-                            ),
-                          );
-                        },
-                      ),
-                    )
-                  : Center(
-                      child: Text(
-                        state.error ?? "",
-                      ),
-                    ),
+          expertsWidget(context, expertsResponse),
         ],
       ),
     );
+  }
+
+  Widget categoriesWidget(BuildContext context, DataState apiResponse) {
+    List<CategoryModel>? categoriesList =
+        apiResponse.data as List<CategoryModel>?;
+    switch (apiResponse.status) {
+      case Status.LOADING:
+        return const Expanded(
+          child: Center(
+            child: CircularProgressIndicator(),
+          ),
+        );
+      case Status.COMPLETED:
+        return _CategoryBuilder(
+          categories: categoriesList ?? [],
+        );
+      case Status.ERROR:
+        return const Center(
+          child: Text(
+            'Please try again latter!!!',
+          ),
+        );
+      case Status.INITIAL:
+      default:
+        return const Center(
+          child: Text(
+            'Search the song by Artist',
+          ),
+        );
+    }
+  }
+
+  Widget expertsWidget(BuildContext context, DataState apiResponse) {
+    ExpertResponse? experts = apiResponse.data as ExpertResponse?;
+    switch (apiResponse.status) {
+      case Status.LOADING:
+        return const Expanded(
+          child: Center(
+            child: CircularProgressIndicator(),
+          ),
+        );
+      case Status.COMPLETED:
+        return Expanded(
+          child: GridView.builder(
+            padding: const EdgeInsetsDirectional.fromSTEB(
+              20,
+              10,
+              20,
+              10,
+            ),
+            itemCount: experts?.items?.length,
+            shrinkWrap: true,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              childAspectRatio: 0.75,
+              mainAxisSpacing: 10,
+              crossAxisSpacing: 15,
+            ),
+            itemBuilder: (context, position) {
+              return GestureDetector(
+                onTap: () {
+                  appRouter.push(const ExpertDetailsRoute());
+                },
+                child: ExpertItemBuilder(
+                  experts?.items?[position],
+                ),
+              );
+            },
+          ),
+        );
+      case Status.ERROR:
+        return const Center(
+          child: Text(
+            'Please try again latter!!!',
+          ),
+        );
+      case Status.INITIAL:
+      default:
+        return const Center(
+          child: Text(
+            'Search the song by Artist',
+          ),
+        );
+    }
   }
 }

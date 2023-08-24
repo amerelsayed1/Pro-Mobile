@@ -1,6 +1,6 @@
 part of '../pages/experts_page.dart';
 
-class _CategoryBuilder extends ConsumerWidget {
+class _CategoryBuilder extends StatelessWidget {
   const _CategoryBuilder({
     required this.categories,
   });
@@ -8,7 +8,7 @@ class _CategoryBuilder extends ConsumerWidget {
   final List<CategoryModel> categories;
 
   @override
-  Widget build(BuildContext context, ref) {
+  Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(
         vertical: 16,
@@ -20,7 +20,7 @@ class _CategoryBuilder extends ConsumerWidget {
         itemBuilder: (context, index) {
           return InkWell(
             onTap: () {
-              ref.read(selectedCategoryProvider.notifier).state = categories[index];
+              //ref.read(selectedCategoryProvider.notifier).state = categories[index];
             },
             child: Container(
               padding: const EdgeInsets.symmetric(
@@ -29,11 +29,6 @@ class _CategoryBuilder extends ConsumerWidget {
               ),
               decoration: BoxDecoration(
                 color: Colors.grey[200],
-                border: ref.watch(selectedCategoryProvider) == categories[index]
-                    ? Border.all(
-                        color: Colors.blue,
-                      )
-                    : null,
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Center(
@@ -50,4 +45,6 @@ class _CategoryBuilder extends ConsumerWidget {
       ),
     );
   }
+
+
 }

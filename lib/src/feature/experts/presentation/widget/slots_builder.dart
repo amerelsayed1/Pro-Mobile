@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class SlotsBuilder extends ConsumerWidget {
+class SlotsBuilder extends StatelessWidget {
   const SlotsBuilder({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(
         vertical: 12,
@@ -21,4 +20,6 @@ class SlotsBuilder extends ConsumerWidget {
       ),
     );
   }
+
+
 }

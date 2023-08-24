@@ -1,19 +1,20 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:unknown/src/feature/experts/presentation/widget/slots_builder.dart';
 
 import '../../../../../../common/widgets/custom_appbar.dart';
 import '../../widget/available_times_builder.dart';
 
-class BookExpertPage extends ConsumerStatefulWidget {
+@RoutePage()
+class BookExpertPage extends StatefulWidget {
   const BookExpertPage({Key? key}) : super(key: key);
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _BookExpertState();
+  State<StatefulWidget> createState() => _BookExpertState();
 }
 
-class _BookExpertState extends ConsumerState<BookExpertPage> {
+class _BookExpertState extends State<BookExpertPage> {
   List<String> testList = [];
 
   @override
@@ -74,7 +75,7 @@ class _BookExpertState extends ConsumerState<BookExpertPage> {
                 crossAxisSpacing: 8,
                 itemCount: 4,
                 itemBuilder: (context, index) {
-                  return const SlotsBuilder();
+                  return SlotsBuilder();
                 },
               ),
             ),

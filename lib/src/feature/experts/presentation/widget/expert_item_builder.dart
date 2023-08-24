@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:unknown/src/feature/experts/data/models/expert_model.dart';
 
-
 class ExpertItemBuilder extends StatelessWidget {
   final ExpertModel? _model;
 
@@ -28,20 +27,17 @@ class ExpertItemBuilder extends StatelessWidget {
                 ),
               )),
         ),
-        Text(
-          _model?.nameEn ?? "",
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 15,
-            color: Colors.black,
+        Container(
+          margin: const EdgeInsetsDirectional.only(
+            bottom: 5,
           ),
-        ),
-        const Text(
-          '900 . Session',
-          style: TextStyle(
-            fontWeight: FontWeight.normal,
-            fontSize: 13,
-            color: Colors.black,
+          child: Text(
+            _model?.nameEn ?? "",
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 15,
+              color: Colors.black,
+            ),
           ),
         ),
         Expanded(

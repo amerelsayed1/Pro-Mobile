@@ -16,34 +16,33 @@ class ExpertsRepositoryImpl implements ExpertsRepository {
 
   @override
   Future<DataState<ExpertResponse>> getExperts() async {
+    DataState<ExpertResponse> apiResponse = DataState.loading(
+      'loading',
+    );
     try {
       final response = await dataSource.getExperts();
-      List<ExpertModel> list = [];
-      /*response.data.forEach(
-          (_onBoarding) => list.add(ExpertModel.fromJson(_onBoarding)));*/
-      return DataSuccess(data: ExpertResponse.fromJson(response.data));
-    } catch (e, stacktrace) {
-      /*log(
-        'CategoryRepositoryImpl.categories',
-        error: e,
-        stackTrace: stacktrace,
-      );*/
-      return DataFailure(error: e.toString());
+      apiResponse = DataState.completed(ExpertResponse.fromJson(response.data));
+      return apiResponse;
+    } catch (e) {
+      apiResponse = DataState.error(e.toString());
+      return apiResponse;
     }
   }
 
   @override
   Future<DataState<ExpertModel>> getSingleExpertInfo(int id) async {
+    DataState<ExpertModel> apiResponse = DataState.loading(
+      'Fetching artist data',
+    );
     try {
       final response = await dataSource.getSingleExpertInfo(id);
-      return DataSuccess(data: ExpertModel.fromJson(response.data));
-    } catch (e, stacktrace) {
-     /* log(
-        'CategoryRepositoryImpl.categories',
-        error: e,
-        stackTrace: stacktrace,
-      );*/
-      return DataFailure(error: e.toString());
+      apiResponse = DataState.completed(
+        ExpertModel.fromJson(response.data),
+      );
+      return apiResponse;
+    } catch (e) {
+      apiResponse = DataState.error(e.toString());
+      return apiResponse;
     }
   }
 }

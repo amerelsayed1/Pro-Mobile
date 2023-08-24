@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'src/core/router/app_router.dart';
 
-import 'src/core/router/router_config.dart';
-
-class App extends ConsumerWidget {
+class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ref) {
+  Widget build(BuildContext context) {
     return MaterialApp.router(
       title: 'Experts',
-      routerConfig: ref.read(goRouterProvider),
+
+      routerConfig: appRouter.config(),
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
       debugShowCheckedModeBanner: false,
     );
   }
+
+
 }

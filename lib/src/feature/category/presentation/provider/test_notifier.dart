@@ -1,3 +1,4 @@
+/*
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:unknown/src/feature/category/data/model/category_model.dart';
 
@@ -11,4 +12,4 @@ class ProfileStateNotifier extends StateNotifier<CategoryModel> {
   void setAge(int age) {
     state = state.copyWith(age: age);
   }
-}
+}*/

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../src/core/router/app_router.dart';
+
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final bool showBackArrow;
@@ -71,7 +73,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             : Container(),
         onTap: () {
           if (showBackArrow) {
-            context.pop();
+            appRouter.pop();
           } else {
             Scaffold.of(context).openDrawer();
           }

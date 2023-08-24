@@ -16,6 +16,31 @@ class CategoryRepositoryImpl implements CategoryRepository {
 
   @override
   Future<DataState<List<CategoryModel>>> categories() async {
+    DataState<List<CategoryModel>> apiResponse = DataState.loading(
+      'Loading',
+    );
+    try {
+      final response = await dataSource.categories();
+
+      List<CategoryModel> list = [];
+      response.data.forEach(
+        (category) => list.add(
+          CategoryModel.fromJson(category),
+        ),
+      );
+
+      apiResponse = DataState.completed(
+        list,
+      );
+      return apiResponse;
+    } catch (e) {
+      apiResponse = DataState.error(e.toString());
+      return apiResponse;
+    }
+  }
+
+/*@override
+  Future<DataState<List<CategoryModel>>> categories() async {
     try {
       final response = await dataSource.categories();
       if (response.statusCode == HttpStatus.ok) {
@@ -31,9 +56,9 @@ class CategoryRepositoryImpl implements CategoryRepository {
       }
     } on DioException catch (error) {
       return DataFailure(error: error.toString());
-    }
+    }*/
 
-    /* try {
+/* try {
       final response = await dataSource.categories();
       List<CategoryModel> list = [];
       response.data.forEach(
@@ -47,5 +72,5 @@ class CategoryRepositoryImpl implements CategoryRepository {
       );
       return Left(e as Exception);
     }*/
-  }
+//}
 }
