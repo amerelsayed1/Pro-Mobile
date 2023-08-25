@@ -56,7 +56,9 @@ class _BookExpertState extends State<BookExpertPage> {
             ),
           ),
           Container(
-            child: const Text('Select one of the available time slots below:'),
+            child: const Text(
+              'Select one of the available time slots below:',
+            ),
             margin: const EdgeInsetsDirectional.only(
               start: 15,
               top: 10,

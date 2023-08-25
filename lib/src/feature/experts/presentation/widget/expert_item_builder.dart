@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:unknown/src/feature/experts/data/models/expert_model.dart';
 
+import '../../../../../common/images.dart';
+
 class ExpertItemBuilder extends StatelessWidget {
   final ExpertModel? _model;
 
@@ -18,9 +20,18 @@ class ExpertItemBuilder extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10.0),
               ),
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(10.0),
-                child: Image.network(
-                  "https://media.intro.co/avatars/4862257n9r5p0A.jpg",
+                borderRadius: BorderRadius.circular(
+                  10.0,
+                ),
+                child: FadeInImage.assetNetwork(
+                  placeholder: Images.ic_place_holder,
+                  image: "http://192.168.1.12:8080${_model?.avatarUrl ?? ""}",
+                  imageErrorBuilder: (context, error, stackTrace) {
+                    return Image.asset(
+                      Images.ic_place_holder,
+                      fit: BoxFit.fitWidth,
+                    );
+                  },
                   fit: BoxFit.fill,
                   height: 170,
                   width: double.infinity,

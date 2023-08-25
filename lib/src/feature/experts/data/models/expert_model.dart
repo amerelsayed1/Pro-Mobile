@@ -6,6 +6,7 @@ class ExpertModel {
   String? titleAr;
   String? bioEn;
   String? bioAr;
+  String? avatarUrl;
   String? createdAt;
 
   ExpertModel({
@@ -16,6 +17,7 @@ class ExpertModel {
     this.titleAr,
     this.bioEn,
     this.bioAr,
+    this.avatarUrl,
     this.createdAt,
   });
 
@@ -27,6 +29,7 @@ class ExpertModel {
     titleAr = json['titleAr'];
     bioEn = json['bioEn'];
     bioAr = json['bioAr'];
+    avatarUrl = json['avatarUrl'];
     createdAt = json['createdAt'];
   }
 
@@ -39,6 +42,7 @@ class ExpertModel {
     map['titleAr'] = titleAr;
     map['bioEn'] = bioEn;
     map['bioAr'] = bioAr;
+    map['avatarUrl'] = avatarUrl;
     map['createdAt'] = createdAt;
     return map;
   }

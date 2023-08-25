@@ -1,11 +1,18 @@
 part of '../pages/experts_page.dart';
 
-class _CategoryBuilder extends StatelessWidget {
+class _CategoryBuilder extends StatefulWidget {
   const _CategoryBuilder({
     required this.categories,
   });
 
   final List<CategoryModel> categories;
+
+  @override
+  State<StatefulWidget> createState() => _CategoryState();
+}
+
+class _CategoryState extends State<_CategoryBuilder> {
+  int selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -16,11 +23,16 @@ class _CategoryBuilder extends StatelessWidget {
       height: 50,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
-        itemCount: categories.length,
+        itemCount: widget.categories.length,
         itemBuilder: (context, index) {
           return InkWell(
             onTap: () {
-              //ref.read(selectedCategoryProvider.notifier).state = categories[index];
+              setState(() {
+                selectedIndex = index;
+              });
+              Provider.of<TestPattern>(context, listen: false).getExperts(
+                widget.categories[selectedIndex].id ?? 0,
+              );
             },
             child: Container(
               padding: const EdgeInsets.symmetric(
@@ -29,22 +41,27 @@ class _CategoryBuilder extends StatelessWidget {
               ),
               decoration: BoxDecoration(
                 color: Colors.grey[200],
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(
+                  8,
+                ),
               ),
               child: Center(
                 child: Text(
-                  categories[index].nameEn ?? "",
+                  widget.categories[index].nameEn ?? "",
+                  style: TextStyle(
+                    color: selectedIndex == index ? Colors.blue : Colors.black,
+                  ),
                 ),
               ),
             ),
           );
         },
         separatorBuilder: (context, index) {
-          return const SizedBox(width: 8);
+          return const SizedBox(
+            width: 8,
+          );
         },
       ),
     );
   }
-
-
 }

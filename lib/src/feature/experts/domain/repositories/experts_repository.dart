@@ -4,7 +4,7 @@ import '../../../../core/state/test_base_state.dart';
 import '../../data/models/expert_response.dart';
 
 abstract class ExpertsRepository {
-  Future<DataState<ExpertResponse>> getExperts();
+  Future<DataState<ExpertResponse>> getExperts(int categoryId);
 
   Future<DataState<ExpertModel>> getSingleExpertInfo(int id);
 }

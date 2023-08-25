@@ -39,9 +39,10 @@ class TestPattern extends ChangeNotifier {
     return _categoriesResponse;
   }
 
-  Future<void> getCategoriesList() async {
+  Future<DataState<List<CategoryModel>>> getCategoriesList() async {
     _categoriesResponse = await categoryUseCase.categories();
     notifyListeners();
+    return categoriesResponse;
   }
 
   DataState<ExpertResponse> _expertsResponse = DataState.loading(
@@ -52,9 +53,8 @@ class TestPattern extends ChangeNotifier {
     return _expertsResponse;
   }
 
-  Future<void> getExperts() async {
-    _expertsResponse = await expertsUseCase.getExpertList();
+  Future<void> getExperts(int categoryId) async {
+    _expertsResponse = await expertsUseCase.getExpertList(categoryId);
     notifyListeners();
   }
-
 }

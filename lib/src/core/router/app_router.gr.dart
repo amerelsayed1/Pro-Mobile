@@ -22,9 +22,13 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     ExpertDetailsRoute.name: (routeData) {
+      final args = routeData.argsAs<ExpertDetailsRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const ExpertDetailsPage(),
+        child: ExpertDetailsPage(
+          key: args.key,
+          expert: args.expert,
+        ),
       );
     },
     ExpertsRoute.name: (routeData) {
@@ -52,16 +56,40 @@ class BookExpertRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [ExpertDetailsPage]
-class ExpertDetailsRoute extends PageRouteInfo<void> {
-  const ExpertDetailsRoute({List<PageRouteInfo>? children})
-      : super(
+class ExpertDetailsRoute extends PageRouteInfo<ExpertDetailsRouteArgs> {
+  ExpertDetailsRoute({
+    Key? key,
+    required ExpertModel expert,
+    List<PageRouteInfo>? children,
+  }) : super(
           ExpertDetailsRoute.name,
+          args: ExpertDetailsRouteArgs(
+            key: key,
+            expert: expert,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'ExpertDetailsRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<ExpertDetailsRouteArgs> page =
+      PageInfo<ExpertDetailsRouteArgs>(name);
+}
+
+class ExpertDetailsRouteArgs {
+  const ExpertDetailsRouteArgs({
+    this.key,
+    required this.expert,
+  });
+
+  final Key? key;
+
+  final ExpertModel expert;
+
+  @override
+  String toString() {
+    return 'ExpertDetailsRouteArgs{key: $key, expert: $expert}';
+  }
 }
 
 /// generated route for

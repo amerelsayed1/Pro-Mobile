@@ -4,6 +4,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../../common/images.dart';
 import '../../../../../../common/widgets/custom_appbar.dart';
 import '../../../../../core/di/locator.dart';
 import '../../../../../core/router/app_router.dart';
@@ -15,7 +16,9 @@ import '../../providers/test_class.dart';
 
 @RoutePage()
 class ExpertDetailsPage extends StatefulWidget {
-  const ExpertDetailsPage({Key? key}) : super(key: key);
+  final ExpertModel expert;
+
+  const ExpertDetailsPage({Key? key, required this.expert}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _ExpertDetailsState();
@@ -25,7 +28,8 @@ class _ExpertDetailsState extends State<ExpertDetailsPage> {
   @override
   void initState() {
     super.initState();
-    Provider.of<TestPattern>(context, listen: false).getSingleExpertInfo(1);
+    Provider.of<TestPattern>(context, listen: false)
+        .getSingleExpertInfo(widget.expert.id);
   }
 
   @override
@@ -34,9 +38,9 @@ class _ExpertDetailsState extends State<ExpertDetailsPage> {
         Provider.of<TestPattern>(context).apiResponse;
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: const CustomAppBar(
+      appBar: CustomAppBar(
         showBackArrow: true,
-        title: "Nate Berkus",
+        title: widget.expert.nameEn ?? "",
       ),
       body: Container(
         padding: const EdgeInsetsDirectional.only(
@@ -82,9 +86,18 @@ class _ExpertDetailsState extends State<ExpertDetailsPage> {
                             ),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(10.0),
-                              child: Image.network(
-                                "https://media.intro.co/avatars/434693o27ZCXhE.jpg",
+                              child: FadeInImage.assetNetwork(
+                                placeholder: Images.ic_place_holder,
+                                image:
+                                    "http://192.168.1.12:8080${expert?.avatarUrl ?? ""}",
                                 fit: BoxFit.fill,
+                                imageErrorBuilder:
+                                    (context, error, stackTrace) {
+                                  return Image.asset(
+                                    Images.ic_place_holder,
+                                    fit: BoxFit.fitWidth,
+                                  );
+                                },
                                 height: 170,
                                 width: double.infinity,
                               ),
@@ -133,7 +146,7 @@ class _ExpertDetailsState extends State<ExpertDetailsPage> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Container(
-                          margin: EdgeInsetsDirectional.only(top: 5),
+                          margin: const EdgeInsetsDirectional.only(top: 5),
                           child: const Text(
                             '\$900 . Session',
                             style: TextStyle(
@@ -186,7 +199,7 @@ class _ExpertDetailsState extends State<ExpertDetailsPage> {
                         backgroundColor: MaterialStateProperty.all(Colors.red),
                       ),
                       onPressed: () {
-                        // appRouter.push(BookExpertRoute.page);
+                        appRouter.push(const BookExpertRoute());
                       },
                       child: const Text(
                         "See Plans",

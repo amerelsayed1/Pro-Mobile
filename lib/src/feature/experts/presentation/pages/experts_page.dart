@@ -25,7 +25,9 @@ class _ExpertsState extends State<ExpertsPage> {
     super.initState();
     Provider.of<TestPattern>(context, listen: false).getCategoriesList().then(
       (value) {
-        Provider.of<TestPattern>(context, listen: false).getExperts();
+        Provider.of<TestPattern>(context, listen: false).getExperts(
+          value.data?[0].id ?? 0,
+        );
       },
     );
   }
@@ -111,32 +113,40 @@ class _ExpertsState extends State<ExpertsPage> {
         );
       case Status.COMPLETED:
         return Expanded(
-          child: GridView.builder(
-            padding: const EdgeInsetsDirectional.fromSTEB(
-              20,
-              10,
-              20,
-              10,
-            ),
-            itemCount: experts?.items?.length,
-            shrinkWrap: true,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              childAspectRatio: 0.75,
-              mainAxisSpacing: 10,
-              crossAxisSpacing: 15,
-            ),
-            itemBuilder: (context, position) {
-              return GestureDetector(
-                onTap: () {
-                  appRouter.push(const ExpertDetailsRoute());
-                },
-                child: ExpertItemBuilder(
-                  experts?.items?[position],
+          child: experts?.items?.isNotEmpty == true
+              ? GridView.builder(
+                  padding: const EdgeInsetsDirectional.fromSTEB(
+                    20,
+                    10,
+                    20,
+                    10,
+                  ),
+                  itemCount: experts?.items?.length,
+                  shrinkWrap: true,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 0.75,
+                    mainAxisSpacing: 10,
+                    crossAxisSpacing: 15,
+                  ),
+                  itemBuilder: (context, position) {
+                    return GestureDetector(
+                      onTap: () {
+                        appRouter.push(
+                          ExpertDetailsRoute(expert: experts!.items![position]),
+                        );
+                      },
+                      child: ExpertItemBuilder(
+                        experts?.items?[position],
+                      ),
+                    );
+                  },
+                )
+              : const Center(
+                  child: Text(
+                    'No Experts in this Category',
+                  ),
                 ),
-              );
-            },
-          ),
         );
       case Status.ERROR:
         return const Center(

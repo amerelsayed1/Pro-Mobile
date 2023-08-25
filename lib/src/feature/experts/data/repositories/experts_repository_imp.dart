@@ -15,12 +15,12 @@ class ExpertsRepositoryImpl implements ExpertsRepository {
   final ExpertsDataSource dataSource;
 
   @override
-  Future<DataState<ExpertResponse>> getExperts() async {
+  Future<DataState<ExpertResponse>> getExperts(int categoryId) async {
     DataState<ExpertResponse> apiResponse = DataState.loading(
       'loading',
     );
     try {
-      final response = await dataSource.getExperts();
+      final response = await dataSource.getExperts(categoryId);
       apiResponse = DataState.completed(ExpertResponse.fromJson(response.data));
       return apiResponse;
     } catch (e) {
