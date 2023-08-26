@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
@@ -6,12 +5,9 @@ import 'package:provider/provider.dart';
 
 import '../../../../../../common/images.dart';
 import '../../../../../../common/widgets/custom_appbar.dart';
-import '../../../../../core/di/locator.dart';
 import '../../../../../core/router/app_router.dart';
-import '../../../../../core/state/api_response.dart';
-import '../../../../../core/state/test_base_state.dart';
+import '../../../../../core/state/data_state.dart';
 import '../../../data/models/expert_model.dart';
-import '../../../domain/user_case/single_expert_use_case.dart';
 import '../../providers/test_class.dart';
 
 @RoutePage()

@@ -1,8 +1,23 @@
 import 'package:flutter/material.dart';
 
-class SlotsBuilder extends StatelessWidget {
-  const SlotsBuilder({Key? key}) : super(key: key);
+import '../../data/models/appointment_types_model.dart';
 
+class SlotsBuilder extends StatefulWidget {
+
+  AppointmentTypesModel? appointmentType;
+  bool isSelected = false;
+
+  SlotsBuilder({
+    Key? key,
+    required this.appointmentType,
+    required this.isSelected,
+  }) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() => _SlotState();
+}
+
+class _SlotState extends State<SlotsBuilder> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -13,13 +28,15 @@ class SlotsBuilder extends StatelessWidget {
         color: Colors.grey[200],
         borderRadius: BorderRadius.circular(3),
       ),
-      child: const Center(
+      child: Center(
         child: Text(
-          "Quick - 15 Min",
+          widget.appointmentType?.type ?? "",
+          style: TextStyle(
+            color: widget.isSelected ? Colors.blue : Colors.black,
+            fontWeight: widget.isSelected ? FontWeight.bold : FontWeight.normal,
+          ),
         ),
       ),
     );
   }
-
-
 }

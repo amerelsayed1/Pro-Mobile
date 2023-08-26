@@ -1,6 +1,6 @@
 
 
-import '../../../../core/state/test_base_state.dart';
+import '../../../../core/state/data_state.dart';
 import '../../data/model/category_model.dart';
 
 abstract class CategoryRepository {

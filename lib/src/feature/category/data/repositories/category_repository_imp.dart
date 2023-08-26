@@ -1,9 +1,6 @@
-import 'dart:io';
-
-import 'package:dio/dio.dart';
 import 'package:unknown/src/feature/category/data/model/category_model.dart';
 
-import '../../../../core/state/test_base_state.dart';
+import '../../../../core/state/data_state.dart';
 import '../../domain/repositories/category_repository.dart';
 import '../data_sources/category_data_source.dart';
 

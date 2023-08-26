@@ -37,6 +37,12 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const ExpertsPage(),
       );
     },
+    SuccessRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: SuccessPage(),
+      );
+    },
   };
 }
 
@@ -102,6 +108,20 @@ class ExpertsRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'ExpertsRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [SuccessPage]
+class SuccessRoute extends PageRouteInfo<void> {
+  const SuccessRoute({List<PageRouteInfo>? children})
+      : super(
+          SuccessRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'SuccessRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

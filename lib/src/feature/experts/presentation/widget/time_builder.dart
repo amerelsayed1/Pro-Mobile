@@ -1,10 +1,19 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class TimeBuilder extends StatelessWidget {
-  const TimeBuilder({Key? key}) : super(key: key);
+
+  String time;
+
+   TimeBuilder({required this.time,Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
+
+
     return Container(
       padding: const EdgeInsets.symmetric(
         vertical: 12,
@@ -15,18 +24,21 @@ class TimeBuilder extends StatelessWidget {
           3,
         ),
       ),
-      child: const Column(
+      child:  Column(
         children: [
           Center(
             child: Text(
-              "12:00 AM",
+              time,
             ),
           ),
-          Center(
-            child: Text(
-              "(Sold Out)",
-              style: TextStyle(
-                fontSize: 11,
+          const Visibility(
+            visible: false,
+            child: Center(
+              child: Text(
+                "(Sold Out)",
+                style: TextStyle(
+                  fontSize: 11,
+                ),
               ),
             ),
           ),

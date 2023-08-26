@@ -25,8 +25,4 @@ class CategoryModel {
     data['createdAt'] = createdAt;
     return data;
   }
-
-  CategoryModel copyWith({name, age}) {
-    return CategoryModel(id: 0,nameAr: "uhlv",nameEn: "pwiofbn");
-  }
 }

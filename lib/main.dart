@@ -6,6 +6,8 @@ import 'package:unknown/src/feature/experts/presentation/providers/test_class.da
 import 'app.dart';
 import 'src/core/di/locator.dart';
 import 'src/feature/category/domain/use_cases/category_use_case.dart';
+import 'src/feature/experts/domain/user_case/expert_appointement_use_case.dart';
+import 'src/feature/experts/domain/user_case/expert_availabilities_use_case.dart';
 import 'src/feature/experts/domain/user_case/single_expert_use_case.dart';
 
 void main() async {
@@ -17,6 +19,8 @@ void main() async {
         useCase: locator<SingleExpertsUseCase>(),
         expertsUseCase: locator<ExpertsUseCase>(),
         categoryUseCase: locator<CategoryUseCase>(),
+        expertsAppointmentUseCase: locator<ExpertsAppointmentUseCase>(),
+        expertsAAvailabilitiesUseCase: locator<ExpertsAAvailabilitiesUseCase>(),
       ),
     ),
   ], child: const App()));

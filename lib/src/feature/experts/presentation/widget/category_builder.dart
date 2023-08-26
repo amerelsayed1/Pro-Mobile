@@ -15,6 +15,17 @@ class _CategoryState extends State<_CategoryBuilder> {
   int selectedIndex = 0;
 
   @override
+  void initState() {
+    super.initState();
+    widget.categories.insert(
+        0,
+        CategoryModel(
+          nameEn: "All",
+          nameAr: "الكل",
+        ));
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(
@@ -27,12 +38,17 @@ class _CategoryState extends State<_CategoryBuilder> {
         itemBuilder: (context, index) {
           return InkWell(
             onTap: () {
-              setState(() {
-                selectedIndex = index;
-              });
-              Provider.of<TestPattern>(context, listen: false).getExperts(
-                widget.categories[selectedIndex].id ?? 0,
+
+              setState(
+                () {
+                  selectedIndex = index;
+                },
               );
+
+              Provider.of<TestPattern>(context, listen: false).getExperts(
+                widget.categories[selectedIndex].id,
+              );
+
             },
             child: Container(
               padding: const EdgeInsets.symmetric(

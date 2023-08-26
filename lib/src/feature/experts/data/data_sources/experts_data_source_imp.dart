@@ -10,14 +10,15 @@ class ExpertsDataSourceImpl implements ExpertsDataSource {
   final Dio client;
 
   @override
-  Future<Response> getExperts(int categoryId) async {
+  Future<Response> getExperts(int? categoryId) async {
     final queryParameters = {
       'categoryId': '$categoryId',
     };
 
     final response = await client.get(
       '/expert/v1/experts',
-      queryParameters: queryParameters,
+      queryParameters:
+          categoryId != null || categoryId == 0 ? queryParameters : null,
     );
     return response;
   }
@@ -25,6 +26,19 @@ class ExpertsDataSourceImpl implements ExpertsDataSource {
   @override
   Future<Response> getSingleExpertInfo(int id) async {
     final response = await client.get('/expert/v1/experts/$id');
+    return response;
+  }
+
+  @override
+  Future<Response> getExpertAppointmentTypes(int id) async {
+    final response =
+        await client.get('/expert/v1/experts/$id/appointment-types');
+    return response;
+  }
+
+  @override
+  Future<Response> getExpertAvailabilities(int id) async {
+    final response = await client.get('/expert/v1/experts/$id/availabilities');
     return response;
   }
 }

@@ -1,10 +1,22 @@
+import 'dart:developer';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import 'package:unknown/src/feature/experts/data/models/appointment_types_model.dart';
+import 'package:unknown/src/feature/experts/data/models/availabilities/availabilities_model.dart';
+import 'package:unknown/src/feature/experts/presentation/pages/status/success_page.dart';
 import 'package:unknown/src/feature/experts/presentation/widget/slots_builder.dart';
 
 import '../../../../../../common/widgets/custom_appbar.dart';
+import '../../../../../core/router/app_router.dart';
+import '../../../../../core/state/data_state.dart';
+import '../../providers/test_class.dart';
+import '../../widget/available_builder.dart';
 import '../../widget/available_times_builder.dart';
+import 'appiontment_type_selection_notifier.dart';
 
 @RoutePage()
 class BookExpertPage extends StatefulWidget {
@@ -15,24 +27,28 @@ class BookExpertPage extends StatefulWidget {
 }
 
 class _BookExpertState extends State<BookExpertPage> {
-  List<String> testList = [];
+  int selectedIndex = 0;
 
   @override
   void initState() {
     super.initState();
-    testList = [
-      "Today",
-      "Friday 8/11",
-      "Tuesday 8/15",
-      "Wednesday 8/16",
-      "Friday 8/18",
-      "Tuesday 8/22",
-      "Wednesday 8/23",
-    ];
+
+    Provider.of<TestPattern>(context, listen: false).getExpertAppointment(
+      1,
+    );
+    Provider.of<TestPattern>(context, listen: false).getExpertAvailabilities(
+      1,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
+    DataState<List<AppointmentTypesModel>> apiResponse =
+        Provider.of<TestPattern>(context).appointmentsResponse;
+
+    DataState<List<AvailabilitiesModel>> availabilitiesResponse =
+        Provider.of<TestPattern>(context).availabilitiesResponse;
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: const CustomAppBar(
@@ -56,12 +72,12 @@ class _BookExpertState extends State<BookExpertPage> {
             ),
           ),
           Container(
-            child: const Text(
-              'Select one of the available time slots below:',
-            ),
             margin: const EdgeInsetsDirectional.only(
               start: 15,
               top: 10,
+            ),
+            child: const Text(
+              'Select one of the available time slots below:',
             ),
           ),
           Expanded(
@@ -72,18 +88,29 @@ class _BookExpertState extends State<BookExpertPage> {
                 start: 15,
               ),
               child: AlignedGridView.count(
-                crossAxisCount: 2,
+                crossAxisCount: 3,
                 mainAxisSpacing: 10,
                 crossAxisSpacing: 8,
-                itemCount: 4,
+                itemCount: apiResponse.data?.length,
                 itemBuilder: (context, index) {
-                  return SlotsBuilder();
+                  return GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        selectedIndex = index;
+                      });
+                      //appRouter.push(const SuccessRoute());
+                    },
+                    child: SlotsBuilder(
+                      appointmentType: apiResponse.data?[index],
+                      isSelected: selectedIndex == index,
+                    ),
+                  );
                 },
               ),
             ),
           ),
           Expanded(
-            flex: 5,
+            flex: 10,
             child: Container(
               margin: const EdgeInsetsDirectional.only(
                 end: 15,
@@ -95,9 +122,11 @@ class _BookExpertState extends State<BookExpertPage> {
                   Expanded(
                     child: ListView.builder(
                         shrinkWrap: true,
-                        itemCount: testList.length,
+                        itemCount: availabilitiesResponse.data?.length,
                         itemBuilder: (BuildContext context, int index) {
-                          return AvailableTimesBuilder(testList[index]);
+                          return AvailableTimeBuilder(
+                            availability: availabilitiesResponse.data?[index],
+                          );
                         }),
                   )
                 ],

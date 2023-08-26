@@ -5,7 +5,7 @@ import 'package:unknown/common/widgets/custom_appbar.dart';
 import 'package:unknown/src/feature/category/data/model/category_model.dart';
 import 'package:unknown/src/feature/experts/data/models/expert_response.dart';
 import '../../../../core/router/app_router.dart';
-import '../../../../core/state/test_base_state.dart';
+import '../../../../core/state/data_state.dart';
 import '../providers/test_class.dart';
 import '../widget/expert_item_builder.dart';
 
@@ -20,13 +20,14 @@ class ExpertsPage extends StatefulWidget {
 }
 
 class _ExpertsState extends State<ExpertsPage> {
+
   @override
   void initState() {
     super.initState();
     Provider.of<TestPattern>(context, listen: false).getCategoriesList().then(
       (value) {
         Provider.of<TestPattern>(context, listen: false).getExperts(
-          value.data?[0].id ?? 0,
+          null,
         );
       },
     );
