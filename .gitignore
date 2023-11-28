@@ -92,8 +92,7 @@ lib/generated_plugin_registrant.dart
 .idea/**/dbnavigator.xml
 
 # Gradle
-.idea/**/gradle.xml
-.idea/**/libraries
+.idea/
 
 build/
 
