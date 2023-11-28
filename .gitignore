@@ -11,7 +11,7 @@
 .packages
 .pub-cache/
 .pub/
-build/
+
 coverage/
 lib/generated_plugin_registrant.dart
 # For library packages, don’t commit the pubspec.lock file.
@@ -94,6 +94,8 @@ lib/generated_plugin_registrant.dart
 # Gradle
 .idea/**/gradle.xml
 .idea/**/libraries
+
+build/kotlin
 
 # Gradle and Maven with auto-import
 # When using Gradle or Maven with auto-import, you should exclude module files,
