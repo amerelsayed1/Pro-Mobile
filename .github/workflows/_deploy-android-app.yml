@@ -1,0 +1,46 @@
+name: Deploy To Google Drive
+
+on:
+  push:
+    branches: [ develop ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v2
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.13.0'
+
+      - name: Debug Service Account JSON
+        run: echo "${{ secrets.YOUR_SERVICE_ACCOUNT_CREDENTIALS }}"
+
+      - name: Install Dependencies
+        run: flutter pub get
+
+      - run: flutter build apk --debug
+
+      - name: Save APKBUILD to Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: APKBUILD
+          path: build/app/outputs/flutter-apk/app-debug.apk
+
+      - name: Debug APK File
+        run: ls -R build/app/outputs/flutter-apk/
+
+      - uses: actions/checkout@v4.1.1
+      - name: Upload Artifacts TO Google Drive
+        uses: Jumbo810/Upload_Github_Artifacts_TO_GDrive@v2.2.2
+        with:
+          target: ${{github.workspace}}/build/app/outputs/flutter-apk/app-debug.apk
+          credentials: ${{ secrets.YOUR_SERVICE_ACCOUNT_CREDENTIALS }}
+          parent_folder_id: ${{secrets.FOLDER_ID}}
