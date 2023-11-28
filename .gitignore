@@ -50,6 +50,7 @@
 .pub-cache/
 .pub/
 /build/
+!/build/app/outputs/
 .firebaserc
 firebase.json
 .firebase
