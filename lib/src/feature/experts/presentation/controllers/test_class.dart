@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:unknown/src/feature/category/data/model/category_model.dart';
 import 'package:unknown/src/feature/category/data/model/specialties_model.dart';
-import 'package:unknown/src/feature/category/domain/use_cases/category_use_case.dart';
-import 'package:unknown/src/feature/category/domain/use_cases/specialties_use_case.dart';
 import 'package:unknown/src/feature/experts/data/models/appointment_types_model.dart';
 import 'package:unknown/src/feature/experts/data/models/expert_response.dart';
 import 'package:unknown/src/feature/experts/domain/user_case/experts_use_case.dart';
@@ -16,16 +14,16 @@ import '../../domain/user_case/single_expert_use_case.dart';
 class TestPattern extends ChangeNotifier {
   final ExpertsUseCase expertsUseCase;
   final SingleExpertsUseCase useCase;
-  final CategoryUseCase categoryUseCase;
-  final SpecialtiesUseCase specialtiesUseCase;
+/*  final CategoryUseCase categoryUseCase;
+  final SpecialtiesUseCase specialtiesUseCase;*/
   final ExpertsAppointmentUseCase expertsAppointmentUseCase;
   final ExpertsAAvailabilitiesUseCase expertsAAvailabilitiesUseCase;
 
   TestPattern({
     required this.expertsUseCase,
     required this.useCase,
-    required this.categoryUseCase,
-    required this.specialtiesUseCase,
+    /*required this.categoryUseCase,
+    required this.specialtiesUseCase,*/
     required this.expertsAppointmentUseCase,
     required this.expertsAAvailabilitiesUseCase,
   });
@@ -55,7 +53,7 @@ class TestPattern extends ChangeNotifier {
   }
 
   Future<DataState<List<CategoryModel>>> getCategoriesList() async {
-    _categoriesResponse = await categoryUseCase.categories();
+    //_categoriesResponse = await categoryUseCase.categories();
     notifyListeners();
     return categoriesResponse;
   }
@@ -68,10 +66,10 @@ class TestPattern extends ChangeNotifier {
     return _specialtiesResponse;
   }
 
-  Future<void> getSpecialties(int id) async {
+/*  Future<void> getSpecialties(int id) async {
     _specialtiesResponse = await specialtiesUseCase.getSpecialties(id);
     notifyListeners();
-  }
+  }*/
 
 
 
@@ -88,10 +86,10 @@ class TestPattern extends ChangeNotifier {
     return _expertsResponse;
   }
 
-  Future<void> getExperts(int? categoryId) async {
+  /*Future<void> getExperts(int? categoryId) async {
     _expertsResponse = await expertsUseCase.getExpertList(categoryId);
     notifyListeners();
-  }
+  }*/
 
   DataState<List<AppointmentTypesModel>> _appointmentsResponse =
       DataState.loading(

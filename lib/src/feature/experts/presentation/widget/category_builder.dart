@@ -45,9 +45,9 @@ class _CategoryState extends State<_CategoryBuilder> {
                 },
               );
 
-              Provider.of<TestPattern>(context, listen: false).getExperts(
+            /*  Provider.of<TestPattern>(context, listen: false).getExperts(
                 widget.categories[selectedIndex].id,
-              );
+              );*/
 
             },
             child: Container(

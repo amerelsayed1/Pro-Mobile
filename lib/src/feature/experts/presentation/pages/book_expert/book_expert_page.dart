@@ -10,7 +10,7 @@ import 'package:unknown/src/feature/experts/presentation/widget/slots_builder.da
 import '../../../../../../common/widgets/custom_appbar.dart';
 import '../../../../../core/state/data_state.dart';
 import '../../../data/models/expert_model.dart';
-import '../../providers/test_class.dart';
+import '../../controllers/test_class.dart';
 import '../../widget/available_builder.dart';
 
 @RoutePage()

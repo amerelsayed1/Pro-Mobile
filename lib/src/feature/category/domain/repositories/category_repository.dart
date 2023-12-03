@@ -3,7 +3,7 @@ import '../../data/model/category_model.dart';
 import '../../data/model/specialties_model.dart';
 
 abstract class CategoryRepository {
-  Future<DataState<List<CategoryModel>>> categories();
+  Future<List<CategoryModel>> categories();
 
   Future<DataState<List<SpecialtiesModel>>> specialties(int id);
 }

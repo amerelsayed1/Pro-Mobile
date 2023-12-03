@@ -8,7 +8,7 @@ import '../../../../../common/widgets/custom_snackbar.dart';
 import '../../../../core/state/data_state.dart';
 import '../../../category/data/model/category_model.dart';
 import '../../../category/data/model/specialties_model.dart';
-import '../../../experts/presentation/providers/home_controller.dart';
+import '../../../experts/presentation/controllers/home_controller.dart';
 import '../providers/auth_controller.dart';
 
 @RoutePage()
@@ -39,7 +39,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   void initState() {
-    Get.find<HomeController>().getCategoriesList();
+    //Get.find<HomeController>().getCategoriesList();
     super.initState();
   }
 
@@ -188,7 +188,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           ),
                         ),
                       ),
-                      Container(
+                     /* Container(
                         decoration: BoxDecoration(
                           border: Border.all(width: 0.4),
                           borderRadius: BorderRadius.circular(
@@ -220,7 +220,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           isExpanded: true,
                           underline: Container(),
                         ),
-                      ),
+                      ),*/
                       /*  Align(
                         alignment: Alignment.topLeft,
                         child: Wrap(

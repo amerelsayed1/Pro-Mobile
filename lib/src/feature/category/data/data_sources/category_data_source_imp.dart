@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
 
+import '../model/category_model.dart';
 import 'category_data_source.dart';
 
 class CategoryDataSourceImpl implements CategoryDataSource {
@@ -13,18 +14,23 @@ class CategoryDataSourceImpl implements CategoryDataSource {
   final Dio client;
 
   @override
-  Future<Response> categories() async {
-    (client.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =(HttpClient dioClient) {
-      dioClient.badCertificateCallback =
-      ((X509Certificate cert, String host, int port) => true);
-      return dioClient;
-    };
+  Future<List<CategoryModel>> categories() async {
+    try {
+      final response = await client.get(
+        '/v1/categories',
+      );
 
-
-    final response = await client.get(
-      '/v1/categories',
-    );
-    return response;
+      if (response.statusCode == 200) {
+        List<CategoryModel> categories = List<CategoryModel>.from(
+          response.data.map((x) => CategoryModel.fromJson(x)),
+        );
+        return categories;
+      } else {
+        throw Exception('Failed to load news');
+      }
+    } catch (e) {
+      throw Exception('Error fetching news: $e');
+    }
   }
 
   @override

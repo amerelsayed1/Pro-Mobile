@@ -1,10 +1,8 @@
-import 'package:flutter/cupertino.dart';
-import 'package:unknown/src/feature/category/data/model/category_model.dart';
-import 'package:unknown/src/feature/category/data/model/specialties_model.dart';
-
 import '../../../../core/state/data_state.dart';
 import '../../domain/repositories/category_repository.dart';
 import '../data_sources/category_data_source.dart';
+import '../model/category_model.dart';
+import '../model/specialties_model.dart';
 
 class CategoryRepositoryImpl implements CategoryRepository {
   CategoryRepositoryImpl({
@@ -14,49 +12,38 @@ class CategoryRepositoryImpl implements CategoryRepository {
   final CategoryDataSource dataSource;
 
   @override
-  Future<DataState<List<CategoryModel>>> categories() async {
-    DataState<List<CategoryModel>> apiResponse = DataState.loading(
-      'Loading',
-    );
-    try {
-      final response = await dataSource.categories();
-
-      List<CategoryModel> list = [];
-      response.data.forEach(
-        (category) => list.add(
-          CategoryModel.fromJson(category),
-        ),
-      );
-
-      apiResponse = DataState.completed(
-        list,
-      );
-      return apiResponse;
-    } catch (e) {
-      apiResponse = DataState.error(e.toString());
-      return apiResponse;
-    }
+  Future<List<CategoryModel>> categories() async {
+    return dataSource.categories();
   }
+
+  /* @override
+  Future<DataState<List<CategoryModel>>> categories() async {
+
+  }*/
 
   @override
   Future<DataState<List<SpecialtiesModel>>> specialties(int id) async {
-    DataState<List<SpecialtiesModel>> apiResponse = DataState.loading(
-      'loading',
-    );
     try {
       final response = await dataSource.specialties(id);
-      List<SpecialtiesModel> list = [];
-      response.data.forEach(
-        (category) => list.add(
-          SpecialtiesModel.fromJson(category),
-        ),
-      );
-
-      apiResponse = DataState.completed(list);
-      return apiResponse;
-    } catch (e) {
-      apiResponse = DataState.error(e.toString());
-      return apiResponse;
+      return DataState.completed(_mapSpecialtiesModels(response.data));
+    } catch (e, stackTrace) {
+      _logError(e, stackTrace);
+      return DataState.error(e.toString());
     }
+  }
+
+  List<CategoryModel> _mapCategoryModels(List<dynamic> data) {
+    return data.map((category) => CategoryModel.fromJson(category)).toList();
+  }
+
+  List<SpecialtiesModel> _mapSpecialtiesModels(List<dynamic> data) {
+    return data
+        .map((specialty) => SpecialtiesModel.fromJson(specialty))
+        .toList();
+  }
+
+  void _logError(dynamic error, StackTrace stackTrace) {
+    // Log the error using a logging library or print statement.
+    print('Error: $error\n$stackTrace');
   }
 }

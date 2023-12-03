@@ -8,7 +8,7 @@ class ExpertsUseCase {
 
   ExpertsUseCase(this._repository);
 
-  Future<DataState<ExpertResponse>> getExpertList(int? categoryId) async {
+  /*Future<DataState<ExpertResponse>> getExpertList(int? categoryId) async {
     return await _repository.getExperts(categoryId);
-  }
+  }*/
 }

@@ -1,6 +1,4 @@
-/*abstract*/ class DataState<T> {
-  //final T? data;
-  //final String? error;
+class DataState<T> {
   Status status;
   T? data;
   String? message;
@@ -19,11 +17,12 @@
 
   @override
   String toString() {
-    return "Status : $status \n Message : $message \n Data : $data";
+    return "Status : $status \nMessage : $message \nData : $data";
   }
 
 }
 
+// Enum for different API states
 enum Status { INITIAL, LOADING, COMPLETED, ERROR }
 
 

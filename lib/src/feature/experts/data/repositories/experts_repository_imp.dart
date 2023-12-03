@@ -16,8 +16,9 @@ class ExpertsRepositoryImpl implements ExpertsRepository {
   final ExpertsDataSource dataSource;
 
   @override
-  Future<DataState<ExpertResponse>> getExperts(int? categoryId) async {
-    DataState<ExpertResponse> apiResponse = DataState.loading(
+  Future<ExpertResponse> getExperts(int? categoryId) async {
+    return dataSource.getExperts(categoryId);
+    /*DataState<ExpertResponse> apiResponse = DataState.loading(
       'loading',
     );
     try {
@@ -27,7 +28,7 @@ class ExpertsRepositoryImpl implements ExpertsRepository {
     } catch (e) {
       apiResponse = DataState.error(e.toString());
       return apiResponse;
-    }
+    }*/
   }
 
   @override

@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:unknown/src/feature/experts/data/models/expert_model.dart';
 
 import '../../../../../common/images.dart';
+import '../../../../../common/util/constants.dart';
 
 class ExpertItemBuilder extends StatelessWidget {
-  final ExpertModel? _model;
+  final ExpertModel? expert;
 
-  const ExpertItemBuilder(this._model, {Key? key}) : super(key: key);
+  const ExpertItemBuilder(this.expert, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,7 @@ class ExpertItemBuilder extends StatelessWidget {
                 ),
                 child: FadeInImage.assetNetwork(
                   placeholder: Images.ic_place_holder,
-                  image: "http://192.168.1.13:8080${_model?.avatarUrl ?? ""}",
+                  image: "${Constants.baseApiUrl}${expert?.avatarUrl ?? ""}",
                   imageErrorBuilder: (context, error, stackTrace) {
                     return Image.asset(
                       Images.ic_place_holder,
@@ -43,7 +44,7 @@ class ExpertItemBuilder extends StatelessWidget {
             bottom: 5,
           ),
           child: Text(
-            _model?.nameEn ?? "",
+            expert?.nameEn ?? "",
             style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 15,
@@ -53,7 +54,7 @@ class ExpertItemBuilder extends StatelessWidget {
         ),
         Expanded(
           child: Text(
-            _model?.bioEn ?? "",
+            expert?.bioEn ?? "",
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(

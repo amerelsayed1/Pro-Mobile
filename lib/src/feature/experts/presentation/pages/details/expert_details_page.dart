@@ -7,7 +7,7 @@ import '../../../../../../common/widgets/custom_appbar.dart';
 import '../../../../../core/router/app_router.dart';
 import '../../../../../core/state/data_state.dart';
 import '../../../data/models/expert_model.dart';
-import '../../providers/test_class.dart';
+import '../../controllers/test_class.dart';
 
 @RoutePage()
 class ExpertDetailsPage extends StatefulWidget {

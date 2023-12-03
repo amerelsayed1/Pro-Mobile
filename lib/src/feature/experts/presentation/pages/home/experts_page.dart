@@ -1,15 +1,15 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:provider/provider.dart';
-import 'package:unknown/common/widgets/custom_appbar.dart';
-import 'package:unknown/src/feature/category/data/model/category_model.dart';
-import 'package:unknown/src/feature/experts/data/models/expert_response.dart';
+
+import '../../../../../../common/widgets/custom_appbar.dart';
 import '../../../../../core/router/app_router.dart';
 import '../../../../../core/state/data_state.dart';
-import '../../providers/home_controller.dart';
-import '../../providers/test_class.dart';
+import '../../../../category/data/model/category_model.dart';
+import '../../../data/models/expert_response.dart';
+import '../../controllers/home_controller.dart';
 import '../../widget/expert_item_builder.dart';
+import 'expert_item.dart';
 
 part '../../widget/category_builder.dart';
 
@@ -22,72 +22,93 @@ class ExpertsPage extends StatefulWidget {
 }
 
 class _ExpertsState extends State<ExpertsPage> {
+  final HomeController _controller = Get.find<HomeController>();
+
   @override
   void initState() {
     super.initState();
-    Get.find<HomeController>().getCategoriesList();
-    Get.find<HomeController>().getSpecialties(null);
-    /*Provider.of<TestPattern>(context, listen: false).getCategoriesList().then(
-      (value) {
-
-      },
-    );*/
-
-    /*Provider.of<TestPattern>(context, listen: false).getExperts(
-      null,
-    );*/
+    Get.find<HomeController>().fetchMainHomeData(null);
   }
 
   @override
   Widget build(BuildContext context) {
-    /*DataState<List<CategoryModel>> apiResponse =
-        Provider.of<TestPattern>(context).categoriesResponse;
-    DataState<ExpertResponse> expertsResponse =
-        Provider.of<TestPattern>(context).expertsResponse;*/
-
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: CustomAppBar(
-        actionsWidget: [
-          const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Icon(
-              Icons.search,
-              color: Colors.black,
-            ),
-          ),
-          GestureDetector(
-            child: const Padding(
+        backgroundColor: Colors.white,
+        appBar: CustomAppBar(
+          actionsWidget: [
+            const Padding(
               padding: EdgeInsets.all(8.0),
               child: Icon(
-                Icons.person,
+                Icons.search,
                 color: Colors.black,
               ),
             ),
-            onTap: () {
-              appRouter.push(const LoginRoute());
-            },
-          ),
-        ],
-        showBackArrow: false,
-      ),
-      body: Column(
-        children: [
-          GetBuilder<HomeController>(builder: (controller) {
-            /// Categories
-            return categoriesWidget(context, controller.categoriesResponse);
-          }),
-          GetBuilder<HomeController>(builder: (controller) {
-            /// Experts
-            return expertsWidget(context, controller.expertsResponse);
-          }),
+            GestureDetector(
+              child: const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Icon(
+                  Icons.person,
+                  color: Colors.black,
+                ),
+              ),
+              onTap: () {
+                appRouter.push(const LoginRoute());
+              },
+            ),
+          ],
+          showBackArrow: false,
+        ),
+        body: Stack(
+          children: [
+            Obx(() {
+              final categoriesState = _controller.categoriesState.value;
+              final expertsState = _controller.expertsState.value;
+              return (categoriesState.status == Status.LOADING ||
+                      expertsState.status == Status.LOADING)
+                  ? const Center(child: CircularProgressIndicator())
+                  : const SizedBox.shrink();
+            }),
+            Expanded(
+              child: Obx(() {
+                final categoriesState = _controller.categoriesState.value;
+                final expertsState = _controller.expertsState.value;
 
-          /*,
+                if (categoriesState.status == Status.ERROR ||
+                    expertsState.status == Status.ERROR) {
+                  return const Center(child: Text('Failed to load'));
+                }
 
-          */
-        ],
-      ),
-    );
+                final categories = categoriesState.data ?? [];
+                final experts = expertsState.data?.items ?? [];
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    SizedBox(
+                      child: _CategoryBuilder(
+                        categories: categories ?? [],
+                      ),
+                    ),
+                    Expanded(
+                      child: GridView.builder(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          // Adjust the number of columns as needed
+                          crossAxisSpacing: 8.0,
+                          mainAxisSpacing: 8.0,
+                        ),
+                        itemCount: experts.length,
+                        itemBuilder: (context, index) {
+                          return ExpertItemBuilder(experts[index]);
+                        },
+                      ),
+                    ),
+                  ],
+                );
+              }),
+            ),
+          ],
+        ));
   }
 
   Widget categoriesWidget(BuildContext context, DataState apiResponse) {
