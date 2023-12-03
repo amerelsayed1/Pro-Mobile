@@ -4,16 +4,15 @@ import 'package:unknown/src/feature/category/data/model/specialties_model.dart';
 import 'package:unknown/src/feature/experts/data/models/appointment_types_model.dart';
 import 'package:unknown/src/feature/experts/data/models/expert_response.dart';
 import 'package:unknown/src/feature/experts/domain/user_case/experts_use_case.dart';
+
 import '../../../../core/state/data_state.dart';
 import '../../data/models/availabilities/availabilities_model.dart';
 import '../../data/models/expert_model.dart';
 import '../../domain/user_case/expert_appointement_use_case.dart';
 import '../../domain/user_case/expert_availabilities_use_case.dart';
-import '../../domain/user_case/single_expert_use_case.dart';
 
 class TestPattern extends ChangeNotifier {
   final ExpertsUseCase expertsUseCase;
-  final SingleExpertsUseCase useCase;
 /*  final CategoryUseCase categoryUseCase;
   final SpecialtiesUseCase specialtiesUseCase;*/
   final ExpertsAppointmentUseCase expertsAppointmentUseCase;
@@ -21,7 +20,6 @@ class TestPattern extends ChangeNotifier {
 
   TestPattern({
     required this.expertsUseCase,
-    required this.useCase,
     /*required this.categoryUseCase,
     required this.specialtiesUseCase,*/
     required this.expertsAppointmentUseCase,
@@ -37,7 +35,7 @@ class TestPattern extends ChangeNotifier {
   }
 
   Future<void> getSingleExpertInfo(id) async {
-    _apiResponse = await useCase.getSingleExpertInfo(id);
+    //_apiResponse = await useCase.getSingleExpertInfo(id);
     notifyListeners();
   }
 

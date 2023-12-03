@@ -8,8 +8,10 @@ import '../../data/models/expert_response.dart';
 abstract class ExpertsRepository {
   Future<ExpertResponse> getExperts(int? categoryId);
 
-  Future<DataState<ExpertModel>> getSingleExpertInfo(int id);
+  Future<ExpertModel> getSingleExpertInfo(int id);
 
-  Future<DataState<List<AppointmentTypesModel>>> getExpertAppointmentTypes(int id);
+  Future<DataState<List<AppointmentTypesModel>>> getExpertAppointmentTypes(
+      int id);
+
   Future<DataState<List<AvailabilitiesModel>>> getExpertAvailabilities(int id);
 }

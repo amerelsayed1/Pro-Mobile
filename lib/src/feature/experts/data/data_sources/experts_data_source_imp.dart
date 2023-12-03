@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:unknown/src/feature/experts/data/models/expert_model.dart';
 
 import '../models/expert_response.dart';
 import 'experts_data_source.dart';
@@ -34,9 +35,18 @@ class ExpertsDataSourceImpl implements ExpertsDataSource {
   }
 
   @override
-  Future<Response> getSingleExpertInfo(int id) async {
-    final response = await client.get('/v1/experts/$id');
-    return response;
+  Future<ExpertModel> getSingleExpertInfo(int id) async {
+    try {
+      final response = await client.get('/v1/experts/$id');
+
+      if (response.statusCode == 200) {
+        return ExpertModel.fromJson(response.data);
+      } else {
+        throw Exception('Failed to load news');
+      }
+    } catch (e) {
+      throw Exception('Error fetching news: $e');
+    }
   }
 
   @override

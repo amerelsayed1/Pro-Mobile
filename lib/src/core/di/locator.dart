@@ -26,7 +26,6 @@ import '../../feature/experts/domain/repositories/experts_repository.dart';
 import '../../feature/experts/domain/user_case/expert_appointement_use_case.dart';
 import '../../feature/experts/domain/user_case/expert_availabilities_use_case.dart';
 import '../../feature/experts/domain/user_case/experts_use_case.dart';
-import '../../feature/experts/domain/user_case/single_expert_use_case.dart';
 import '../../feature/experts/presentation/controllers/home_controller.dart';
 
 final locator = GetIt.instance;
@@ -104,9 +103,9 @@ Future<void> initializeDependencies() async {
     SpecialtiesUseCase(locator<CategoryRepository>()),
   );*/
 
-  locator.registerSingleton<SingleExpertsUseCase>(
+ /* locator.registerSingleton<SingleExpertsUseCase>(
     SingleExpertsUseCase(locator<ExpertsRepository>()),
-  );
+  );*/
 
   locator.registerSingleton<LoginUseCase>(
     LoginUseCase(locator<AuthRepository>()),

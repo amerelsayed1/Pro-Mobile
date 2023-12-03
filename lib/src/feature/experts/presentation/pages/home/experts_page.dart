@@ -1,15 +1,15 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:unknown/common/helper/route_helper.dart';
 
 import '../../../../../../common/widgets/custom_appbar.dart';
 import '../../../../../core/router/app_router.dart';
 import '../../../../../core/state/data_state.dart';
 import '../../../../category/data/model/category_model.dart';
-import '../../../data/models/expert_response.dart';
 import '../../controllers/home_controller.dart';
 import '../../widget/expert_item_builder.dart';
-import 'expert_item.dart';
+import '../details/expert_details_page.dart';
 
 part '../../widget/category_builder.dart';
 
@@ -85,7 +85,7 @@ class _ExpertsState extends State<ExpertsPage> {
                   children: [
                     SizedBox(
                       child: _CategoryBuilder(
-                        categories: categories ?? [],
+                        categories: categories,
                       ),
                     ),
                     Expanded(
@@ -99,7 +99,16 @@ class _ExpertsState extends State<ExpertsPage> {
                         ),
                         itemCount: experts.length,
                         itemBuilder: (context, index) {
-                          return ExpertItemBuilder(experts[index]);
+                          return GestureDetector(
+                              onTap: () {
+                                Get.toNamed(
+                                  RouteHelper.expertDetails,
+                                  arguments: ExpertDetailsPage(
+                                    expert: experts[index],
+                                  ),
+                                );
+                              },
+                              child: ExpertItemBuilder(experts[index]));
                         },
                       ),
                     ),
@@ -109,97 +118,5 @@ class _ExpertsState extends State<ExpertsPage> {
             ),
           ],
         ));
-  }
-
-  Widget categoriesWidget(BuildContext context, DataState apiResponse) {
-    List<CategoryModel>? categoriesList =
-        apiResponse.data as List<CategoryModel>?;
-    switch (apiResponse.status) {
-      case Status.LOADING:
-        return const Expanded(
-          child: Center(
-            child: CircularProgressIndicator(),
-          ),
-        );
-      case Status.COMPLETED:
-        return _CategoryBuilder(
-          categories: categoriesList ?? [],
-        );
-      case Status.ERROR:
-        return const Center(
-          child: Text(
-            'Please try again latter!!!',
-          ),
-        );
-      case Status.INITIAL:
-      default:
-        return const Center(
-          child: Text(
-            'Search the song by Artist',
-          ),
-        );
-    }
-  }
-
-  Widget expertsWidget(BuildContext context, DataState apiResponse) {
-    ExpertResponse? experts = apiResponse.data as ExpertResponse?;
-    switch (apiResponse.status) {
-      case Status.LOADING:
-        return const Expanded(
-          child: Center(
-            child: CircularProgressIndicator(),
-          ),
-        );
-      case Status.COMPLETED:
-        return Expanded(
-          child: experts?.items?.isNotEmpty == true
-              ? GridView.builder(
-                  padding: const EdgeInsetsDirectional.fromSTEB(
-                    20,
-                    10,
-                    20,
-                    10,
-                  ),
-                  itemCount: experts?.items?.length,
-                  shrinkWrap: true,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    childAspectRatio: 0.75,
-                    mainAxisSpacing: 10,
-                    crossAxisSpacing: 15,
-                  ),
-                  itemBuilder: (context, position) {
-                    return GestureDetector(
-                      onTap: () {
-                        appRouter.push(
-                          ExpertDetailsRoute(expert: experts!.items![position]),
-                        );
-                      },
-                      child: ExpertItemBuilder(
-                        experts?.items?[position],
-                      ),
-                    );
-                  },
-                )
-              : const Center(
-                  child: Text(
-                    'No Experts in this Category',
-                  ),
-                ),
-        );
-      case Status.ERROR:
-        return Center(
-          child: Text(
-            apiResponse.message ?? "",
-          ),
-        );
-      case Status.INITIAL:
-      default:
-        return const Center(
-          child: Text(
-            'Search the song by Artist',
-          ),
-        );
-    }
   }
 }

@@ -1,4 +1,3 @@
-
 import 'package:unknown/src/core/state/data_state.dart';
 import 'package:unknown/src/feature/experts/data/data_sources/experts_data_source.dart';
 import 'package:unknown/src/feature/experts/data/models/appointment_types_model.dart';
@@ -18,34 +17,11 @@ class ExpertsRepositoryImpl implements ExpertsRepository {
   @override
   Future<ExpertResponse> getExperts(int? categoryId) async {
     return dataSource.getExperts(categoryId);
-    /*DataState<ExpertResponse> apiResponse = DataState.loading(
-      'loading',
-    );
-    try {
-      final response = await dataSource.getExperts(categoryId);
-      apiResponse = DataState.completed(ExpertResponse.fromJson(response.data));
-      return apiResponse;
-    } catch (e) {
-      apiResponse = DataState.error(e.toString());
-      return apiResponse;
-    }*/
   }
 
   @override
-  Future<DataState<ExpertModel>> getSingleExpertInfo(int id) async {
-    DataState<ExpertModel> apiResponse = DataState.loading(
-      'Fetching artist data',
-    );
-    try {
-      final response = await dataSource.getSingleExpertInfo(id);
-      apiResponse = DataState.completed(
-        ExpertModel.fromJson(response.data),
-      );
-      return apiResponse;
-    } catch (e) {
-      apiResponse = DataState.error(e.toString());
-      return apiResponse;
-    }
+  Future<ExpertModel> getSingleExpertInfo(int id) async {
+    return dataSource.getSingleExpertInfo(id);
   }
 
   @override
@@ -72,7 +48,8 @@ class ExpertsRepositoryImpl implements ExpertsRepository {
   }
 
   @override
-  Future<DataState<List<AvailabilitiesModel>>> getExpertAvailabilities(int id) async{
+  Future<DataState<List<AvailabilitiesModel>>> getExpertAvailabilities(
+      int id) async {
     DataState<List<AvailabilitiesModel>> apiResponse = DataState.loading(
       'Fetching ExpertAppointment data',
     );
@@ -80,8 +57,8 @@ class ExpertsRepositoryImpl implements ExpertsRepository {
       List<AvailabilitiesModel> appointments = [];
       final response = await dataSource.getExpertAvailabilities(id);
       response.data.forEach(
-            (appointment) => appointments.add(
-              AvailabilitiesModel.fromJson(appointment),
+        (appointment) => appointments.add(
+          AvailabilitiesModel.fromJson(appointment),
         ),
       );
       apiResponse = DataState.completed(appointments);
