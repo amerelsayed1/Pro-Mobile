@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
+import 'package:network_info_plus/network_info_plus.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:unknown/src/feature/auth/data/data_sources/auth_data_source.dart';
 import 'package:unknown/src/feature/auth/data/data_sources/auth_data_source_imp.dart';
@@ -24,9 +25,6 @@ import '../../feature/experts/domain/user_case/expert_appointement_use_case.dart
 import '../../feature/experts/domain/user_case/expert_availabilities_use_case.dart';
 import '../../feature/experts/domain/user_case/experts_use_case.dart';
 import '../../feature/experts/domain/user_case/single_expert_use_case.dart';
-
-import 'package:network_info_plus/network_info_plus.dart';
-
 import '../../feature/experts/presentation/providers/home_controller.dart';
 
 final locator = GetIt.instance;
@@ -117,5 +115,6 @@ Future<void> initializeDependencies() async {
       ));
   Get.lazyPut(() => HomeController(
       categoryUseCase: locator<CategoryUseCase>(),
+      expertsUseCase: locator<ExpertsUseCase>(),
       specialtiesUseCase: locator<SpecialtiesUseCase>()));
 }

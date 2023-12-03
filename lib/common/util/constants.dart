@@ -1,8 +1,9 @@
-class Constants{
-  static final String experts = "/v1/experts";
-  static final String expertInfo = "/expert/v1/experts/";
+class Constants {
+  static String appName = "Expert Arena";
 
+  static String experts = "/v1/experts";
+  static String expertInfo = "/expert/v1/experts/";
 
-  static final String login = "/v1/auth/login";
-  static final String register = "/v1/experts/register";
+  static String login = "/v1/auth/login";
+  static String register = "/v1/experts/register";
 }

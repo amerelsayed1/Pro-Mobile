@@ -2,9 +2,10 @@ import 'package:get/get.dart';
 
 import '../../../../core/state/data_state.dart';
 import '../../../category/data/model/category_model.dart';
-import '../../../category/data/model/specialties_model.dart';
 import '../../../category/domain/use_cases/category_use_case.dart';
 import '../../../category/domain/use_cases/specialties_use_case.dart';
+import '../../data/models/expert_response.dart';
+import '../../domain/user_case/experts_use_case.dart';
 
 class HomeController extends GetxController implements GetxService {
   bool _isLoading = false;
@@ -13,9 +14,11 @@ class HomeController extends GetxController implements GetxService {
 
   final CategoryUseCase categoryUseCase;
   final SpecialtiesUseCase specialtiesUseCase;
+  final ExpertsUseCase expertsUseCase;
 
   HomeController({
     required this.categoryUseCase,
+    required this.expertsUseCase,
     required this.specialtiesUseCase,
   });
 
@@ -33,16 +36,16 @@ class HomeController extends GetxController implements GetxService {
     return categoriesResponse;
   }
 
-  DataState<List<SpecialtiesModel>> _specialtiesResponse = DataState.loading(
+  DataState<ExpertResponse> _expertsResponse = DataState.loading(
     'loading',
   );
 
-  DataState<List<SpecialtiesModel>> get specialtiesResponse {
-    return _specialtiesResponse;
+  DataState<ExpertResponse> get expertsResponse {
+    return _expertsResponse;
   }
 
-  Future<void> getSpecialties(int id) async {
-    _specialtiesResponse = await specialtiesUseCase.getSpecialties(id);
+  Future<void> getSpecialties(int? id) async {
+    _expertsResponse = await expertsUseCase.getExpertList(id);
     update();
   }
 }

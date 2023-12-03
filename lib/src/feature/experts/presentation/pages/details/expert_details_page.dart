@@ -143,7 +143,7 @@ class _ExpertDetailsState extends State<ExpertDetailsPage> {
                         Container(
                           margin: const EdgeInsetsDirectional.only(top: 5),
                           child: Text(
-                            "${expert?.startingPrice ?? ""} EGP . Session",
+                            "${expert?.startingPrice?.amount ?? ""} ${expert?.startingPrice?.currency ?? ""} . Session",
                             style: const TextStyle(
                               fontWeight: FontWeight.w900,
                               color: Colors.black,

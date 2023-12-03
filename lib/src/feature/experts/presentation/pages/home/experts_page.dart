@@ -1,11 +1,13 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:unknown/common/widgets/custom_appbar.dart';
 import 'package:unknown/src/feature/category/data/model/category_model.dart';
 import 'package:unknown/src/feature/experts/data/models/expert_response.dart';
 import '../../../../../core/router/app_router.dart';
 import '../../../../../core/state/data_state.dart';
+import '../../providers/home_controller.dart';
 import '../../providers/test_class.dart';
 import '../../widget/expert_item_builder.dart';
 
@@ -23,21 +25,25 @@ class _ExpertsState extends State<ExpertsPage> {
   @override
   void initState() {
     super.initState();
-    Provider.of<TestPattern>(context, listen: false).getCategoriesList().then(
+    Get.find<HomeController>().getCategoriesList();
+    Get.find<HomeController>().getSpecialties(null);
+    /*Provider.of<TestPattern>(context, listen: false).getCategoriesList().then(
       (value) {
-        Provider.of<TestPattern>(context, listen: false).getExperts(
-          null,
-        );
+
       },
-    );
+    );*/
+
+    /*Provider.of<TestPattern>(context, listen: false).getExperts(
+      null,
+    );*/
   }
 
   @override
   Widget build(BuildContext context) {
-    DataState<List<CategoryModel>> apiResponse =
+    /*DataState<List<CategoryModel>> apiResponse =
         Provider.of<TestPattern>(context).categoriesResponse;
     DataState<ExpertResponse> expertsResponse =
-        Provider.of<TestPattern>(context).expertsResponse;
+        Provider.of<TestPattern>(context).expertsResponse;*/
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -67,11 +73,18 @@ class _ExpertsState extends State<ExpertsPage> {
       ),
       body: Column(
         children: [
-          /// Categories
-          categoriesWidget(context, apiResponse),
+          GetBuilder<HomeController>(builder: (controller) {
+            /// Categories
+            return categoriesWidget(context, controller.categoriesResponse);
+          }),
+          GetBuilder<HomeController>(builder: (controller) {
+            /// Experts
+            return expertsWidget(context, controller.expertsResponse);
+          }),
 
-          /// Experts
-          expertsWidget(context, expertsResponse),
+          /*,
+
+          */
         ],
       ),
     );
