@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:unknown/src/feature/auth/presentation/pages/login_page.dart';
 import 'package:unknown/src/feature/experts/presentation/pages/details/expert_details_page.dart';
 
 import '../../src/feature/experts/presentation/pages/home/experts_page.dart';
@@ -7,6 +8,7 @@ import '../../src/feature/experts/presentation/pages/home/experts_page.dart';
 class RouteHelper {
   static const String initial = '/';
   static const String expertDetails = '/expert-details';
+  static const String login = "/login-screen";
   static const String splash = '/splash';
   static const String language = '/language';
   static const String onBoarding = '/on-boarding';
@@ -15,6 +17,7 @@ class RouteHelper {
 
   static List<GetPage> routes = [
     GetPage(name: initial, page: () => getRoute(const ExpertsPage())),
+    GetPage(name: login, page: () => getRoute(const LoginPage())),
     GetPage(
       name: expertDetails,
       page: () {

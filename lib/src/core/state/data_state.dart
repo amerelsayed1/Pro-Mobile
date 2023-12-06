@@ -1,23 +1,20 @@
 class DataState<T> {
   Status status;
   T? data;
-  String? message;
+  String? messages;
 
 
+  DataState.initial(this.messages) : status = Status.INITIAL;
 
-  //DataState({this.data, this.error});
-
-  DataState.initial(this.message) : status = Status.INITIAL;
-
-  DataState.loading(this.message) : status = Status.LOADING;
+  DataState.loading(this.messages) : status = Status.LOADING;
 
   DataState.completed(this.data) : status = Status.COMPLETED;
 
-  DataState.error(this.message) : status = Status.ERROR;
+  DataState.error(this.messages) : status = Status.ERROR;
 
   @override
   String toString() {
-    return "Status : $status \nMessage : $message \nData : $data";
+    return "Status : $status \nMessage : $messages \nData : $data";
   }
 
 }

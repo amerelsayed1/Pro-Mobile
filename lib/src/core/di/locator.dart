@@ -11,7 +11,6 @@ import 'package:unknown/src/feature/auth/data/data_sources/auth_data_source.dart
 import 'package:unknown/src/feature/auth/data/data_sources/auth_data_source_imp.dart';
 import 'package:unknown/src/feature/auth/data/repositories/auth_repository_imp.dart';
 import 'package:unknown/src/feature/auth/domain/repositories/auth_repository.dart';
-import 'package:unknown/src/feature/auth/domain/use_case/login_use_case.dart';
 import 'package:unknown/src/feature/auth/domain/use_case/register_use_case.dart';
 
 import '../../feature/auth/presentation/providers/auth_controller.dart';
@@ -95,33 +94,13 @@ Future<void> initializeDependencies() async {
     ExpertsAAvailabilitiesUseCase(locator<ExpertsRepository>()),
   );
 
-  /* locator.registerSingleton<CategoryUseCase>(
-    CategoryUseCase(locator<CategoryRepository>()),
-  );
-
-  locator.registerSingleton<SpecialtiesUseCase>(
-    SpecialtiesUseCase(locator<CategoryRepository>()),
-  );*/
-
- /* locator.registerSingleton<SingleExpertsUseCase>(
-    SingleExpertsUseCase(locator<ExpertsRepository>()),
-  );*/
-
-  locator.registerSingleton<LoginUseCase>(
-    LoginUseCase(locator<AuthRepository>()),
-  );
-
   locator.registerSingleton<RegisterUseCase>(
     RegisterUseCase(locator<AuthRepository>()),
   );
 
-  Get.lazyPut(() => AuthController(
-        loginUseCase: locator<LoginUseCase>(),
-        registerUseCase: locator<RegisterUseCase>(),
-      ));
+  Get.lazyPut(() => AuthController(authRepository: locator<AuthRepository>()));
   Get.lazyPut(
     () => HomeController(
-      expertsUseCase: locator<ExpertsUseCase>(),
       categoryRepository: locator<CategoryRepository>(),
       expertsRepository: locator<ExpertsRepository>(),
     ),

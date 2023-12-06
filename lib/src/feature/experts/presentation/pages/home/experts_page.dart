@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:unknown/common/helper/route_helper.dart';
 
 import '../../../../../../common/widgets/custom_appbar.dart';
-import '../../../../../core/router/app_router.dart';
 import '../../../../../core/state/data_state.dart';
 import '../../../../category/data/model/category_model.dart';
 import '../../controllers/home_controller.dart';
@@ -52,7 +51,9 @@ class _ExpertsState extends State<ExpertsPage> {
                 ),
               ),
               onTap: () {
-                appRouter.push(const LoginRoute());
+                Get.toNamed(
+                  RouteHelper.login,
+                );
               },
             ),
           ],
@@ -99,6 +100,8 @@ class _ExpertsState extends State<ExpertsPage> {
                         ),
                         itemCount: experts.length,
                         itemBuilder: (context, index) {
+                          experts[index].avatarUrl =
+                              "https://source.unsplash.com/random/200x200?sig=${index + 1}";
                           return GestureDetector(
                               onTap: () {
                                 Get.toNamed(

@@ -19,6 +19,8 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   //late AuthProvider authProvider;
 
+  AuthController _controller = Get.find<AuthController>();
+
   TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
@@ -88,25 +90,44 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                       ),
-                      Container(
-                        height: 50,
-                        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                        margin: const EdgeInsetsDirectional.only(top: 10),
-                        child: ElevatedButton(
-                          child: const Text('Sign in'),
-                          onPressed: () {
-                            _login(authController);
-
-                            /* Get.find<AuthController>().login(
+                      if (_controller.loginState.value.status != Status.LOADING)
+                        Container(
+                          height: 50,
+                          width: double.infinity,
+                          padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                          margin: const EdgeInsetsDirectional.only(top: 15),
+                          child: ElevatedButton(
+                            child: const Text('Sign in'),
+                            onPressed: () {
+                              authController.loginXX(
                                 LoginRequest(
-                                  "amer@expertarena.app",
-                                  "amer",
+                                  nameController.text.toString(),
+                                  passwordController.text.toString(),
                                 ),
-                              );*/
-
-                            //authProvider.
-                          },
+                              );
+                            },
+                          ),
                         ),
+                      const SizedBox(height: 16),
+                      Obx(
+                        () {
+                          final loginState = _controller.loginState.value;
+                          if (loginState.status == Status.LOADING) {
+                            return const CircularProgressIndicator();
+                          } else if (loginState.status == Status.ERROR) {
+                            return Text(
+                              ' ${loginState.messages}',
+                              style: const TextStyle(color: Colors.red),
+                            );
+                          } else if (loginState.status == Status.COMPLETED) {
+                            return Text(
+                              'Success : ${loginState.data?.email}',
+                              style: const TextStyle(color: Colors.green),
+                            );
+                          } else {
+                            return Container();
+                          }
+                        },
                       ),
                       Container(
                         margin: const EdgeInsetsDirectional.only(
@@ -173,7 +194,7 @@ class _LoginPageState extends State<LoginPage> {
       },
     );
 
-    authController.login(LoginRequest("user@pro.com", "123456")).then(
+    /*authController.login(LoginRequest("user@pro.com", "123456")).then(
       (status) async {
         if (status.status == Status.COMPLETED) {
           print("COMPLETED");
@@ -183,6 +204,6 @@ class _LoginPageState extends State<LoginPage> {
           print("No");
         }
       },
-    );
+    );*/
   }
 }

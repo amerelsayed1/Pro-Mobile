@@ -6,15 +6,12 @@ import '../../../category/data/model/category_model.dart';
 import '../../../category/domain/repositories/category_repository.dart';
 import '../../data/models/expert_response.dart';
 import '../../domain/repositories/experts_repository.dart';
-import '../../domain/user_case/experts_use_case.dart';
 
 class HomeController extends GetxController implements GetxService {
-  final ExpertsUseCase expertsUseCase;
   final CategoryRepository categoryRepository;
   final ExpertsRepository expertsRepository;
 
   HomeController({
-    required this.expertsUseCase,
     required this.categoryRepository,
     required this.expertsRepository,
   });

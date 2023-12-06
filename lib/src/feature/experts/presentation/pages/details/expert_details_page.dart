@@ -51,7 +51,7 @@ class _ExpertDetailsState extends State<ExpertDetailsPage> {
             case Status.COMPLETED:
               return getMediaWidget(context, expert.data);
             case Status.ERROR:
-              return Text('Error: ${expert.message}');
+              return Text('Error: ${expert.messages}');
             default:
               return Container();
           }

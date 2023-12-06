@@ -15,18 +15,8 @@ class AuthRepositoryImpl implements AuthRepository {
   final AuthDataSource dataSource;
 
   @override
-  Future<DataState<UserResponse>> login(LoginRequest? loginRequest) async {
-    DataState<UserResponse> apiResponse = DataState.loading(
-      'loading',
-    );
-    try {
-      final response = await dataSource.login(loginRequest);
-      apiResponse = DataState.completed(UserResponse.fromJson(response.data));
-      return apiResponse;
-    } catch (e) {
-      apiResponse = DataState.error(e.toString());
-      return apiResponse;
-    }
+  Future<UserResponse> login(LoginRequest? loginRequest) async {
+    return dataSource.login(loginRequest);
   }
 
   @override
@@ -43,5 +33,10 @@ class AuthRepositoryImpl implements AuthRepository {
       apiResponse = DataState.error(error.messages?.join("") ?? "");
       return apiResponse;
     }
+  }
+
+  @override
+  Future<DataState<UserResponse>> loginX(LoginRequest? loginRequest) {
+    return dataSource.loginXX(loginRequest);
   }
 }

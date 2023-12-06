@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:unknown/src/feature/experts/data/models/expert_model.dart';
 
 import '../../../../../common/images.dart';
-import '../../../../../common/util/constants.dart';
 
 class ExpertItemBuilder extends StatelessWidget {
   final ExpertModel? expert;
@@ -26,7 +25,8 @@ class ExpertItemBuilder extends StatelessWidget {
                 ),
                 child: FadeInImage.assetNetwork(
                   placeholder: Images.ic_place_holder,
-                  image: "${Constants.baseApiUrl}${expert?.avatarUrl ?? ""}",
+                  image: expert?.avatarUrl ?? "",
+                  //image: "${Constants.baseApiUrl}${expert?.avatarUrl ?? ""}",
                   imageErrorBuilder: (context, error, stackTrace) {
                     return Image.asset(
                       Images.ic_place_holder,

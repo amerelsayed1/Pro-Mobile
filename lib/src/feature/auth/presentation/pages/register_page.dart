@@ -1,11 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:unknown/src/feature/auth/data/models/local/register_request.dart';
 
 import '../../../../../common/widgets/custom_appbar.dart';
 import '../../../../../common/widgets/custom_snackbar.dart';
-import '../../../../core/state/data_state.dart';
 import '../../../category/data/model/category_model.dart';
 import '../../../category/data/model/specialties_model.dart';
 import '../../../experts/presentation/controllers/home_controller.dart';
@@ -188,7 +186,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           ),
                         ),
                       ),
-                     /* Container(
+                      /* Container(
                         decoration: BoxDecoration(
                           border: Border.all(width: 0.4),
                           borderRadius: BorderRadius.circular(
@@ -346,7 +344,7 @@ class _RegisterPageState extends State<RegisterPage> {
         },
       );
 
-      authController
+      /*authController
           .register(
         RegisterRequest(
           email,
@@ -371,7 +369,7 @@ class _RegisterPageState extends State<RegisterPage> {
           if (!mounted) return;
           Navigator.of(context).pop();
         },
-      );
+      );*/
     }
   }
 }

@@ -1,56 +1,43 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:unknown/src/feature/auth/data/models/local/register_request.dart';
+import 'package:unknown/src/feature/auth/data/models/local/login_request.dart';
+import 'package:unknown/src/feature/auth/data/models/remote/user_response.dart';
+import 'package:unknown/src/feature/auth/domain/repositories/auth_repository.dart';
 
 import '../../../../core/state/data_state.dart';
-import '../../data/models/local/login_request.dart';
-import '../../data/models/remote/user_response.dart';
-import '../../domain/use_case/login_use_case.dart';
-import '../../domain/use_case/register_use_case.dart';
 
 class AuthController extends GetxController implements GetxService {
-  bool _isLoading = false;
-
-  bool get isLoading => _isLoading;
-
-  final LoginUseCase loginUseCase;
-  final RegisterUseCase registerUseCase;
+  final AuthRepository authRepository;
 
   AuthController({
-    required this.loginUseCase,
-    required this.registerUseCase,
+    required this.authRepository,
   });
 
-  DataState<UserResponse> _apiLoginResponse = DataState.loading(
-    'loading',
-  );
+  final loginState = DataState<UserResponse>.initial(
+    "Initial state",
+  ).obs;
 
-  DataState<UserResponse> get apiLoginResponse {
-    return _apiLoginResponse;
+  Future<void> login(LoginRequest loginRequest) async {
+    try {
+      loginState.value = DataState.loading("Loading news");
+      final newsData = await authRepository.login(loginRequest);
+      loginState.value = DataState.completed(newsData);
+    } catch (e) {
+      debugPrint("${e}");
+     // loginState.value = DataState.error("Error loading news: $e");
+    }
   }
 
-  Future<DataState<UserResponse>> login(LoginRequest loginRequest) async {
-    _isLoading = true;
-    update();
-    _apiLoginResponse = await loginUseCase.login(loginRequest);
-    _isLoading = false;
-    update();
-    return _apiLoginResponse;
+  Future<void> loginXX(LoginRequest loginRequest) async {
+    try {
+      loginState.value = DataState.loading("Loading news");
+      final newsData = await authRepository.login(loginRequest);
+      loginState.value = DataState.completed(newsData);
+    } catch (e) {
+      debugPrint("${e}");
+     // loginState.value = DataState.error("Error loading news: $e");
+    }
   }
 
-  DataState _apiRegisterResponse = DataState.loading(
-    'loading',
-  );
 
-  DataState get apiRegisterResponse {
-    return _apiRegisterResponse;
-  }
-
-  Future<DataState> register(RegisterRequest registerRequest) async {
-    _isLoading = true;
-    update();
-    _apiRegisterResponse = await registerUseCase.register(registerRequest);
-    _isLoading = false;
-    update();
-    return _apiRegisterResponse;
-  }
 }
