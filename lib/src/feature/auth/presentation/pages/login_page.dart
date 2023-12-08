@@ -1,12 +1,12 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:unknown/src/core/router/app_router.dart';
 import 'package:unknown/src/core/state/data_state.dart';
 import 'package:unknown/src/feature/auth/data/models/local/login_request.dart';
 
 import '../../../../../common/widgets/custom_appbar.dart';
-import '../providers/auth_controller.dart';
+import '../../../../core/router/route_helper.dart';
+import '../controller/auth_controller.dart';
 
 @RoutePage()
 class LoginPage extends StatefulWidget {
@@ -19,7 +19,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   //late AuthProvider authProvider;
 
-  AuthController _controller = Get.find<AuthController>();
+  final AuthController _controller = Get.find<AuthController>();
 
   TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -137,7 +137,7 @@ class _LoginPageState extends State<LoginPage> {
                         child: Center(
                           child: GestureDetector(
                             onTap: () {
-                              appRouter.push(const RegisterRoute());
+                              Get.toNamed(RouteHelper.signUp);
                             },
                             child: const Text.rich(
                               TextSpan(

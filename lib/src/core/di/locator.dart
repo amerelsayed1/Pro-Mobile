@@ -4,16 +4,15 @@ import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
-import 'package:network_info_plus/network_info_plus.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
-import 'package:unknown/common/util/constants.dart';
-import 'package:unknown/src/feature/auth/data/data_sources/auth_data_source.dart';
-import 'package:unknown/src/feature/auth/data/data_sources/auth_data_source_imp.dart';
-import 'package:unknown/src/feature/auth/data/repositories/auth_repository_imp.dart';
-import 'package:unknown/src/feature/auth/domain/repositories/auth_repository.dart';
-import 'package:unknown/src/feature/auth/domain/use_case/register_use_case.dart';
 
-import '../../feature/auth/presentation/providers/auth_controller.dart';
+import '../../../common/util/constants.dart';
+import '../../feature/auth/data/data_sources/auth_data_source.dart';
+import '../../feature/auth/data/data_sources/auth_data_source_imp.dart';
+import '../../feature/auth/data/repositories/auth_repository_imp.dart';
+import '../../feature/auth/domain/repositories/auth_repository.dart';
+import '../../feature/auth/domain/use_case/register_use_case.dart';
+import '../../feature/auth/presentation/controller/auth_controller.dart';
 import '../../feature/category/data/data_sources/category_data_source.dart';
 import '../../feature/category/data/data_sources/category_data_source_imp.dart';
 import '../../feature/category/data/repositories/category_repository_imp.dart';
@@ -30,12 +29,6 @@ import '../../feature/experts/presentation/controllers/home_controller.dart';
 final locator = GetIt.instance;
 
 Future<void> initializeDependencies() async {
-  Future<String> getIp() async {
-    final NetworkInfo networkInfo = NetworkInfo();
-    String? ip = await networkInfo.getWifiIP();
-    return ip ?? "";
-  }
-
   final dio = Dio()
     ..interceptors.add(
       PrettyDioLogger(
@@ -48,8 +41,8 @@ Future<void> initializeDependencies() async {
       ),
     )
     ..options.baseUrl = Constants.baseApiUrl
-    ..options.connectTimeout = const Duration(seconds: 5)
-    ..options.receiveTimeout = const Duration(seconds: 5);
+    ..options.connectTimeout = const Duration(seconds: 60)
+    ..options.receiveTimeout = const Duration(seconds: 60);
   (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
       (client) {
     client.badCertificateCallback =

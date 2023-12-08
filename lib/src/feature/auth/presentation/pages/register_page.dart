@@ -7,7 +7,7 @@ import '../../../../../common/widgets/custom_snackbar.dart';
 import '../../../category/data/model/category_model.dart';
 import '../../../category/data/model/specialties_model.dart';
 import '../../../experts/presentation/controllers/home_controller.dart';
-import '../providers/auth_controller.dart';
+import '../controller/auth_controller.dart';
 
 @RoutePage()
 class RegisterPage extends StatefulWidget {
@@ -43,252 +43,166 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
+    return  Scaffold(
       appBar: const CustomAppBar(
         showBackArrow: true,
       ),
-      body: GetBuilder<HomeController>(builder: (homeController) {
-        return Column(
-          children: [
-            Container(
-              alignment: Alignment.center,
-              padding: const EdgeInsets.all(10),
-              child: const Text(
-                'SignUp',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w900),
+      body: ListView(
+        padding: const EdgeInsets.all(16.0),
+        children: [
+          Container(
+            alignment: Alignment.center,
+            padding: const EdgeInsets.all(10),
+            child: const Text(
+              'SignUp',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w900),
+            ),
+          ),
+          Container(
+            alignment: Alignment.center,
+            padding: const EdgeInsets.all(10),
+            child: const Text(
+              'To enjoy all of our cool features ',
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
               ),
             ),
-            Container(
-              alignment: Alignment.center,
-              padding: const EdgeInsets.all(10),
-              child: const Text(
-                'To enjoy all of our cool features ',
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(
-                    maxHeight: MediaQuery.of(context).size.height,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Expanded(
-                            flex: 1,
-                            child: Container(
-                              padding: const EdgeInsets.all(10),
-                              child: TextField(
-                                controller: nameEnController,
-                                decoration: const InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  labelText: 'Name (English)',
-                                ),
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            flex: 1,
-                            child: Container(
-                              padding: const EdgeInsets.all(10),
-                              child: TextField(
-                                controller: nameArController,
-                                decoration: const InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  labelText: 'Name (Arabic)',
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                            flex: 1,
-                            child: Container(
-                              padding: const EdgeInsets.all(10),
-                              child: TextField(
-                                controller: titleEnController,
-                                decoration: const InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  labelText: 'Title (English)',
-                                ),
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            flex: 1,
-                            child: Container(
-                              padding: const EdgeInsets.all(10),
-                              child: TextField(
-                                controller: titleArController,
-                                decoration: const InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  labelText: 'Title (Arabic)',
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Container(
-                        padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-                        child: TextField(
-                          obscureText: true,
-                          controller: emailController,
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: 'Email Address',
-                          ),
-                        ),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-                        child: TextField(
-                          obscureText: true,
-                          controller: passwordController,
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: 'password',
-                          ),
-                        ),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-                        child: TextField(
-                          keyboardType: TextInputType.multiline,
-                          maxLines: 4,
-                          controller: bioEnController,
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: 'Bio (English)',
-                          ),
-                        ),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-                        child: TextField(
-                          keyboardType: TextInputType.multiline,
-                          maxLines: 4,
-                          controller: bioArController,
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: 'Bio (Arabic)',
-                          ),
-                        ),
-                      ),
-                      /* Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(width: 0.4),
-                          borderRadius: BorderRadius.circular(
-                            4.0,
-                          ),
-                        ),
-                        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                        margin: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-                        child: DropdownButton<CategoryModel>(
-                          hint: const Text("Select Category"),
-                          items: (homeController.categoriesResponse.data ?? [])
-                              .map((CategoryModel item) {
-                            return DropdownMenuItem<CategoryModel>(
-                              value: item,
-                              child: Text(item.nameEn ?? ""),
-                            );
-                          }).toList(),
-                          onChanged: (newVal) {
-                            setState(
-                              () {
-                                dropdownValue = newVal;
-                              },
-                            );
-                            homeController.getSpecialties(
-                              dropdownValue?.id ?? 0,
-                            );
-                          },
-                          value: dropdownValue,
-                          isExpanded: true,
-                          underline: Container(),
-                        ),
-                      ),*/
-                      /*  Align(
-                        alignment: Alignment.topLeft,
-                        child: Wrap(
-                          children: (homeController.specialtiesResponse.data ??
-                                  [])
-                              .map(
-                                (item) => Padding(
-                                  padding: const EdgeInsets.all(6.0),
-                                  child: FilterChip(
-                                    label: Text(
-                                      item.nameEn ?? "",
-                                      style: const TextStyle(
-                                          color: Colors.white, fontSize: 15),
-                                    ),
-                                    selected: _selected.contains(item),
-                                    onSelected: (bool selected) {
-                                      setState(() {
-                                        if (selected) {
-                                          _selected.add(item);
-                                        } else {
-                                          _selected.removeWhere(
-                                              (SpecialtiesModel specialties) {
-                                            return specialties == item;
-                                          });
-                                        }
-                                      });
-                                    },
-                                    backgroundColor: Colors.grey,
-                                    selectedColor: Colors.blueAccent,
-                                    padding: const EdgeInsets.all(8.0),
-                                  ),
-                                ),
-                              )
-                              .toList()
-                              .cast<Widget>(),
-                        ),
-                      ),*/
-                      Container(
-                          height: 50,
-                          padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                          margin: const EdgeInsetsDirectional.only(top: 10),
-                          child: ElevatedButton(
-                            child: const Text('Sign up'),
-                            onPressed: () {
-                              _register(Get.find<AuthController>(), context);
-                            },
-                          )),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          const Text('Does not have account?'),
-                          TextButton(
-                            child: const Text(
-                              'Login',
-                              style: TextStyle(fontSize: 20),
-                            ),
-                            onPressed: () {
-                              //signup screen
-                            },
-                          )
-                        ],
-                      ),
-                    ],
+          ),
+          Row(
+            children: [
+              Expanded(
+                flex: 1,
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  child: TextField(
+                    controller: nameEnController,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Name (English)',
+                    ),
                   ),
                 ),
               ),
+              Expanded(
+                flex: 1,
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  child: TextField(
+                    controller: nameArController,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Name (Arabic)',
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              Expanded(
+                flex: 1,
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  child: TextField(
+                    controller: titleEnController,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Title (English)',
+                    ),
+                  ),
+                ),
+              ),
+              Expanded(
+                flex: 1,
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  child: TextField(
+                    controller: titleArController,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Title (Arabic)',
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Container(
+            padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+            child: TextField(
+              obscureText: true,
+              controller: emailController,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Email Address',
+              ),
             ),
-          ],
-        );
-      }),
+          ),
+          Container(
+            padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+            child: TextField(
+              obscureText: true,
+              controller: passwordController,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Password',
+              ),
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+            child: TextField(
+              keyboardType: TextInputType.multiline,
+              maxLines: 4,
+              controller: bioEnController,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Bio (English)',
+              ),
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+            child: TextField(
+              keyboardType: TextInputType.multiline,
+              maxLines: 4,
+              controller: bioArController,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Bio (Arabic)',
+              ),
+            ),
+          ),
+          Container(
+            height: 50,
+            padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+            margin: const EdgeInsetsDirectional.only(top: 10),
+            child: ElevatedButton(
+              child: const Text('Sign up'),
+              onPressed: () {
+                //_register(Get.find<AuthController>(), context);
+              },
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              const Text('Does not have an account?'),
+              TextButton(
+                child: const Text(
+                  'Login',
+                  style: TextStyle(fontSize: 20),
+                ),
+                onPressed: () {
+                  //signup screen
+                },
+              )
+            ],
+          ),
+        ],
+      ),
     );
   }
 
