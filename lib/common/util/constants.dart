@@ -8,4 +8,7 @@ class Constants {
 
   static String login = "/v1/auth/login";
   static String register = "/v1/experts/register";
+
+  //SharedPref KEYS
+  static String token = "TOKEN";
 }

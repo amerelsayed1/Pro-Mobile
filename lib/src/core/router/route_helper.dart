@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:unknown/src/feature/auth/presentation/pages/login_page.dart';
+import 'package:unknown/src/feature/auth/presentation/pages/profile_page.dart';
 import 'package:unknown/src/feature/auth/presentation/pages/register_page.dart';
 import 'package:unknown/src/feature/experts/presentation/pages/details/expert_details_page.dart';
 
@@ -15,6 +16,7 @@ class RouteHelper {
   static const String splash = '/splash';
   static const String language = '/language';
   static const String onBoarding = '/on-boarding';
+  static const String userProfile = '/user-profile';
 
   static String getInitialRoute() => initial;
 
@@ -30,7 +32,8 @@ class RouteHelper {
       page: () => getRoute(
         const LoginPage(),
       ),
-    ),GetPage(
+    ),
+    GetPage(
       name: signUp,
       page: () => getRoute(
         const RegisterPage(),
@@ -41,6 +44,12 @@ class RouteHelper {
       page: () {
         ExpertDetailsPage expertDetails = Get.arguments;
         return getRoute(expertDetails);
+      },
+    ),
+    GetPage(
+      name: userProfile,
+      page: () {
+        return const ProfilePage();
       },
     ),
   ];

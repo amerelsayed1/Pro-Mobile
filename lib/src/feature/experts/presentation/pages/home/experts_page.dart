@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:unknown/src/feature/auth/presentation/controller/auth_controller.dart';
 
 import '../../../../../../common/widgets/custom_appbar.dart';
 import '../../../../../core/router/route_helper.dart';
@@ -22,6 +23,7 @@ class ExpertsPage extends StatefulWidget {
 
 class _ExpertsState extends State<ExpertsPage> {
   final HomeController _controller = Get.find<HomeController>();
+  bool isLoggedIn = Get.find<AuthController>().isLoggedIn();
 
   @override
   void initState() {
@@ -51,9 +53,15 @@ class _ExpertsState extends State<ExpertsPage> {
                 ),
               ),
               onTap: () {
-                Get.toNamed(
-                  RouteHelper.login,
-                );
+                if (isLoggedIn) {
+                  Get.toNamed(
+                    RouteHelper.login,
+                  );
+                } else {
+                  Get.toNamed(
+                    RouteHelper.userProfile,
+                  );
+                }
               },
             ),
           ],
@@ -101,7 +109,7 @@ class _ExpertsState extends State<ExpertsPage> {
                         itemCount: experts.length,
                         itemBuilder: (context, index) {
                           experts[index].avatarUrl =
-                              "https://source.unsplash.com/random/200x200?sig=${index + 1}";
+                          "https://source.unsplash.com/random/200x200?sig=${index + 1}";
                           return GestureDetector(
                               onTap: () {
                                 Get.toNamed(

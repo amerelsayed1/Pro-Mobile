@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:unknown/src/feature/experts/presentation/controllers/home_controller.dart';
@@ -9,7 +8,6 @@ import '../../../../../core/router/app_router.dart';
 import '../../../../../core/state/data_state.dart';
 import '../../../data/models/expert_model.dart';
 
-@RoutePage()
 class ExpertDetailsPage extends StatefulWidget {
   final ExpertModel expert;
 
@@ -86,7 +84,7 @@ class _ExpertDetailsState extends State<ExpertDetailsPage> {
                           child: FadeInImage.assetNetwork(
                             placeholder: Images.ic_place_holder,
                             image:
-                                "http://192.168.1.12:8080${expert?.avatarUrl ?? ""}",
+                                "https://source.unsplash.com/random/200x200?sig=1",
                             fit: BoxFit.fill,
                             imageErrorBuilder: (context, error, stackTrace) {
                               return Image.asset(
@@ -106,19 +104,28 @@ class _ExpertDetailsState extends State<ExpertDetailsPage> {
                     child: Text(
                       expert?.nameEn ?? "",
                       style: const TextStyle(
-                        fontSize: 16,
+                        fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
                   Text(
                     expert?.titleEn ?? "",
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.normal,
+                    ),
                   ),
-                  const Text(
-                    "About me",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
+                  Container(
+                    margin: const EdgeInsetsDirectional.only(
+                      top: 15,
+                    ),
+                    child: const Text(
+                      "About me",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                   Container(
@@ -128,6 +135,36 @@ class _ExpertDetailsState extends State<ExpertDetailsPage> {
                     child: Text(
                       expert?.bioEn ?? "",
                       style: const TextStyle(height: 1.5),
+                    ),
+                  ),
+                  Container(
+                    margin: const EdgeInsetsDirectional.only(
+                      top: 15,
+                    ),
+                    child: const Text(
+                      "What to expect",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsetsDirectional.all(10),
+                    margin: const EdgeInsetsDirectional.only(
+                      top: 8,
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      // Adjust the radius as needed
+                      color: const Color(0XFFF4F4F4),
+                    ),
+                    child: const Text(
+                      "15 minute session\n- ask three or more questions\n- advice on how to a healthier lifestyle\n- tips and tricks\n- how to eat well",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.normal,
+                      ),
                     ),
                   ),
                 ],

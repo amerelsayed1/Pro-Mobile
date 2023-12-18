@@ -5,6 +5,7 @@ import 'package:dio/io.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../common/util/constants.dart';
 import '../../feature/auth/data/data_sources/auth_data_source.dart';
@@ -51,6 +52,12 @@ Future<void> initializeDependencies() async {
   };
   locator.registerSingleton<Dio>(dio);
 
+  final sharedPreferences = await SharedPreferences.getInstance();
+  //Get.lazyPut(() => sharedPreferences);
+  locator.registerSingleton<SharedPreferences>(
+    await SharedPreferences.getInstance(),
+  );
+
   locator.registerSingleton<ExpertsDataSource>(
     ExpertsDataSourceImpl(client: locator<Dio>()),
   );
@@ -68,7 +75,10 @@ Future<void> initializeDependencies() async {
   );
 
   locator.registerSingleton<AuthRepository>(
-    AuthRepositoryImpl(dataSource: locator<AuthDataSource>()),
+    AuthRepositoryImpl(
+      dataSource: locator<AuthDataSource>(),
+      sharedPreferences: locator<SharedPreferences>(),
+    ),
   );
 
   locator.registerSingleton<CategoryRepository>(

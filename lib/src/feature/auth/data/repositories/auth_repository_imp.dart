@@ -1,6 +1,8 @@
-import 'package:dio/dio.dart';
+
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:unknown/common/util/constants.dart';
 import 'package:unknown/src/core/state/data_state.dart';
-import 'package:unknown/src/core/state/error_response.dart';
+
 import 'package:unknown/src/feature/auth/data/data_sources/auth_data_source.dart';
 import 'package:unknown/src/feature/auth/data/models/local/login_request.dart';
 import 'package:unknown/src/feature/auth/data/models/local/register_request.dart';
@@ -10,9 +12,11 @@ import 'package:unknown/src/feature/auth/domain/repositories/auth_repository.dar
 class AuthRepositoryImpl implements AuthRepository {
   AuthRepositoryImpl({
     required this.dataSource,
+    required this.sharedPreferences,
   });
 
   final AuthDataSource dataSource;
+  final SharedPreferences sharedPreferences;
 
   @override
   Future<UserResponse> login(LoginRequest? loginRequest) async {
@@ -20,23 +24,29 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<DataState> register(RegisterRequest? registerRequest) async {
-    DataState apiResponse = DataState.loading(
-      'loading',
-    );
-    try {
-      final response = await dataSource.register(registerRequest);
-      apiResponse = DataState.completed(null);
-      return apiResponse;
-    } on DioException catch (e) {
-      ErrorResponse error = ErrorResponse.fromJson(e.response?.data);
-      apiResponse = DataState.error(error.messages?.join("") ?? "");
-      return apiResponse;
-    }
+  Future<UserResponse> register(RegisterRequest? registerRequest) async {
+    return dataSource.register(registerRequest);
   }
 
   @override
   Future<DataState<UserResponse>> loginX(LoginRequest? loginRequest) {
     return dataSource.loginXX(loginRequest);
   }
+
+  @override
+  Future<bool> saveUserToken(String token) async {
+    return await sharedPreferences.setString(Constants.token, token);
+  }
+
+  @override
+  String getUserToken() {
+    return sharedPreferences.getString(Constants.token) ?? "";
+  }
+
+  @override
+  bool isLoggedIn() {
+    return sharedPreferences.containsKey(Constants.token);
+  }
+
+
 }

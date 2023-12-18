@@ -1,12 +1,12 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../../../../common/widgets/custom_appbar.dart';
 import '../../../../../common/widgets/custom_snackbar.dart';
 import '../../../category/data/model/category_model.dart';
 import '../../../category/data/model/specialties_model.dart';
 import '../../../experts/presentation/controllers/home_controller.dart';
+import '../../data/models/local/register_request.dart';
 import '../controller/auth_controller.dart';
 
 @RoutePage()
@@ -33,17 +33,18 @@ class _RegisterPageState extends State<RegisterPage> {
   CategoryModel? dropdownValue;
   SpecialtiesModel? specialtiesDropdownValue;
 
-  final List<SpecialtiesModel> _selected = [];
+  final HomeController _controller = Get.find<HomeController>();
+  var selectedValue = 'Option 1'.obs;
 
   @override
   void initState() {
-    //Get.find<HomeController>().getCategoriesList();
     super.initState();
+    _controller.fetchCategories();
   }
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       appBar: const CustomAppBar(
         showBackArrow: true,
       ),
@@ -132,7 +133,6 @@ class _RegisterPageState extends State<RegisterPage> {
           Container(
             padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
             child: TextField(
-              obscureText: true,
               controller: emailController,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
@@ -176,13 +176,17 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
           ),
           Container(
+            padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+            child: buildDropdownButton(),
+          ),
+          Container(
             height: 50,
             padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
             margin: const EdgeInsetsDirectional.only(top: 10),
             child: ElevatedButton(
               child: const Text('Sign up'),
               onPressed: () {
-                //_register(Get.find<AuthController>(), context);
+                _register(Get.find<AuthController>(), context);
               },
             ),
           ),
@@ -206,10 +210,34 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  void _register(
-    AuthController authController,
-    BuildContext context,
-  ) async {
+  String? _getErrorText(String value) {
+    if (value.isEmpty) {
+      return 'This field is required';
+    }
+    // Add more validation logic as needed
+    return null;
+  }
+
+  Widget buildDropdownButton() {
+    return Obx(() {
+      return DropdownButton<String>(
+        value: selectedValue.value,
+        items: _controller.categoriesState.value.data?.map((element) {
+          return DropdownMenuItem<String>(
+            value: element.id?.toString() ?? '0',
+            child: Text(element.nameEn ?? ""),
+          );
+        }).toList() ?? [],
+        onChanged: (String? newValue) {
+          // Update selected value and fetch data
+          selectedValue.value = newValue ?? '';
+          // controller.fetchData(newValue ?? '');
+        },
+      );
+    });
+  }
+
+  void _register(AuthController authController, BuildContext context) async {
     String nameEn = nameEnController.text.trim();
     String nameAr = nameArController.text.trim();
     String titleEn = titleEnController.text.trim();
@@ -219,47 +247,33 @@ class _RegisterPageState extends State<RegisterPage> {
     String bioEn = bioEnController.text.trim();
     String bioAr = bioArController.text.trim();
 
-    if (nameEn.isEmpty) {
-      showCustomSnackBar('Enter English Name', context);
-    } else if (nameAr.isEmpty) {
-      showCustomSnackBar('Enter Arabic Name', context);
-    } else if (titleEn.isEmpty) {
-      showCustomSnackBar('Enter English Title', context);
-    } else if (titleAr.isEmpty) {
-      showCustomSnackBar('Enter Arabic Title', context);
-    } else if (email.isEmpty) {
-      showCustomSnackBar('Enter Email', context);
-    } else if (password.isEmpty) {
-      showCustomSnackBar('Enter Password', context);
-    } else if (bioEn.isEmpty) {
-      showCustomSnackBar('Enter English Bio', context);
-    } else if (bioAr.isEmpty) {
-      showCustomSnackBar('Enter Arabic Bio', context);
-    } else {
-      showDialog(
-        barrierDismissible: false,
-        context: context,
-        builder: (_) {
-          return const Dialog(
-            backgroundColor: Colors.white,
-            child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 20),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  // The loading indicator
-                  CircularProgressIndicator(),
-                  SizedBox(height: 15),
-                  Text('Loading...')
-                ],
-              ),
-            ),
-          );
-        },
-      );
+    String? nameEnError = _getErrorText(nameEn);
+    String? nameArError = _getErrorText(nameAr);
+    String? titleEnError = _getErrorText(titleEn);
+    String? titleArError = _getErrorText(titleAr);
+    String? emailError = _getErrorText(email);
+    String? passwordError = _getErrorText(password);
+    String? bioEnError = _getErrorText(bioEn);
+    String? bioArError = _getErrorText(bioAr);
 
-      /*authController
-          .register(
+    if (nameEnError != null) {
+      showCustomSnackBar(nameEnError, context);
+    } else if (nameArError != null) {
+      showCustomSnackBar(nameArError, context);
+    } else if (titleEnError != null) {
+      showCustomSnackBar(titleEnError, context);
+    } else if (titleArError != null) {
+      showCustomSnackBar(titleArError, context);
+    } else if (emailError != null) {
+      showCustomSnackBar(emailError, context);
+    } else if (passwordError != null) {
+      showCustomSnackBar(passwordError, context);
+    } else if (bioEnError != null) {
+      showCustomSnackBar(bioEnError, context);
+    } else if (bioArError != null) {
+      showCustomSnackBar(bioArError, context);
+    } else {
+      authController.register(
         RegisterRequest(
           email,
           password,
@@ -272,18 +286,7 @@ class _RegisterPageState extends State<RegisterPage> {
           14,
           [12],
         ),
-      )
-          .then(
-        (status) async {
-          if (status.status == Status.COMPLETED) {
-            print("COMPLETED");
-          } else {
-            print(status.message);
-          }
-          if (!mounted) return;
-          Navigator.of(context).pop();
-        },
-      );*/
+      );
     }
   }
 }

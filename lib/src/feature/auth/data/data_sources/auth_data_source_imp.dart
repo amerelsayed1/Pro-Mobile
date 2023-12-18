@@ -48,12 +48,18 @@ class AuthDataSourceImpl implements AuthDataSource {
   }
 
   @override
-  Future<Response> register(RegisterRequest? registerRequest) async {
+  Future<UserResponse> register(RegisterRequest? registerRequest) async {
     final response = await client.post(
       Constants.register,
       data: registerRequest?.toMap(),
     );
-    return response;
+
+    if (response.statusCode == 200) {
+      return UserResponse.fromJson(response.data);
+    } else {
+      handleErrorResponse(response);
+      throw Exception('Failed to load login response');
+    }
   }
 
   @override
