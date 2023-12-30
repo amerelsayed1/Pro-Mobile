@@ -34,6 +34,14 @@ class HomeController extends GetxController implements GetxService {
       expertsState.value = DataState.loading("Loading news");
 
       final newsData = await categoryRepository.categories();
+
+      newsData.insert(
+          0,
+          CategoryModel(
+            nameEn: "All",
+            nameAr: "الكل",
+          ));
+
       categoriesState.value = DataState.completed(newsData);
 
       final expertsData = await expertsRepository.getExperts(id);

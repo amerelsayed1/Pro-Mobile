@@ -17,12 +17,6 @@ class _CategoryState extends State<_CategoryBuilder> {
   @override
   void initState() {
     super.initState();
-    widget.categories.insert(
-        0,
-        CategoryModel(
-          nameEn: "All",
-          nameAr: "الكل",
-        ));
   }
 
   @override
@@ -38,17 +32,13 @@ class _CategoryState extends State<_CategoryBuilder> {
         itemBuilder: (context, index) {
           return InkWell(
             onTap: () {
-
               setState(
                 () {
                   selectedIndex = index;
                 },
               );
-
-            /*  Provider.of<TestPattern>(context, listen: false).getExperts(
-                widget.categories[selectedIndex].id,
-              );*/
-
+              Get.find<HomeController>()
+                  .fetchExperts(widget.categories[selectedIndex].id);
             },
             child: Container(
               padding: const EdgeInsets.symmetric(
