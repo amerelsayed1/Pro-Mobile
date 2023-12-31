@@ -99,7 +99,7 @@ class _LoginPageState extends State<LoginPage> {
                           child: ElevatedButton(
                             child: const Text('Sign in'),
                             onPressed: () {
-                              authController.loginXX(
+                              authController.login(
                                 LoginRequest(
                                   nameController.text.toString(),
                                   passwordController.text.toString(),

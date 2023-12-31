@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:unknown/common/widgets/custom_appbar.dart';
+import 'package:unknown/src/feature/auth/presentation/controller/auth_controller.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -9,13 +11,30 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+
+
+  final AuthController _authController = Get.find<AuthController>();
+
   @override
   Widget build(BuildContext context) {
+
+
+
     return Scaffold(
       appBar: const CustomAppBar(
         showBackArrow: true,
       ),
-      body: Container(),
+      body: Column(
+        children: [
+          Center(child: Text(_authController.getUserToken()),),
+          Center(
+            child: TextButton(
+              onPressed: () {},
+              child: const Text("Logout"),
+            ),
+          )
+        ],
+      ),
     );
   }
 }

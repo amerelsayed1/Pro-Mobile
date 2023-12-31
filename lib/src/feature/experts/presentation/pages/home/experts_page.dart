@@ -55,11 +55,11 @@ class _ExpertsState extends State<ExpertsPage> {
               onTap: () {
                 if (isLoggedIn) {
                   Get.toNamed(
-                    RouteHelper.login,
+                    RouteHelper.userProfile,
                   );
                 } else {
                   Get.toNamed(
-                    RouteHelper.userProfile,
+                    RouteHelper.login,
                   );
                 }
               },
@@ -109,7 +109,7 @@ class _ExpertsState extends State<ExpertsPage> {
                         itemCount: experts.length,
                         itemBuilder: (context, index) {
                           experts[index].avatarUrl =
-                          "https://source.unsplash.com/random/200x200?sig=${index + 1}";
+                              "https://source.unsplash.com/random/200x200?sig=${index + 1}";
                           return GestureDetector(
                               onTap: () {
                                 Get.toNamed(

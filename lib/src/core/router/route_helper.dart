@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:unknown/src/feature/auth/presentation/pages/login_page.dart';
 import 'package:unknown/src/feature/auth/presentation/pages/profile_page.dart';
 import 'package:unknown/src/feature/auth/presentation/pages/register_page.dart';
+import 'package:unknown/src/feature/experts/presentation/pages/book_expert/book_expert_page.dart';
 import 'package:unknown/src/feature/experts/presentation/pages/details/expert_details_page.dart';
 
 import '../../feature/experts/presentation/pages/home/experts_page.dart';
@@ -17,6 +18,7 @@ class RouteHelper {
   static const String language = '/language';
   static const String onBoarding = '/on-boarding';
   static const String userProfile = '/user-profile';
+  static const String bookSlot = '/book-slot';
 
   static String getInitialRoute() => initial;
 
@@ -32,6 +34,13 @@ class RouteHelper {
       page: () => getRoute(
         const LoginPage(),
       ),
+    ),
+    GetPage(
+      name: bookSlot,
+      page: () {
+        BookExpertPage bookSlot = Get.arguments;
+        return getRoute(bookSlot);
+      },
     ),
     GetPage(
       name: signUp,

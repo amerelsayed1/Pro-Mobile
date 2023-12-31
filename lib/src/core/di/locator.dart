@@ -22,8 +22,6 @@ import '../../feature/experts/data/data_sources/experts_data_source.dart';
 import '../../feature/experts/data/data_sources/experts_data_source_imp.dart';
 import '../../feature/experts/data/repositories/experts_repository_imp.dart';
 import '../../feature/experts/domain/repositories/experts_repository.dart';
-import '../../feature/experts/domain/user_case/expert_appointement_use_case.dart';
-import '../../feature/experts/domain/user_case/expert_availabilities_use_case.dart';
 import '../../feature/experts/domain/user_case/experts_use_case.dart';
 import '../../feature/experts/presentation/controllers/home_controller.dart';
 
@@ -87,14 +85,6 @@ Future<void> initializeDependencies() async {
 
   locator.registerSingleton<ExpertsUseCase>(
     ExpertsUseCase(locator<ExpertsRepository>()),
-  );
-
-  locator.registerSingleton<ExpertsAppointmentUseCase>(
-    ExpertsAppointmentUseCase(locator<ExpertsRepository>()),
-  );
-
-  locator.registerSingleton<ExpertsAAvailabilitiesUseCase>(
-    ExpertsAAvailabilitiesUseCase(locator<ExpertsRepository>()),
   );
 
   locator.registerSingleton<RegisterUseCase>(

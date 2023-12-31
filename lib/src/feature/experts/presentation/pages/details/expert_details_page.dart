@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:unknown/src/feature/experts/presentation/controllers/home_controller.dart';
+import 'package:unknown/src/feature/experts/presentation/pages/book_expert/book_expert_page.dart';
 
 import '../../../../../../common/images.dart';
 import '../../../../../../common/widgets/custom_appbar.dart';
 import '../../../../../core/router/app_router.dart';
+import '../../../../../core/router/route_helper.dart';
 import '../../../../../core/state/data_state.dart';
 import '../../../data/models/expert_model.dart';
 
@@ -198,9 +200,11 @@ class _ExpertDetailsState extends State<ExpertDetailsPage> {
                     backgroundColor: MaterialStateProperty.all(Colors.red),
                   ),
                   onPressed: () {
-                    appRouter.push(
-                      BookExpertRoute(expert: widget.expert),
-                    );
+                    Get.toNamed(
+                      RouteHelper.bookSlot,
+                      arguments: BookExpertPage(
+                        expert: expert,
+                      ),);
                   },
                   child: const Text(
                     "See Plans",

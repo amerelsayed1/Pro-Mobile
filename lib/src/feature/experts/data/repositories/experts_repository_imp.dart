@@ -25,47 +25,13 @@ class ExpertsRepositoryImpl implements ExpertsRepository {
   }
 
   @override
-  Future<DataState<List<AppointmentTypesModel>>> getExpertAppointmentTypes(
-    int id,
-  ) async {
-    DataState<List<AppointmentTypesModel>> apiResponse = DataState.loading(
-      'Fetching ExpertAppointment data',
-    );
-    try {
-      List<AppointmentTypesModel> appointments = [];
-      final response = await dataSource.getExpertAppointmentTypes(id);
-      response.data.forEach(
-        (appointment) => appointments.add(
-          AppointmentTypesModel.fromJson(appointment),
-        ),
-      );
-      apiResponse = DataState.completed(appointments);
-      return apiResponse;
-    } catch (e) {
-      apiResponse = DataState.error(e.toString());
-      return apiResponse;
-    }
+  Future<List<AppointmentTypesModel>> getExpertAppointmentTypes(int id) {
+    return dataSource.getExpertAppointmentTypes(id);
   }
 
   @override
-  Future<DataState<List<AvailabilitiesModel>>> getExpertAvailabilities(
-      int id) async {
-    DataState<List<AvailabilitiesModel>> apiResponse = DataState.loading(
-      'Fetching ExpertAppointment data',
-    );
-    try {
-      List<AvailabilitiesModel> appointments = [];
-      final response = await dataSource.getExpertAvailabilities(id);
-      response.data.forEach(
-        (appointment) => appointments.add(
-          AvailabilitiesModel.fromJson(appointment),
-        ),
-      );
-      apiResponse = DataState.completed(appointments);
-      return apiResponse;
-    } catch (e) {
-      apiResponse = DataState.error(e.toString());
-      return apiResponse;
-    }
+  Future<List<AvailabilitiesModel>> getAvailableSlots(int id) {
+    return dataSource.getExpertAvailabilities(id);
   }
+
 }

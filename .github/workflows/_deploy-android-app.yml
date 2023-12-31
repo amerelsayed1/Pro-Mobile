@@ -2,7 +2,7 @@ name: Deploy To Google Drive
 
 on:
   push:
-    branches: [ develop ]
+    branches: [ master ]
   pull_request:
     branches: [ master ]
 

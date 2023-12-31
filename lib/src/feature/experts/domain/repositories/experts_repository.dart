@@ -6,12 +6,17 @@ import '../../data/models/availabilities/availabilities_model.dart';
 import '../../data/models/expert_response.dart';
 
 abstract class ExpertsRepository {
-  Future<ExpertResponse> getExperts(int? categoryId);
+  Future<ExpertResponse> getExperts(
+    int? categoryId,
+  );
 
   Future<ExpertModel> getSingleExpertInfo(int id);
 
-  Future<DataState<List<AppointmentTypesModel>>> getExpertAppointmentTypes(
-      int id);
+  Future<List<AppointmentTypesModel>> getExpertAppointmentTypes(
+    int id,
+  );
 
-  Future<DataState<List<AvailabilitiesModel>>> getExpertAvailabilities(int id);
+  Future<List<AvailabilitiesModel>> getAvailableSlots(
+    int id,
+  );
 }

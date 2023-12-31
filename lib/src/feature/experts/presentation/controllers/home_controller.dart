@@ -4,6 +4,8 @@ import 'package:unknown/src/feature/experts/data/models/expert_model.dart';
 import '../../../../core/state/data_state.dart';
 import '../../../category/data/model/category_model.dart';
 import '../../../category/domain/repositories/category_repository.dart';
+import '../../data/models/appointment_types_model.dart';
+import '../../data/models/availabilities/availabilities_model.dart';
 import '../../data/models/expert_response.dart';
 import '../../domain/repositories/experts_repository.dart';
 
@@ -25,6 +27,14 @@ class HomeController extends GetxController implements GetxService {
   ).obs;
 
   final expertDetailsState = DataState<ExpertModel>.initial(
+    "Initial state",
+  ).obs;
+
+  final appointmentsState = DataState<List<AppointmentTypesModel>>.initial(
+    "Initial state",
+  ).obs;
+
+  final availableSlotsState = DataState<List<AvailabilitiesModel>>.initial(
     "Initial state",
   ).obs;
 
@@ -79,6 +89,27 @@ class HomeController extends GetxController implements GetxService {
       expertDetailsState.value = DataState.completed(expertsDetails);
     } catch (e) {
       expertDetailsState.value = DataState.error("Error loading experts: $e");
+    }
+  }
+
+
+  Future<void> fetchExpertAppointmentTypes(int id) async {
+    try {
+      appointmentsState.value = DataState.loading("Loading news");
+      final expertsDetails = await expertsRepository.getExpertAppointmentTypes(id);
+      appointmentsState.value = DataState.completed(expertsDetails);
+    } catch (e) {
+      appointmentsState.value = DataState.error("Error loading experts: $e");
+    }
+  }
+
+  Future<void> fetchExpertAvailableSlots(int id) async {
+    try {
+      availableSlotsState.value = DataState.loading("Loading news");
+      final slots = await expertsRepository.getAvailableSlots(id);
+      availableSlotsState.value = DataState.completed(slots);
+    } catch (e) {
+      availableSlotsState.value = DataState.error("Error loading experts: $e");
     }
   }
 }
