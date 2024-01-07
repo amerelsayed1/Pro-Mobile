@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:intl/intl.dart';
@@ -47,13 +45,15 @@ class _CategoryState extends State<AvailableTimeBuilder> {
     List<String> timeSlots = [];
     while (startTime.isBefore(endTime)) {
       DateTime timeIncrement = startTime.add(step);
-      final DateFormat formatter = DateFormat('HH:mm aa');
+      final DateFormat formatter = DateFormat('HH:mm');
       final String formatted = formatter.format(timeIncrement);
-      timeSlots.add(formatted /*DateFormat.Hm().format(timeIncrement)*/);
+      timeSlots.add(formatted);
       startTime = timeIncrement;
     }
 
-    var myDate = DateFormat('dd-MM-y').parse(widget.availability?.date ?? "");
+    var myDate = DateFormat('yyyy-MM-dd').parse(
+      widget.availability?.date ?? "",
+    );
     var availabilityDateStr =
         "${getWeekdayName(myDate.weekday)} ${myDate.day}-${myDate.month}";
 
@@ -95,7 +95,7 @@ class _CategoryState extends State<AvailableTimeBuilder> {
 
   String getWeekdayName(int weekday) {
     final DateTime now = DateTime.now().toLocal();
-    final int diff = now.weekday - weekday; // weekday is our 1-7 ISO value
+    final int diff = now.weekday - weekday;
     var udpatedDt;
     if (diff > 0) {
       udpatedDt = now.subtract(Duration(days: diff));

@@ -22,8 +22,7 @@ class BookExpertPage extends StatefulWidget {
 }
 
 class _BookExpertState extends State<BookExpertPage> {
-
-  final HomeController _homeController=Get.find<HomeController>();
+  final HomeController _homeController = Get.find<HomeController>();
   int selectedIndex = 0;
 
   @override
@@ -31,13 +30,12 @@ class _BookExpertState extends State<BookExpertPage> {
     super.initState();
 
     _homeController.fetchExpertAppointmentTypes(
-      widget.expert?.id??0,
+      widget.expert?.id ?? 0,
     );
 
     _homeController.fetchExpertAvailableSlots(
-      widget.expert?.id??0,
+      widget.expert?.id ?? 0,
     );
-
   }
 
   @override
@@ -50,11 +48,16 @@ class _BookExpertState extends State<BookExpertPage> {
       ),
       body: Obx(() {
         final appointmentList = _homeController.appointmentsState.value;
+        final slotsList = _homeController.availableSlotsState.value;
         switch (appointmentList.status) {
           case Status.LOADING:
             return const Center(child: CircularProgressIndicator());
           case Status.COMPLETED:
-            return appointmentListWidget(context,appointmentList.data ?? []);
+            return combineWidgets(
+              context,
+              appointmentList.data ?? [],
+              slotsList.data ?? [],
+            );
           case Status.ERROR:
             return Text('Error: ${appointmentList.messages}');
           default:
@@ -64,7 +67,21 @@ class _BookExpertState extends State<BookExpertPage> {
     );
   }
 
-  Widget appointmentListWidget(BuildContext context, List<AppointmentTypesModel> data) {
+  Widget combineWidgets(
+    BuildContext context,
+    List<AppointmentTypesModel> data,
+    List<AvailabilitiesModel> slots,
+  ) {
+    return Column(
+      children: [
+        Expanded(child: appointmentTypeWidget(context, data)),
+        slotsListWidget(context, slots)
+      ],
+    );
+  }
+
+  Widget appointmentTypeWidget(
+      BuildContext context, List<AppointmentTypesModel> data) {
     return AlignedGridView.count(
       crossAxisCount: 3,
       mainAxisSpacing: 10,
@@ -87,66 +104,40 @@ class _BookExpertState extends State<BookExpertPage> {
     );
   }
 
-  Widget slotsListWidget(BuildContext context, DataState availabilitiesResponse,
-      DataState apiResponse) {
-    List<AvailabilitiesModel>? availabilitiesList =
-        availabilitiesResponse.data as List<AvailabilitiesModel>?;
-
-    List<AppointmentTypesModel>? appointmentList =
-        apiResponse.data as List<AppointmentTypesModel>?;
-
-    switch (availabilitiesResponse.status) {
-      case Status.LOADING:
-        return const Expanded(
-          child: Center(
-            child: CircularProgressIndicator(),
-          ),
-        );
-      case Status.COMPLETED:
-        return Expanded(
-          flex: 10,
-          child: Container(
-            margin: const EdgeInsetsDirectional.only(
-              end: 15,
-              start: 15,
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Expanded(
-                  child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: availabilitiesList?.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return AvailableTimeBuilder(
-                          availability: availabilitiesResponse.data?[index],
-                          type: appointmentList?[selectedIndex].type ?? "",
-                          onClick: (item) {
-                            appRouter.push(
-                              ConfirmBookingRoute(expert: widget.expert!),
-                            );
-                          },
+  Widget slotsListWidget(
+    BuildContext context,
+    List<AvailabilitiesModel> data,
+  ) {
+    return Expanded(
+      flex: 10,
+      child: Container(
+        margin: const EdgeInsetsDirectional.only(
+          end: 15,
+          start: 15,
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Expanded(
+              child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: data.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return AvailableTimeBuilder(
+                      availability: data[index],
+                      type: "QUICK",
+                      onClick: (item) {
+                        appRouter.push(
+                          ConfirmBookingRoute(expert: widget.expert!),
                         );
-                      }),
-                )
-              ],
-            ),
-          ),
-        );
-      case Status.ERROR:
-        return const Center(
-          child: Text(
-            'Please try again latter!!!',
-          ),
-        );
-      case Status.INITIAL:
-      default:
-        return const Center(
-          child: Text(
-            'Search the song by Artist',
-          ),
-        );
-    }
+                      },
+                    );
+                  }),
+            )
+          ],
+        ),
+      ),
+    );
   }
 
   @override

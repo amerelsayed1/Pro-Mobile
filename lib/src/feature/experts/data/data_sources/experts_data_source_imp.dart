@@ -73,16 +73,17 @@ class ExpertsDataSourceImpl implements ExpertsDataSource {
   }
 
   @override
-  Future<List<AvailabilitiesModel>> getExpertAvailabilities(int id) async{
+  Future<List<AvailabilitiesModel>> getExpertAvailabilities(int id) async {
     try {
       List<AvailabilitiesModel> availableSlotsList = [];
       final response = await client.get('/v1/experts/$id/availabilities');
       if (response.statusCode == 200) {
-        response.data.forEach(
-              (appointment) => availableSlotsList.add(
-                AvailabilitiesModel.fromJson(appointment),
-          ),
-        );
+        response.data.forEach((appointment) {
+          AvailabilitiesModel slot = AvailabilitiesModel.fromJson(appointment);
+          if (slot.slots?.isNotEmpty ?? false) {
+            availableSlotsList.add(slot);
+          }
+        });
 
         return availableSlotsList;
       } else {
@@ -92,5 +93,4 @@ class ExpertsDataSourceImpl implements ExpertsDataSource {
       throw Exception('Error fetching news: $e');
     }
   }
-
 }

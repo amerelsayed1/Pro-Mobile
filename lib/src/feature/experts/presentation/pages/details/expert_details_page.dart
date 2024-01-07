@@ -20,7 +20,7 @@ class ExpertDetailsPage extends StatefulWidget {
 }
 
 class _ExpertDetailsState extends State<ExpertDetailsPage> {
-  HomeController _controller = Get.find<HomeController>();
+  final HomeController _controller = Get.find<HomeController>();
 
   @override
   void initState() {
@@ -176,24 +176,6 @@ class _ExpertDetailsState extends State<ExpertDetailsPage> {
           Row(
             children: [
               Expanded(
-                flex: 2,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Container(
-                      margin: const EdgeInsetsDirectional.only(top: 5),
-                      child: Text(
-                        "${expert?.startingPrice?.amount ?? ""} ${expert?.startingPrice?.currency ?? ""} . Session",
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w900,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Expanded(
                 flex: 1,
                 child: TextButton(
                   style: ButtonStyle(
@@ -207,7 +189,7 @@ class _ExpertDetailsState extends State<ExpertDetailsPage> {
                       ),);
                   },
                   child: const Text(
-                    "See Plans",
+                    "See times",
                     style: TextStyle(
                       color: Colors.white,
                     ),

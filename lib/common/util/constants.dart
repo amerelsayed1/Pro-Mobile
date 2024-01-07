@@ -11,4 +11,5 @@ class Constants {
 
   //SharedPref KEYS
   static String token = "TOKEN";
+  static String user = "USER";
 }

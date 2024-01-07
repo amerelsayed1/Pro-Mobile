@@ -13,6 +13,7 @@ class App extends StatelessWidget {
       title: Constants.appName,
       debugShowCheckedModeBanner: false,
       navigatorKey: Get.key,
+      themeMode: ThemeMode.light,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),

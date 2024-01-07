@@ -1,4 +1,6 @@
 
+import 'dart:convert';
+
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:unknown/common/util/constants.dart';
 import 'package:unknown/src/core/state/data_state.dart';
@@ -29,11 +31,6 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<DataState<UserResponse>> loginX(LoginRequest? loginRequest) {
-    return dataSource.loginXX(loginRequest);
-  }
-
-  @override
   Future<bool> saveUserToken(String token) async {
     return await sharedPreferences.setString(Constants.token, token);
   }
@@ -48,5 +45,22 @@ class AuthRepositoryImpl implements AuthRepository {
     return sharedPreferences.containsKey(Constants.token);
   }
 
+  @override
+  UserResponse getUser() {
+    String userJsonString =sharedPreferences.getString(Constants.user) ?? "";
+    Map<String, dynamic> userJson = jsonDecode(userJsonString);
+    return UserResponse.fromJson(userJson);
+  }
+
+  @override
+  Future<bool> saveUser(UserResponse user) async {
+    return await sharedPreferences.setString(Constants.user, jsonEncode(user));
+  }
+
+  @override
+  void logout() async {
+    await sharedPreferences.remove(Constants.user);
+    await sharedPreferences.remove(Constants.token);
+  }
 
 }

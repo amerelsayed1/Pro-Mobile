@@ -23,6 +23,7 @@ class AuthController extends GetxController implements GetxService {
       loginState.value = DataState.loading("Loading news");
       final user = await authRepository.login(loginRequest);
       authRepository.saveUserToken(user.accessToken);
+      authRepository.saveUser(user);
       loginState.value = DataState.completed(user);
     } catch (e) {
       debugPrint("${e}");
@@ -33,8 +34,16 @@ class AuthController extends GetxController implements GetxService {
     return authRepository.getUserToken();
   }
 
+  UserResponse getUser() {
+    return authRepository.getUser();
+  }
+
   bool isLoggedIn() {
     return authRepository.isLoggedIn();
+  }
+
+  logout() {
+     authRepository.logout();
   }
 
   Future<void> register(RegisterRequest registerRequest) async {

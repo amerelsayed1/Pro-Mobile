@@ -26,10 +26,12 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
       body: Column(
         children: [
-          Center(child: Text(_authController.getUserToken()),),
+            Center(child: Text(_authController.getUser().email),),
           Center(
             child: TextButton(
-              onPressed: () {},
+              onPressed: () {
+                _authController.logout();
+              },
               child: const Text("Logout"),
             ),
           )
