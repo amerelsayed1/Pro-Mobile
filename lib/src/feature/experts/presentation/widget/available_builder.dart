@@ -40,13 +40,17 @@ class _CategoryState extends State<AvailableTimeBuilder> {
     final String endTimeFormattedStr = formatter.format(endTimeFormatted);
     DateTime endTime = formatter.parse(endTimeFormattedStr);
 
+    startTime = DateTime(startTime.year, startTime.month, startTime.day, startTime.hour, 0);
+
     Duration step = Duration(minutes: widget.type == "QUICK" ? 15 : 30);
 
+    final DateFormat timeFormatter = DateFormat('HH:mm');
     List<String> timeSlots = [];
+
+    timeSlots.add(timeFormatter.format(startTime));
     while (startTime.isBefore(endTime)) {
       DateTime timeIncrement = startTime.add(step);
-      final DateFormat formatter = DateFormat('HH:mm');
-      final String formatted = formatter.format(timeIncrement);
+      final String formatted = timeFormatter.format(timeIncrement);
       timeSlots.add(formatted);
       startTime = timeIncrement;
     }

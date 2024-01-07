@@ -74,69 +74,91 @@ class _BookExpertState extends State<BookExpertPage> {
   ) {
     return Column(
       children: [
-        Expanded(child: appointmentTypeWidget(context, data)),
-        slotsListWidget(context, slots)
+        Expanded(
+          flex: 1,
+          child: appointmentTypeWidget(
+            context,
+            data,
+          ),
+        ),
+        Expanded(
+          flex: 14,
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(
+              minHeight: 0.0, // or set a specific minimum height
+            ),
+            child: Container(
+              margin: const EdgeInsetsDirectional.symmetric(
+                horizontal: 15,
+              ),
+              child: slotsListWidget(
+                context,
+                slots,
+                data,
+              ),
+            ),
+          ),
+        ),
       ],
     );
   }
 
   Widget appointmentTypeWidget(
-      BuildContext context, List<AppointmentTypesModel> data) {
-    return AlignedGridView.count(
-      crossAxisCount: 3,
-      mainAxisSpacing: 10,
-      crossAxisSpacing: 8,
-      itemCount: data.length,
-      itemBuilder: (context, index) {
-        return GestureDetector(
-          onTap: () {
-            setState(() {
-              selectedIndex = index;
-            });
-            //appRouter.push(const SuccessRoute());
-          },
-          child: SlotsBuilder(
-            appointmentType: data[index],
-            isSelected: selectedIndex == index,
-          ),
-        );
-      },
+    BuildContext context,
+    List<AppointmentTypesModel> data,
+  ) {
+    return Container(
+      margin: const EdgeInsetsDirectional.symmetric(
+        horizontal: 15,
+        vertical: 5,
+      ),
+      child: AlignedGridView.count(
+        crossAxisCount: 3,
+        mainAxisSpacing: 10,
+        crossAxisSpacing: 8,
+        itemCount: data.length,
+        itemBuilder: (context, index) {
+          return GestureDetector(
+            onTap: () {
+              setState(() {
+                selectedIndex = index;
+              });
+            },
+            child: SlotsBuilder(
+              appointmentType: data[index],
+              isSelected: selectedIndex == index,
+            ),
+          );
+        },
+      ),
     );
   }
 
   Widget slotsListWidget(
     BuildContext context,
     List<AvailabilitiesModel> data,
+    List<AppointmentTypesModel> types,
   ) {
-    return Expanded(
-      flex: 10,
-      child: Container(
-        margin: const EdgeInsetsDirectional.only(
-          end: 15,
-          start: 15,
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Expanded(
-              child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: data.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return AvailableTimeBuilder(
-                      availability: data[index],
-                      type: "QUICK",
-                      onClick: (item) {
-                        appRouter.push(
-                          ConfirmBookingRoute(expert: widget.expert!),
-                        );
-                      },
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        Expanded(
+          child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: data.length,
+              itemBuilder: (BuildContext context, int index) {
+                return AvailableTimeBuilder(
+                  availability: data[index],
+                  type: types[selectedIndex].type ?? "",
+                  onClick: (item) {
+                    appRouter.push(
+                      ConfirmBookingRoute(expert: widget.expert!),
                     );
-                  }),
-            )
-          ],
-        ),
-      ),
+                  },
+                );
+              }),
+        )
+      ],
     );
   }
 
