@@ -7,23 +7,31 @@ import 'time_builder.dart';
 
 class AvailableTimeBuilder extends StatefulWidget {
   AvailableTimeBuilder({
-    super.key,
+    Key? key,
     required this.availability,
     required this.type,
     required this.onClick,
-  });
+    required this.onItemSelected,
+  }) : super(key: key);
 
   final AvailabilitiesModel? availability;
   final String type;
-
-  Function(String time) onClick;
+  final Function(String time) onClick;
+  final Function(int selectedIndex) onItemSelected;
 
   @override
   State<StatefulWidget> createState() => _CategoryState();
 }
 
 class _CategoryState extends State<AvailableTimeBuilder> {
+
   int selectedIndex = 0;
+
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,10 +93,15 @@ class _CategoryState extends State<AvailableTimeBuilder> {
           itemBuilder: (context, index) {
             return GestureDetector(
               onTap: () {
+                setState(() {
+                  selectedIndex = index;
+                });
                 widget.onClick.call(timeSlots[index]);
+                widget.onItemSelected(selectedIndex);
               },
               child: TimeBuilder(
                 time: timeSlots[index],
+                isSelected: index == selectedIndex,
               ),
             );
           },
@@ -100,15 +113,15 @@ class _CategoryState extends State<AvailableTimeBuilder> {
   String getWeekdayName(int weekday) {
     final DateTime now = DateTime.now().toLocal();
     final int diff = now.weekday - weekday;
-    var udpatedDt;
+    DateTime updatedDate;
     if (diff > 0) {
-      udpatedDt = now.subtract(Duration(days: diff));
+      updatedDate = now.subtract(Duration(days: diff));
     } else if (diff == 0) {
-      udpatedDt = now;
+      updatedDate = now;
     } else {
-      udpatedDt = now.add(Duration(days: diff * -1));
+      updatedDate = now.add(Duration(days: diff * -1));
     }
-    final String weekdayName = DateFormat('EEEE').format(udpatedDt);
+    final String weekdayName = DateFormat('EEEE').format(updatedDate);
     return weekdayName;
   }
 }

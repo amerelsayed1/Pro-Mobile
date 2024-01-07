@@ -92,7 +92,6 @@ class HomeController extends GetxController implements GetxService {
     }
   }
 
-
   Future<void> fetchExpertAppointmentTypes(int id) async {
     try {
       appointmentsState.value = DataState.loading("Loading news");

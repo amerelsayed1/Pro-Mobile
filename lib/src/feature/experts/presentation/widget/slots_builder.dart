@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../../data/models/appointment_types_model.dart';
 
 class SlotsBuilder extends StatefulWidget {
-
   AppointmentTypesModel? appointmentType;
   bool isSelected = false;
 
@@ -25,15 +24,15 @@ class _SlotState extends State<SlotsBuilder> {
         vertical: 12,
       ),
       decoration: BoxDecoration(
-        color: Colors.grey[200],
-        borderRadius: BorderRadius.circular(3),
+        color: widget.isSelected ? Colors.blue : Colors.grey[200],
+        borderRadius: BorderRadius.circular(8.0),
       ),
       child: Center(
         child: Text(
           widget.appointmentType?.type ?? "",
           style: TextStyle(
-            color: widget.isSelected ? Colors.blue : Colors.black,
-            fontWeight: widget.isSelected ? FontWeight.bold : FontWeight.normal,
+            color: widget.isSelected ? Colors.white : Colors.black,
+            fontWeight: widget.isSelected ? FontWeight.bold : FontWeight.w400,
           ),
         ),
       ),

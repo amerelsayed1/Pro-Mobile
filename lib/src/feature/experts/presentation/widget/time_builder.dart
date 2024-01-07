@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 
 class TimeBuilder extends StatelessWidget {
+  final bool isSelected;
   String time;
 
-  TimeBuilder({required this.time, Key? key}) : super(key: key);
+  TimeBuilder({
+    required this.time,
+    this.isSelected = false,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,16 +17,18 @@ class TimeBuilder extends StatelessWidget {
         vertical: 12,
       ),
       decoration: BoxDecoration(
-        color: Colors.grey[200],
-        borderRadius: BorderRadius.circular(
-          3,
-        ),
+        color: isSelected ? Colors.blue : Colors.grey[200],
+        borderRadius: BorderRadius.circular(8.0),
       ),
       child: Column(
         children: [
           Center(
             child: Text(
               time,
+              style: TextStyle(
+                color: isSelected ? Colors.white : Colors.black,
+                fontWeight: isSelected ? FontWeight.bold : FontWeight.w400
+              ),
             ),
           ),
           const Visibility(
