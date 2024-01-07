@@ -3,8 +3,6 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:unknown/common/util/constants.dart';
-import 'package:unknown/src/core/state/data_state.dart';
-
 import 'package:unknown/src/feature/auth/data/data_sources/auth_data_source.dart';
 import 'package:unknown/src/feature/auth/data/models/local/login_request.dart';
 import 'package:unknown/src/feature/auth/data/models/local/register_request.dart';

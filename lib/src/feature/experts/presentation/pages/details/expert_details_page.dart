@@ -5,7 +5,6 @@ import 'package:unknown/src/feature/experts/presentation/pages/book_expert/book_
 
 import '../../../../../../common/images.dart';
 import '../../../../../../common/widgets/custom_appbar.dart';
-import '../../../../../core/router/app_router.dart';
 import '../../../../../core/router/route_helper.dart';
 import '../../../../../core/state/data_state.dart';
 import '../../../data/models/expert_model.dart';
