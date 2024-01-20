@@ -1,39 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:unknown/src/feature/experts/data/models/hours_model.dart';
 
-class TimeBuilder extends StatelessWidget {
-
+class TimeBuilder extends StatefulWidget {
   HoursModel time;
-  final bool isSelected;
-  final VoidCallback onTap;
 
   TimeBuilder({
     required this.time,
-    this.isSelected = false,
-    required this.onTap,
     Key? key,
   }) : super(key: key);
 
   @override
+  State<TimeBuilder> createState() => _TimeBuilderState();
+}
+
+class _TimeBuilderState extends State<TimeBuilder> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
       child: Container(
         padding: const EdgeInsets.symmetric(
           vertical: 12,
         ),
         decoration: BoxDecoration(
-          color: isSelected ? Colors.blue : Colors.grey[200],
+          color: widget.time.isSelected ? Colors.blue : Colors.grey[200],
           borderRadius: BorderRadius.circular(8.0),
         ),
         child: Column(
           children: [
             Center(
               child: Text(
-                time.hour,
+                widget.time.hour,
                 style: TextStyle(
-                  color: time.isSelected ? Colors.white : Colors.black,
-                  fontWeight: time.isSelected ? FontWeight.bold : FontWeight.w400,
+                  color: widget.time.isSelected ? Colors.white : Colors.black,
+                  fontWeight: widget.time.isSelected
+                      ? FontWeight.bold
+                      : FontWeight.w400,
                 ),
               ),
             ),
