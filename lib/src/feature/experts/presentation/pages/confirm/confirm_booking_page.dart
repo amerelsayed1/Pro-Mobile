@@ -6,7 +6,6 @@ import '../../../../../../common/images.dart';
 import '../../../../../../common/widgets/custom_appbar.dart';
 import '../../../data/models/expert_model.dart';
 
-@RoutePage()
 class ConfirmBookingPage extends StatelessWidget {
   ExpertModel expert;
 
@@ -32,7 +31,9 @@ class ConfirmBookingPage extends StatelessWidget {
                     height: 90,
                     child: Card(
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
+                        borderRadius: BorderRadius.circular(
+                          10.0,
+                        ),
                       ),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(
@@ -40,7 +41,8 @@ class ConfirmBookingPage extends StatelessWidget {
                         ),
                         child: FadeInImage.assetNetwork(
                           placeholder: Images.ic_place_holder,
-                          image: "http://192.168.1.13:8080${expert.avatarUrl ?? ""}",
+                          image:
+                              "http://192.168.1.13:8080${expert.avatarUrl ?? ""}",
                           imageErrorBuilder: (context, error, stackTrace) {
                             return Image.asset(
                               Images.ic_place_holder,

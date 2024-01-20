@@ -10,7 +10,9 @@ abstract class ExpertsRepository {
     int? categoryId,
   );
 
-  Future<ExpertModel> getSingleExpertInfo(int id);
+  Future<ExpertModel> getSingleExpertInfo(
+    int id,
+  );
 
   Future<List<AppointmentTypesModel>> getExpertAppointmentTypes(
     int id,

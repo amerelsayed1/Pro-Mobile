@@ -1,7 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:unknown/src/core/router/route_helper.dart';
 
 import '../../../../../../common/images.dart';
+import '../home/experts_page.dart';
 
 @RoutePage()
 class SuccessPage extends StatefulWidget {
@@ -70,6 +73,26 @@ class _SuccessState extends State<SuccessPage> {
               ),
             ),
             SizedBox(height: screenHeight * 0.06),
+            Container(
+              width: double.infinity,
+              margin: const EdgeInsetsDirectional.symmetric(horizontal: 70),
+              child: TextButton(
+                onPressed: () {
+                  Get.offAll(ExpertsPage());
+                },
+                style: TextButton.styleFrom(
+                  backgroundColor: Colors.blue,
+                ),
+                child: const Text(
+                  "Done",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),

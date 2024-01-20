@@ -47,9 +47,9 @@ class AvailableTimesBuilder extends StatelessWidget {
           crossAxisSpacing: 8,
           itemCount: timeSlots.length,
           itemBuilder: (context, index) {
-            return TimeBuilder(
+            return /*TimeBuilder(
               time: timeSlots[index],
-            );
+            )*/Container();
           },
         ),
       ],

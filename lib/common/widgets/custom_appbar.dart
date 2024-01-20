@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 
 import '../../src/core/router/app_router.dart';
 
@@ -18,7 +19,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Size get preferredSize => AppBar()
-      .preferredSize; // Size.fromHeight(kToolbarHeight); // Size.fromHeight(34);
+      .preferredSize;
 
   const CustomAppBar({
     Key? key,
@@ -72,7 +73,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             : Container(),
         onTap: () {
           if (showBackArrow) {
-            appRouter.pop();
+            Get.back();
           } else {
             Scaffold.of(context).openDrawer();
           }

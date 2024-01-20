@@ -91,7 +91,7 @@ class _CategoryState extends State<AvailableTimeBuilder> {
           crossAxisSpacing: 8,
           itemCount: timeSlots.length,
           itemBuilder: (context, index) {
-            return GestureDetector(
+            return Container()/*GestureDetector(
               onTap: () {
                 setState(() {
                   selectedIndex = index;
@@ -103,7 +103,7 @@ class _CategoryState extends State<AvailableTimeBuilder> {
                 time: timeSlots[index],
                 isSelected: index == selectedIndex,
               ),
-            );
+            )*/;
           },
         ),
       ],

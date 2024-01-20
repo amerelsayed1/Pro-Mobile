@@ -2,25 +2,73 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:intl/intl.dart';
 
+import '../../../data/models/hours_model.dart';
 import '../../widget/time_builder.dart';
+
+/*class AvailableTestTimeBuilder extends StatelessWidget {
+  final String date;
+  final List<HoursModel> timeSlots;
+  final Function(int) onTimeSelected;
+
+  const AvailableTestTimeBuilder({
+    Key? key,
+    required this.date,
+    required this.timeSlots,
+    required this.onTimeSelected,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          date,
+          style: const TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: 10),
+        Wrap(
+          spacing: 10,
+          children: timeSlots
+              .asMap()
+              .entries
+              .map((entry) => TimeBuilder(time: widget.timeSlots[index],
+            isSelected: widget.timeSlots[index].isSelected,
+            onTap: () {
+              widget.onTimeSelected(index);
+            },))
+              .toList(),
+        ),
+        const Divider(
+          height: 20,
+          thickness: 2,
+        ),
+      ],
+    );
+  }
+}*/
+
 
 class AvailableTestTimeBuilder extends StatefulWidget {
   const AvailableTestTimeBuilder({
     Key? key,
     required this.date,
     required this.timeSlots,
+    required this.onTimeSelected,
   }) : super(key: key);
 
   final String date;
-  final List<String> timeSlots;
+  final List<HoursModel> timeSlots;
+  final Function(int) onTimeSelected;
 
   @override
   State<StatefulWidget> createState() => _CategoryState();
 }
 
 class _CategoryState extends State<AvailableTestTimeBuilder> {
-  int selectedIndex = 0;
-
   @override
   void initState() {
     super.initState();
@@ -50,12 +98,12 @@ class _CategoryState extends State<AvailableTestTimeBuilder> {
           crossAxisSpacing: 8,
           itemCount: widget.timeSlots.length,
           itemBuilder: (context, index) {
-            return GestureDetector(
-              onTap: () {},
-              child: TimeBuilder(
-                time: widget.timeSlots[index],
-                isSelected: index == selectedIndex,
-              ),
+            return TimeBuilder(
+              time: widget.timeSlots[index],
+              isSelected: widget.timeSlots[index].isSelected,
+              onTap: () {
+                widget.onTimeSelected(index);
+              },
             );
           },
         ),
@@ -77,4 +125,5 @@ class _CategoryState extends State<AvailableTestTimeBuilder> {
     final String weekdayName = DateFormat('EEEE').format(updatedDate);
     return weekdayName;
   }
+
 }
