@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:unknown/src/feature/experts/data/models/hours_model.dart';
 
+@immutable
 class TimeBuilder extends StatefulWidget {
   HoursModel time;
 
