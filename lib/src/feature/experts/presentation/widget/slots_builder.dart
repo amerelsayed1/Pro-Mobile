@@ -22,20 +22,35 @@ class _SlotState extends State<SlotsBuilder> {
     return Container(
       padding: const EdgeInsets.symmetric(
         vertical: 12,
+        horizontal: 10,
       ),
       decoration: BoxDecoration(
         color: widget.isSelected ? Colors.blue : Colors.grey[200],
         borderRadius: BorderRadius.circular(8.0),
       ),
-      child: Center(
-        child: Text(
-          widget.appointmentType?.type ?? "",
-          style: TextStyle(
-            color: widget.isSelected ? Colors.white : Colors.black,
-            fontWeight: widget.isSelected ? FontWeight.bold : FontWeight.w400,
-          ),
+      child: Text(
+        widget.appointmentType?.type?.appointmentType() ?? "",
+        style: TextStyle(
+          color: widget.isSelected ? Colors.white : Colors.black,
+          fontWeight: widget.isSelected ? FontWeight.bold : FontWeight.w400,
+          fontSize: 18,
         ),
       ),
     );
+  }
+}
+
+extension StringExtension on String {
+  String appointmentType() {
+    switch (this) {
+      case "QUICK":
+        return "Quick - 15 Min";
+      case "REGULAR":
+        return "Quick - 30 Min";
+      case "ALL_ACCESS":
+        return "ALL Access - 60 Min";
+      default:
+        return "";
+    }
   }
 }

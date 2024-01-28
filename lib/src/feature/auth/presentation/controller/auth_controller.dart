@@ -20,11 +20,17 @@ class AuthController extends GetxController implements GetxService {
 
   Future<void> login(LoginRequest loginRequest) async {
     try {
-      loginState.value = DataState.loading("Loading news");
-      final user = await authRepository.login(loginRequest);
-      authRepository.saveUserToken(user.accessToken);
-      authRepository.saveUser(user);
-      loginState.value = DataState.completed(user);
+      if (loginRequest.email.isEmpty) {
+        loginState.value = DataState.error("Shouldn't be empty");
+      } else if (loginRequest.password.isEmpty) {
+        loginState.value = DataState.error("Shouldn't be empty");
+      } else {
+        loginState.value = DataState.loading("Loading news");
+        final user = await authRepository.login(loginRequest);
+        authRepository.saveUserToken(user.accessToken);
+        authRepository.saveUser(user);
+        loginState.value = DataState.completed(user);
+      }
     } catch (e) {
       debugPrint("${e}");
     }
@@ -43,7 +49,7 @@ class AuthController extends GetxController implements GetxService {
   }
 
   logout() {
-     authRepository.logout();
+    authRepository.logout();
   }
 
   Future<void> register(RegisterRequest registerRequest) async {

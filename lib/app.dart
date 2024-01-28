@@ -12,11 +12,13 @@ class App extends StatelessWidget {
     return GetMaterialApp(
       title: Constants.appName,
       debugShowCheckedModeBanner: false,
+
       navigatorKey: Get.key,
-      themeMode: ThemeMode.light,
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        brightness: Brightness.light,
       ),
+      themeMode: ThemeMode.light,
       getPages: RouteHelper.routes,
       defaultTransition: Transition.topLevel,
       transitionDuration: const Duration(milliseconds: 500),

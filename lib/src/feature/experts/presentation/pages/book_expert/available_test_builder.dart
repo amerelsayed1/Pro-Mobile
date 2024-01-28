@@ -48,7 +48,7 @@ class _CategoryState extends State<AvailableTestTimeBuilder> {
             return GestureDetector(
               onTap: () {
                 widget.onTimeSelected(index);
-                debugPrint("LOGGING TimeBuilder -> ${widget.timeSlots[index].isSelected}");
+               // debugPrint("LOGGING TimeBuilder -> ${widget.timeSlots[index].isSelected}");
                 setState(() {});
               },
               child: TimeBuilder(

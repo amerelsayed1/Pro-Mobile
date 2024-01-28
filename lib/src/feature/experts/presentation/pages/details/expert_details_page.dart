@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:unknown/src/feature/experts/presentation/controllers/home_controller.dart';
 import 'package:unknown/src/feature/experts/presentation/pages/book_expert/book_expert_page.dart';
+import 'package:unknown/src/feature/experts/presentation/pages/book_expert/book_slot_page.dart';
 
 import '../../../../../../common/images.dart';
 import '../../../../../../common/widgets/custom_appbar.dart';
@@ -183,9 +184,13 @@ class _ExpertDetailsState extends State<ExpertDetailsPage> {
                   onPressed: () {
                     Get.toNamed(
                       RouteHelper.bookSlot,
-                      arguments: BookExpertPage(
-                        expert: expert,
-                      ),);
+                      arguments: BookSlotPage(expert: expert),
+                    );
+
+                   /* Get.toNamed(
+                      RouteHelper.bookSlotTest,
+                      arguments: BookExpertPage(expert: expert),
+                    );*/
                   },
                   child: const Text(
                     "See times",

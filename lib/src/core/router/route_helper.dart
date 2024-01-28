@@ -8,6 +8,7 @@ import 'package:unknown/src/feature/experts/presentation/pages/confirm/confirm_b
 import 'package:unknown/src/feature/experts/presentation/pages/details/expert_details_page.dart';
 import 'package:unknown/src/feature/experts/presentation/pages/status/success_page.dart';
 
+import '../../feature/experts/presentation/pages/book_expert/book_slot_page.dart';
 import '../../feature/experts/presentation/pages/home/experts_page.dart';
 
 class RouteHelper {
@@ -21,6 +22,7 @@ class RouteHelper {
   static const String onBoarding = '/on-boarding';
   static const String userProfile = '/user-profile';
   static const String bookSlot = '/book-slot';
+  static const String bookSlotTest = '/book-slot-test';
   static const String bookingConfirmation = "/booking-confirmation";
   static const String successStatus = "/success-status";
 
@@ -47,6 +49,12 @@ class RouteHelper {
     ),
     GetPage(
       name: bookSlot,
+      page: () {
+        BookSlotPage bookSlot = Get.arguments;
+        return getRoute(bookSlot);
+      },
+    ), GetPage(
+      name: bookSlotTest,
       page: () {
         BookExpertPage bookSlot = Get.arguments;
         return getRoute(bookSlot);

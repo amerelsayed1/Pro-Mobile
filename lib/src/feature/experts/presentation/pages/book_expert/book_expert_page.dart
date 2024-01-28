@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
@@ -43,7 +42,7 @@ class _BookExpertState extends State<BookExpertPage> {
       widget.expert?.id ?? 0,
     );
 
-    ever(_homeController.appointmentsState,
+    /*ever(_homeController.appointmentsState,
         (DataState<List<AppointmentTypesModel>> state) {
       if (state.status == Status.COMPLETED) {
         // Handle the completion state
@@ -59,7 +58,7 @@ class _BookExpertState extends State<BookExpertPage> {
           _handleData();
         }
       },
-    );
+    );*/
   }
 
   // Handle the data when both fetches are completed
@@ -70,7 +69,6 @@ class _BookExpertState extends State<BookExpertPage> {
     if (appointmentList.status == Status.COMPLETED &&
         slotsList.status == Status.COMPLETED) {
       setState(() {
-        // Use the fetched data to prepare your list
         listOfData = prepareList(
           slotsList.data ?? [],
           appointmentList.data?[selectedIndex],
@@ -144,7 +142,7 @@ class _BookExpertState extends State<BookExpertPage> {
           height: 10,
         ),
         Expanded(
-          flex: 14,
+          flex: 12,
           child: ConstrainedBox(
             constraints: const BoxConstraints(
               minHeight: 0.0, // or set a specific minimum height
@@ -161,6 +159,25 @@ class _BookExpertState extends State<BookExpertPage> {
             ),
           ),
         ),
+        Container(
+          width: double.infinity,
+          decoration: const BoxDecoration(color: Colors.amber),
+          margin: const EdgeInsetsDirectional.symmetric(
+            horizontal: 15,
+            vertical: 10,
+          ),
+          child: TextButton(
+            onPressed: () {},
+            child: const Text(
+              "Book",
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 18
+              ),
+            ),
+          ),
+        )
       ],
     );
   }
@@ -227,21 +244,7 @@ class _BookExpertState extends State<BookExpertPage> {
     );
   }
 
-  List<AvailableListModel> prepareList(
-    List<AvailabilitiesModel> data,
-    AppointmentTypesModel? type,
-  ) {
-    List<AvailableListModel> list = [];
-    for (var availability in data) {
-      List<HoursModel> listOfHours = slotsList(
-        availability.date ?? "",
-        availability.slots?[0],
-        type,
-      );
-      list.add(AvailableListModel(availability.date ?? "", listOfHours));
-    }
-    return list;
-  }
+
 
   void handleItemClick(int listIndex, int hoursIndex) {
     for (var element in listOfData) {
@@ -253,7 +256,23 @@ class _BookExpertState extends State<BookExpertPage> {
     setState(() {});
   }
 
-  List<HoursModel> slotsList(
+  List<AvailableListModel> prepareList(
+      List<AvailabilitiesModel> data,
+      AppointmentTypesModel? type,
+      ) {
+    List<AvailableListModel> list = [];
+    for (var availability in data) {
+      List<HoursModel> listOfHours = slotsListPrep(
+        availability.date ?? "",
+        availability.slots?[0],
+        type,
+      );
+      list.add(AvailableListModel(availability.date ?? "", listOfHours));
+    }
+    return list;
+  }
+
+  List<HoursModel> slotsListPrep(
     String? date,
     Slots? slot,
     AppointmentTypesModel? type,

@@ -9,3 +9,6 @@ class AvailableListModel {
     this.hoursList,
   );
 }
+
+
+

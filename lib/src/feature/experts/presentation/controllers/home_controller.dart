@@ -34,7 +34,8 @@ class HomeController extends GetxController implements GetxService {
     "Initial state",
   ).obs;
 
-  final availableSlotsState = DataState<List<AvailabilitiesModel>>.initial(
+  Rx<DataState<List<AvailabilitiesModel>>> availableSlotsState =
+      DataState<List<AvailabilitiesModel>>.initial(
     "Initial state",
   ).obs;
 
@@ -95,7 +96,8 @@ class HomeController extends GetxController implements GetxService {
   Future<void> fetchExpertAppointmentTypes(int id) async {
     try {
       appointmentsState.value = DataState.loading("Loading news");
-      final expertsDetails = await expertsRepository.getExpertAppointmentTypes(id);
+      final expertsDetails =
+          await expertsRepository.getExpertAppointmentTypes(id);
       appointmentsState.value = DataState.completed(expertsDetails);
     } catch (e) {
       appointmentsState.value = DataState.error("Error loading experts: $e");

@@ -17,10 +17,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  //late AuthProvider authProvider;
 
   final AuthController _controller = Get.find<AuthController>();
-
   TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 

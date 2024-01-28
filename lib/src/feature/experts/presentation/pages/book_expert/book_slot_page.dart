@@ -1,0 +1,152 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:unknown/common/widgets/custom_appbar.dart';
+import 'package:unknown/src/feature/experts/presentation/controllers/booking_slot_controller.dart';
+import 'package:unknown/src/feature/experts/presentation/pages/book_expert/slots_widget.dart';
+
+import '../../../../../core/state/data_state.dart';
+import '../../../data/models/expert_model.dart';
+import '../../controllers/home_controller.dart';
+import '../../widget/slots_builder.dart';
+import 'available_test_builder.dart';
+
+class BookSlotPage extends StatefulWidget {
+  final ExpertModel? expert;
+
+  const BookSlotPage({super.key, required this.expert});
+
+  @override
+  State<StatefulWidget> createState() => _BookSlotState();
+}
+
+class _BookSlotState extends State<BookSlotPage> {
+  //final HomeController _homeController = Get.find<HomeController>();
+  final BookingSlotController _bookingSlotController =
+      Get.find<BookingSlotController>();
+  int selectedIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _bookingSlotController.fetchData(
+      widget.expert?.id ?? 0,
+    );
+
+    /* _bookingSlotController.fetchExpertAvailableSlots(
+      widget.expert?.id ?? 0,
+    );*/
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: const CustomAppBar(
+        showBackArrow: true,
+      ),
+      body: Obx(() {
+        final appointmentList = _bookingSlotController.appointmentsState.value;
+        final slotsList = _bookingSlotController.availableSlotsState.value;
+
+        switch (appointmentList.status) {
+          case Status.LOADING:
+            return const Center(child: CircularProgressIndicator());
+          case Status.COMPLETED:
+            return Column(
+              children: [
+                Container(
+                  margin: const EdgeInsetsDirectional.symmetric(
+                    horizontal: 15,
+                  ),
+                  child: const Align(
+                    alignment: AlignmentDirectional.centerStart,
+                    child: Text(
+                      'Book a video call',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsetsDirectional.symmetric(
+                    horizontal: 15,
+                    vertical: 5,
+                  ),
+                  child: const Align(
+                    alignment: AlignmentDirectional.centerStart,
+                    child: Text(
+                      'Select one of the available time slots below:',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsetsDirectional.symmetric(
+                    horizontal: 15,
+                    vertical: 5,
+                  ),
+                  child: Align(
+                    alignment: AlignmentDirectional.centerStart,
+                    child: Wrap(
+                      spacing: 8.0,
+                      runSpacing: 8.0,
+                      alignment: WrapAlignment.start,
+                      children: List.generate(appointmentList.data?.length ?? 0,
+                          (index) {
+                        return GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              selectedIndex = index;
+                            });
+                            _bookingSlotController.updateSelectedType(
+                              appointmentList.data?[selectedIndex],
+                            );
+                          },
+                          child: SlotsBuilder(
+                            appointmentType: appointmentList.data?[index],
+                            isSelected: selectedIndex == index,
+                          ),
+                        );
+                      }),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    margin: const EdgeInsetsDirectional.symmetric(
+                      horizontal: 15,
+                      vertical: 5,
+                    ),
+                    child: ListView.builder(
+                      itemCount: slotsList.data?.length,
+                      itemBuilder: (context, index) {
+                        //return SlotsWidget(slot: slotsList.data?[index]);
+                        return AvailableTestTimeBuilder(
+                          date: slotsList.data?[index].date ?? "",
+                          timeSlots: slotsList.data?[index].hoursList ?? [],
+                          onTimeSelected: (selected) async {
+                            _bookingSlotController.selectSlot(index, selected);
+                            setState(() {});
+                          },
+                        );
+                      },
+                    ),
+                  ),
+                )
+              ],
+            );
+          case Status.ERROR:
+            return Text(
+              'Error: ${appointmentList.messages}',
+            );
+          default:
+            return Container();
+        }
+      }),
+    );
+  }
+}

@@ -23,6 +23,7 @@ import '../../feature/experts/data/data_sources/experts_data_source_imp.dart';
 import '../../feature/experts/data/repositories/experts_repository_imp.dart';
 import '../../feature/experts/domain/repositories/experts_repository.dart';
 import '../../feature/experts/domain/user_case/experts_use_case.dart';
+import '../../feature/experts/presentation/controllers/booking_slot_controller.dart';
 import '../../feature/experts/presentation/controllers/home_controller.dart';
 
 final locator = GetIt.instance;
@@ -95,6 +96,11 @@ Future<void> initializeDependencies() async {
   Get.lazyPut(
     () => HomeController(
       categoryRepository: locator<CategoryRepository>(),
+      expertsRepository: locator<ExpertsRepository>(),
+    ),
+  );
+  Get.lazyPut(
+    () => BookingSlotController(
       expertsRepository: locator<ExpertsRepository>(),
     ),
   );
