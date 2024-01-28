@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:unknown/src/feature/auth/presentation/controller/auth_controller.dart';
 
+import '../../../../../../common/images.dart';
+import '../../../../../../common/util/constants.dart';
 import '../../../../../../common/widgets/custom_appbar.dart';
 import '../../../../../core/router/route_helper.dart';
 import '../../../../../core/state/data_state.dart';
@@ -92,10 +94,8 @@ class _ExpertsState extends State<ExpertsPage> {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    SizedBox(
-                      child: _CategoryBuilder(
-                        categories: categories,
-                      ),
+                    _CategoryBuilder(
+                      categories: categories,
                     ),
                     Expanded(
                       child: GridView.builder(

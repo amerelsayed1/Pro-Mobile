@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:unknown/common/app_colors.dart';
 import 'package:unknown/src/feature/experts/data/models/hours_model.dart';
 
 @immutable
@@ -28,7 +29,7 @@ class _TimeBuilderState extends State<TimeBuilder> {
           vertical: 12,
         ),
         decoration: BoxDecoration(
-          color: widget.time.isSelected ? Colors.blue : Colors.grey[200],
+          color: widget.time.isSelected ? AppColors.selectedColor : AppColors.unSelectedColor,
           borderRadius: BorderRadius.circular(8.0),
         ),
         child: Column(
@@ -37,7 +38,7 @@ class _TimeBuilderState extends State<TimeBuilder> {
               child: Text(
                 widget.time.hour,
                 style: TextStyle(
-                  color: widget.time.isSelected ? Colors.white : Colors.black,
+                  color: widget.time.isSelected ? AppColors.whiteColor : AppColors.selectedColor,
                   fontWeight: widget.time.isSelected
                       ? FontWeight.bold
                       : FontWeight.w400,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../common/app_colors.dart';
 import '../../data/models/appointment_types_model.dart';
 
 class SlotsBuilder extends StatefulWidget {
@@ -25,15 +26,15 @@ class _SlotState extends State<SlotsBuilder> {
         horizontal: 10,
       ),
       decoration: BoxDecoration(
-        color: widget.isSelected ? Colors.blue : Colors.grey[200],
+        color: widget.isSelected ? AppColors.selectedColor : AppColors.unSelectedColor,
         borderRadius: BorderRadius.circular(8.0),
       ),
       child: Text(
         widget.appointmentType?.type?.appointmentType() ?? "",
         style: TextStyle(
-          color: widget.isSelected ? Colors.white : Colors.black,
+          color: widget.isSelected ? AppColors.whiteColor : AppColors.selectedColor,
           fontWeight: widget.isSelected ? FontWeight.bold : FontWeight.w400,
-          fontSize: 18,
+          fontSize: 16,
         ),
       ),
     );

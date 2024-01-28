@@ -4,6 +4,7 @@ import 'package:unknown/common/widgets/custom_appbar.dart';
 import 'package:unknown/src/feature/experts/presentation/controllers/booking_slot_controller.dart';
 import 'package:unknown/src/feature/experts/presentation/pages/book_expert/slots_widget.dart';
 
+import '../../../../../../common/app_colors.dart';
 import '../../../../../core/state/data_state.dart';
 import '../../../data/models/expert_model.dart';
 import '../../controllers/home_controller.dart';
@@ -136,6 +137,46 @@ class _BookSlotState extends State<BookSlotPage> {
                       },
                     ),
                   ),
+                ),
+                Wrap(
+                  children: [
+                    Container(
+                      margin: const EdgeInsetsDirectional.symmetric(
+                        horizontal: 15,
+                      ),
+                      child: Align(
+                        alignment: AlignmentDirectional.centerStart,
+                        child: Text(
+                          "${appointmentList.data?[selectedIndex].price} . Session",
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: AppColors.blueColor,
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      margin: const EdgeInsetsDirectional.symmetric(
+                        horizontal: 15,
+                        vertical: 10,
+                      ),
+                      child: TextButton(
+                        onPressed: () {},
+                        child: const Text(
+                          "Next",
+                          style: TextStyle(
+                              color: AppColors.whiteColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18),
+                        ),
+                      ),
+                    ),
+                  ],
                 )
               ],
             );
