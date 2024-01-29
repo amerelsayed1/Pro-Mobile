@@ -60,18 +60,5 @@ class _CategoryState extends State<AvailableTestTimeBuilder> {
     );
   }
 
-  String getWeekdayName(int weekday) {
-    final DateTime now = DateTime.now().toLocal();
-    final int diff = now.weekday - weekday;
-    DateTime updatedDate;
-    if (diff > 0) {
-      updatedDate = now.subtract(Duration(days: diff));
-    } else if (diff == 0) {
-      updatedDate = now;
-    } else {
-      updatedDate = now.add(Duration(days: diff * -1));
-    }
-    final String weekdayName = DateFormat('EEEE').format(updatedDate);
-    return weekdayName;
-  }
+
 }

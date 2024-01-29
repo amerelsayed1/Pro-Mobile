@@ -21,10 +21,12 @@ class BookSlotPage extends StatefulWidget {
 }
 
 class _BookSlotState extends State<BookSlotPage> {
-  //final HomeController _homeController = Get.find<HomeController>();
-  final BookingSlotController _bookingSlotController =
-      Get.find<BookingSlotController>();
+
+  final BookingSlotController _bookingSlotController = Get.find<BookingSlotController>();
+
   int selectedIndex = 0;
+  String selectedDate = "Looking for a time not listed?";
+  String selectedSlot = "Tap here to request a time";
 
   @override
   void initState() {
@@ -117,6 +119,7 @@ class _BookSlotState extends State<BookSlotPage> {
                   ),
                 ),
                 Expanded(
+                  flex: 8,
                   child: Container(
                     margin: const EdgeInsetsDirectional.symmetric(
                       horizontal: 15,
@@ -138,45 +141,89 @@ class _BookSlotState extends State<BookSlotPage> {
                     ),
                   ),
                 ),
-                Wrap(
-                  children: [
-                    Container(
-                      margin: const EdgeInsetsDirectional.symmetric(
-                        horizontal: 15,
-                      ),
-                      child: Align(
-                        alignment: AlignmentDirectional.centerStart,
-                        child: Text(
-                          "${appointmentList.data?[selectedIndex].price} . Session",
-                          style: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
+                Expanded(
+                  flex: 2,
+                  child: Column(
+                    children: [
+                      Container(
+                        margin: const EdgeInsetsDirectional.symmetric(
+                          horizontal: 15,
+                        ),
+                        child: Align(
+                          alignment: AlignmentDirectional.centerStart,
+                          child: Text(
+                            _bookingSlotController.selectedSlotString.value,
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    Container(
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: AppColors.blueColor,
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                      margin: const EdgeInsetsDirectional.symmetric(
-                        horizontal: 15,
-                        vertical: 10,
-                      ),
-                      child: TextButton(
-                        onPressed: () {},
-                        child: const Text(
-                          "Next",
-                          style: TextStyle(
-                              color: AppColors.whiteColor,
+                      Container(
+                        margin: const EdgeInsetsDirectional.symmetric(
+                          horizontal: 15,
+                        ),
+                        child: Align(
+                          alignment: AlignmentDirectional.centerStart,
+                          child: Text(
+                            selectedSlot,
+                            style: const TextStyle(
+                              fontSize: 20,
                               fontWeight: FontWeight.bold,
-                              fontSize: 18),
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                      const Spacer(),
+                      Row(
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: Container(
+                              margin: const EdgeInsetsDirectional.symmetric(
+                                horizontal: 15,
+                              ),
+                              child: Align(
+                                alignment: AlignmentDirectional.centerStart,
+                                child: Text(
+                                  "${appointmentList.data?[selectedIndex].price} . Session",
+                                  style: const TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 2,
+                            child: Container(
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                color: AppColors.blueColor,
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              margin: const EdgeInsetsDirectional.symmetric(
+                                horizontal: 15,
+                                vertical: 10,
+                              ),
+                              child: TextButton(
+                                onPressed: () {},
+                                child: const Text(
+                                  "Next",
+                                  style: TextStyle(
+                                      color: AppColors.whiteColor,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 )
               ],
             );

@@ -98,29 +98,36 @@ class _ExpertsState extends State<ExpertsPage> {
                       categories: categories,
                     ),
                     Expanded(
-                      child: GridView.builder(
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          // Adjust the number of columns as needed
-                          crossAxisSpacing: 8.0,
-                          mainAxisSpacing: 8.0,
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(
+                          horizontal: 15,
                         ),
-                        itemCount: experts.length,
-                        itemBuilder: (context, index) {
-                          experts[index].avatarUrl =
-                              "https://source.unsplash.com/random/200x200?sig=${index + 1}";
-                          return GestureDetector(
-                              onTap: () {
-                                Get.toNamed(
-                                  RouteHelper.expertDetails,
-                                  arguments: ExpertDetailsPage(
-                                    expert: experts[index],
-                                  ),
-                                );
-                              },
-                              child: ExpertItemBuilder(experts[index]));
-                        },
+                        child: GridView.builder(
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                                childAspectRatio: (1 / 1.1),
+
+                                // Adjust the number of columns as needed
+                            crossAxisSpacing: 5.0,
+                            mainAxisSpacing: 9.0,
+                          ),
+                          itemCount: experts.length,
+                          itemBuilder: (context, index) {
+                            experts[index].avatarUrl =
+                                "https://source.unsplash.com/random/200x200?sig=${index + 1}";
+                            return GestureDetector(
+                                onTap: () {
+                                  Get.toNamed(
+                                    RouteHelper.expertDetails,
+                                    arguments: ExpertDetailsPage(
+                                      expert: experts[index],
+                                    ),
+                                  );
+                                },
+                                child: ExpertItemBuilder(experts[index]));
+                          },
+                        ),
                       ),
                     ),
                   ],

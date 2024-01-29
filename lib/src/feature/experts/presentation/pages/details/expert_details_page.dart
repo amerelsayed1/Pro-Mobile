@@ -76,7 +76,7 @@ class _ExpertDetailsState extends State<ExpertDetailsPage> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   SizedBox(
-                    height: 320,
+                    height: 350,
                     child: Card(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0),
@@ -102,6 +102,7 @@ class _ExpertDetailsState extends State<ExpertDetailsPage> {
                   Container(
                     margin: const EdgeInsetsDirectional.symmetric(
                       vertical: 5,
+
                     ),
                     child: Text(
                       expert?.nameEn ?? "",

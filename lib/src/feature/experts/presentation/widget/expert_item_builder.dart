@@ -42,6 +42,7 @@ class ExpertItemBuilder extends StatelessWidget {
         Container(
           margin: const EdgeInsetsDirectional.only(
             bottom: 5,
+            start: 5
           ),
           child: Text(
             expert?.nameEn ?? "",
@@ -52,11 +53,13 @@ class ExpertItemBuilder extends StatelessWidget {
             ),
           ),
         ),
-        Expanded(
+        Container(
+          margin: const EdgeInsetsDirectional.only(
+              bottom: 5,
+              start: 5
+          ),
           child: Text(
-            expert?.bioEn ?? "",
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
+            expert?.titleEn ?? "",
             style: const TextStyle(
               fontWeight: FontWeight.w300,
               fontSize: 12,
@@ -64,6 +67,7 @@ class ExpertItemBuilder extends StatelessWidget {
             ),
           ),
         ),
+
       ],
     );
   }

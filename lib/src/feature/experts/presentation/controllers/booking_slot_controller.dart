@@ -32,6 +32,8 @@ class BookingSlotController extends GetxController implements GetxService {
 
   var selectedType = Rx<AppointmentTypesModel?>(null);
 
+  var selectedSlotString = Rx<String>("");
+
   // Method to update the selected type
   void updateSelectedType(AppointmentTypesModel? newType) {
     selectedType.value = newType;
@@ -45,13 +47,16 @@ class BookingSlotController extends GetxController implements GetxService {
   }
 
   void selectSlot(int listIndex, int hoursIndex) {
-    for (var element in availableSlotsState.value.data ?? []) {
+    var list = availableSlotsState.value.data ?? [];
+    for (var element in list) {
       for (var element in element.hoursList) {
         element.isSelected = false;
       }
     }
-    availableSlotsState
-        .value.data?[listIndex].hoursList[hoursIndex].isSelected = true;
+    list[listIndex].hoursList[hoursIndex].isSelected = true;
+
+    DateTime date = DateTime.parse(availableSlotsState.value.data?[listIndex].date ?? "");
+    selectedSlotString.value = "${formatDate(date)}\n${list[listIndex].hoursList[hoursIndex].hour} - ";
 
     //update();
 
@@ -60,7 +65,26 @@ class BookingSlotController extends GetxController implements GetxService {
         debugPrint(element.isSelected.toString());
       });
     });
+  }
 
+
+  String formatDate(DateTime date) {
+    return DateFormat('EEE, M/d').format(date);
+  }
+
+  String getWeekdayName(int weekday) {
+    final DateTime now = DateTime.now().toLocal();
+    final int diff = now.weekday - weekday;
+    DateTime updatedDate;
+    if (diff > 0) {
+      updatedDate = now.subtract(Duration(days: diff));
+    } else if (diff == 0) {
+      updatedDate = now;
+    } else {
+      updatedDate = now.add(Duration(days: diff * -1));
+    }
+    final String weekdayName = DateFormat('EEEE').format(updatedDate);
+    return weekdayName;
   }
 
   Future<void> fetchData(int? id) async {
