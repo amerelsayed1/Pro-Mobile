@@ -106,7 +106,7 @@ class _ExpertsState extends State<ExpertsPage> {
                           gridDelegate:
                               const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
-                                childAspectRatio: (1 / 1.1),
+                                childAspectRatio: (1 / 1.3),
 
                                 // Adjust the number of columns as needed
                             crossAxisSpacing: 5.0,

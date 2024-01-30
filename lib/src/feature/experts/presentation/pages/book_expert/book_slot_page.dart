@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:unknown/common/widgets/custom_appbar.dart';
+import 'package:unknown/src/core/router/route_helper.dart';
 import 'package:unknown/src/feature/experts/presentation/controllers/booking_slot_controller.dart';
 import 'package:unknown/src/feature/experts/presentation/pages/book_expert/slots_widget.dart';
 
@@ -21,8 +22,8 @@ class BookSlotPage extends StatefulWidget {
 }
 
 class _BookSlotState extends State<BookSlotPage> {
-
-  final BookingSlotController _bookingSlotController = Get.find<BookingSlotController>();
+  final BookingSlotController _bookingSlotController =
+      Get.find<BookingSlotController>();
 
   int selectedIndex = 0;
   String selectedDate = "Looking for a time not listed?";
@@ -167,7 +168,9 @@ class _BookSlotState extends State<BookSlotPage> {
                         child: Align(
                           alignment: AlignmentDirectional.centerStart,
                           child: Text(
-                            selectedSlot,
+                            _bookingSlotController
+                                    .selectedType.value?.expectations ??
+                                "",
                             style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
@@ -209,7 +212,9 @@ class _BookSlotState extends State<BookSlotPage> {
                                 vertical: 10,
                               ),
                               child: TextButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Get.toNamed(RouteHelper.successStatus);
+                                },
                                 child: const Text(
                                   "Next",
                                   style: TextStyle(

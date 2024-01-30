@@ -78,7 +78,11 @@ class _SuccessState extends State<SuccessPage> {
               margin: const EdgeInsetsDirectional.symmetric(horizontal: 70),
               child: TextButton(
                 onPressed: () {
-                  Get.offAll(ExpertsPage());
+                  Get.until(
+                    (route) => route.settings.name == RouteHelper.initial,
+                  );
+
+                  // Get.offAllNamed(RouteHelper.initial);
                 },
                 style: TextButton.styleFrom(
                   backgroundColor: Colors.blue,
@@ -87,9 +91,7 @@ class _SuccessState extends State<SuccessPage> {
                   "Done",
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold
-                  ),
+                      color: Colors.white, fontWeight: FontWeight.bold),
                 ),
               ),
             ),

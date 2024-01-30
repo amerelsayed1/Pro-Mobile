@@ -55,8 +55,13 @@ class BookingSlotController extends GetxController implements GetxService {
     }
     list[listIndex].hoursList[hoursIndex].isSelected = true;
 
-    DateTime date = DateTime.parse(availableSlotsState.value.data?[listIndex].date ?? "");
-    selectedSlotString.value = "${formatDate(date)}\n${list[listIndex].hoursList[hoursIndex].hour} - ";
+    test(
+        "${availableSlotsState.value.data?[listIndex].date} ${list[listIndex].hoursList[hoursIndex].hour}");
+
+    /*DateTime date = DateTime.parse(
+        "${availableSlotsState.value.data?[listIndex].date} ${list[listIndex].hoursList[hoursIndex].hour}");
+    selectedSlotString.value =
+        "${formatDate(date)}\n${list[listIndex].hoursList[hoursIndex].hour} - ";*/
 
     //update();
 
@@ -67,9 +72,40 @@ class BookingSlotController extends GetxController implements GetxService {
     });
   }
 
-
   String formatDate(DateTime date) {
     return DateFormat('EEE, M/d').format(date);
+  }
+
+  void test(String inputDateStr) {
+    // Define input date format
+    DateFormat inputFormat = DateFormat("yyyy-MM-dd hh:mm a");
+
+    try {
+      // Parse the input date string
+      DateTime inputDate = inputFormat.parse(inputDateStr);
+
+      // Define the output format for date and time
+      DateFormat outputDateFormat = DateFormat("E dd-MM");
+      DateFormat outputTimeFormat = DateFormat("hh:mm a");
+
+      // Format the date and time
+      String formattedDate = outputDateFormat.format(inputDate);
+      String startTime = outputTimeFormat.format(inputDate);
+
+      // Calculate end time (assuming 30 minutes duration)
+      DateTime endTime = inputDate.add(Duration(
+        minutes: selectedType.value?.minutes ?? 0,
+      ));
+      String endTimeStr = outputTimeFormat.format(endTime);
+
+      // Combine formatted date, start time, and end time
+      String result = '$formattedDate\n$startTime - $endTimeStr';
+      selectedSlotString.value = result;
+      // Print the result
+      print(result);
+    } catch (e) {
+      print(e);
+    }
   }
 
   String getWeekdayName(int weekday) {
@@ -164,7 +200,7 @@ class BookingSlotController extends GetxController implements GetxService {
     );
 
     Duration step = Duration(minutes: type?.minutes ?? 0);
-    final DateFormat timeFormatter = DateFormat('HH:mm');
+    final DateFormat timeFormatter = DateFormat('HH:mm a');
     List<HoursModel> timeSlots = [];
     timeSlots.add(HoursModel(timeFormatter.format(startTime)));
     while (startTime.isBefore(endTime)) {
