@@ -36,10 +36,7 @@ jobs:
       - name : Build Release
         run : flutter build apk
 
-      - uses: actions/upload-artifact@v2
-        with:
-          name: release-apk
-          path: build/app/outputs/flutter-apk/app-release.apk
+
 
       - name: Upload to Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1
