@@ -1,4 +1,4 @@
-name: Deploy To Google Drive
+name: Deploy To App Distribution
 
 on:
   push:
