@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1074916619226",
+    "project_id": "expert-arena-8ccf1",
+    "storage_bucket": "expert-arena-8ccf1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1074916619226:android:708c4563083f519baf46e3",
+        "android_client_info": {
+          "package_name": "com.iamer.pro"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBcAAZSAFFqdrNwHY-RZzBxscSQuVhs24s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

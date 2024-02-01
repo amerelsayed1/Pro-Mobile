@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:unknown/src/feature/auth/data/models/local/login_request.dart';
@@ -14,11 +15,20 @@ class AuthController extends GetxController implements GetxService {
     required this.authRepository,
   });
 
+  RxBool isUser = false.obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    isUser.value = authRepository.isLoggedIn();
+    update();
+  }
+
   final loginState = DataState<UserResponse>.initial(
     "Initial state",
   ).obs;
 
-  Future<void> login(LoginRequest loginRequest) async {
+  Future<DataState<UserResponse>> login(LoginRequest loginRequest) async {
     try {
       if (loginRequest.email.isEmpty) {
         loginState.value = DataState.error("Shouldn't be empty");
@@ -31,9 +41,11 @@ class AuthController extends GetxController implements GetxService {
         authRepository.saveUser(user);
         loginState.value = DataState.completed(user);
       }
-    } catch (e) {
-      debugPrint("${e}");
+    } on DioException catch (e) {
+      List<String> messages = List<String>.from(e.response?.data['messages']);
+      loginState.value = DataState.error(messages.first);
     }
+    return loginState.value;
   }
 
   String getUserToken() {
@@ -45,6 +57,8 @@ class AuthController extends GetxController implements GetxService {
   }
 
   bool isLoggedIn() {
+    isUser.value = authRepository.isLoggedIn();
+    update();
     return authRepository.isLoggedIn();
   }
 

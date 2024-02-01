@@ -5,6 +5,7 @@ import 'package:unknown/src/core/state/data_state.dart';
 import 'package:unknown/src/feature/auth/data/models/local/login_request.dart';
 
 import '../../../../../common/widgets/custom_appbar.dart';
+import '../../../../../common/widgets/custom_snackbar.dart';
 import '../../../../core/router/route_helper.dart';
 import '../controller/auth_controller.dart';
 
@@ -17,7 +18,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-
   final AuthController _controller = Get.find<AuthController>();
   TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -97,36 +97,33 @@ class _LoginPageState extends State<LoginPage> {
                           child: ElevatedButton(
                             child: const Text('Sign in'),
                             onPressed: () {
-                              authController.login(
+                              // Show loading dialog
+                              Get.dialog(
+                                const Center(
+                                  child: CircularProgressIndicator(),
+                                ),
+                                barrierDismissible: false,
+                              );
+
+                              authController
+                                  .login(
                                 LoginRequest(
                                   nameController.text.toString(),
                                   passwordController.text.toString(),
                                 ),
-                              );
+                              )
+                                  .then((value) {
+                                Get.back();
+                                if (value.status == Status.COMPLETED) {
+                                  Get.back();
+                                } else {
+                                  showCustomSnackBar(value.messages, context);
+                                }
+                              });
                             },
                           ),
                         ),
                       const SizedBox(height: 16),
-                      Obx(
-                        () {
-                          final loginState = _controller.loginState.value;
-                          if (loginState.status == Status.LOADING) {
-                            return const CircularProgressIndicator();
-                          } else if (loginState.status == Status.ERROR) {
-                            return Text(
-                              ' ${loginState.messages}',
-                              style: const TextStyle(color: Colors.red),
-                            );
-                          } else if (loginState.status == Status.COMPLETED) {
-                            return Text(
-                              'Success : ${loginState.data?.email}',
-                              style: const TextStyle(color: Colors.green),
-                            );
-                          } else {
-                            return Container();
-                          }
-                        },
-                      ),
                       Container(
                         margin: const EdgeInsetsDirectional.only(
                           top: 15,

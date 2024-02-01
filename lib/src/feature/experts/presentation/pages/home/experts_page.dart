@@ -1,10 +1,7 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:unknown/src/feature/auth/presentation/controller/auth_controller.dart';
-
 import '../../../../../../common/images.dart';
-import '../../../../../../common/util/constants.dart';
 import '../../../../../../common/widgets/custom_appbar.dart';
 import '../../../../../core/router/route_helper.dart';
 import '../../../../../core/state/data_state.dart';
@@ -15,7 +12,6 @@ import '../details/expert_details_page.dart';
 
 part '../../widget/category_builder.dart';
 
-@RoutePage()
 class ExpertsPage extends StatefulWidget {
   const ExpertsPage({Key? key}) : super(key: key);
 
@@ -25,7 +21,7 @@ class ExpertsPage extends StatefulWidget {
 
 class _ExpertsState extends State<ExpertsPage> {
   final HomeController _controller = Get.find<HomeController>();
-  bool isLoggedIn = Get.find<AuthController>().isLoggedIn();
+  final AuthController _authController = Get.find<AuthController>();
 
   @override
   void initState() {
@@ -55,7 +51,7 @@ class _ExpertsState extends State<ExpertsPage> {
                 ),
               ),
               onTap: () {
-                if (isLoggedIn) {
+                if (_authController.isLoggedIn()) {
                   Get.toNamed(
                     RouteHelper.userProfile,
                   );
@@ -136,5 +132,12 @@ class _ExpertsState extends State<ExpertsPage> {
             ),
           ],
         ));
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
+    _authController.dispose();
   }
 }

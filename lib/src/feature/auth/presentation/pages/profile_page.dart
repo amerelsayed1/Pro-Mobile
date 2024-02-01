@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:unknown/common/widgets/custom_appbar.dart';
+import 'package:unknown/src/core/router/route_helper.dart';
 import 'package:unknown/src/feature/auth/presentation/controller/auth_controller.dart';
+
+import '../../../experts/presentation/controllers/home_controller.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -31,6 +34,7 @@ class _ProfilePageState extends State<ProfilePage> {
             child: TextButton(
               onPressed: () {
                 _authController.logout();
+                Get.back();
               },
               child: const Text("Logout"),
             ),
