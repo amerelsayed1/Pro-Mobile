@@ -33,21 +33,18 @@ jobs:
       - name: Install Dependencies
         run: flutter pub get
 
-      - run: flutter build apk --debug
+      - name : Build Release
+        run : flutter build apk
 
-      - name: Save APKBUILD to Artifacts
-        uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v2
         with:
-          name: APKBUILD
-          path: build/app/outputs/flutter-apk/app-debug.apk
+          name: release-apk
+          path: build/app/outputs/apk/release/app-release.apk
 
-      - name: Debug APK File
-        run: ls -R build/app/outputs/flutter-apk/
-
-      - uses: actions/checkout@v4.1.1
-      - name: Upload Artifacts TO Google Drive
-        uses: Jumbo810/Upload_Github_Artifacts_TO_GDrive@v2.2.2
+      - name: Upload to Firebase App Distribution
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
-          target: ${{github.workspace}}/build/app/outputs/flutter-apk/app-debug.apk
-          credentials: ${{ secrets.YOUR_SERVICE_ACCOUNT_CREDENTIALS }}
-          parent_folder_id: ${{secrets.FOLDER_ID}}
+          appId: ${{secrets.FIREBASE_APP_ID}}
+          token: ${{secrets.FIREBASE_TOKEN}}
+          groups: testers
+          file: build/app/outputs/flutter-apk/app.apk
