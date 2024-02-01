@@ -48,3 +48,4 @@ jobs:
           token: ${{secrets.FIREBASE_TOKEN}}
           groups: testers
           file: build/app/outputs/flutter-apk/app.apk
+
