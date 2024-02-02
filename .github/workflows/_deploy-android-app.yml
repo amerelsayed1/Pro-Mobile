@@ -35,18 +35,11 @@ jobs:
       - name: Install Dependencies
         run: flutter pub get
 
-
-
       - run: flutter build ios --release --no-codesign
-      - name: Upload iPA
-        uses: actions/upload-artifact@master
-        with:
-          name: ios-build
-          path: build/ios/iphoneos
 
       - name: Upload to Firebase Distribution
         run: |
-          firebase appdistribution:distribute "build/ios/iphoneos/Runner.app" --token "${{secrets.FIREBASE_TOKEN}}" --groups 'testers'
+          firebase appdistribution:distribute "build/ios/iphoneos/Runner.app" --token "${{secrets.FIREBASE_TOKEN}}" --app "${{secrets.FIREBASE_APP_ID}}" --groups 'testers'
 
 
 
