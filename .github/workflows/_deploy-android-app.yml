@@ -54,11 +54,15 @@ jobs:
       - name: Build iOS app
         run: flutter build ios --release --no-codesign
 
-      - name: Archive the app
-        run: xcodebuild -workspace ios/Runner.xcworkspace -scheme Runner -configuration Release -archivePath build/ios/Runner.xcarchive archive
+      - run: mkdir Payload
+        working-directory: build/ios/iphoneos
 
-      - name: Export IPA
-        run: xcodebuild -exportArchive -archivePath build/ios/Runner.xcarchive -exportPath build/ios/RunnerExport -exportOptionsPlist ExportOptions.plist
+      - run: mv Runner.app/ Payload
+        working-directory: build/ios/iphoneos
+
+      - name: Zip output
+        run: zip -qq -r -9 FlutterIpaExport.ipa Payload
+        working-directory: build/ios/iphoneos
 
       - name: Upload to Firebase Distribution
         run: |
