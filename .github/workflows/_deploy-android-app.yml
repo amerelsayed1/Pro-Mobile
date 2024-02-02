@@ -19,6 +19,14 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
 
+      - name: Install Firebase CLI
+        run: |
+          curl -sL https://firebase.tools | bash
+
+      - name: Log in to Firebase
+        run: |
+          echo "${{secrets.FIREBASE_TOKEN}}" | firebase login --interactive --no-localhost
+
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.13.0'
@@ -27,13 +35,7 @@ jobs:
       - name: Install Dependencies
         run: flutter pub get
 
-      - name: Install Firebase CLI
-        run: |
-          curl -sL https://firebase.tools | bash
 
-      - name: Log in to Firebase
-        run: |
-          echo "${{secrets.FIREBASE_TOKEN}}" | firebase login:ci --no-localhost
 
       - run: flutter build ios --release --no-codesign
       - name: Upload iPA
