@@ -34,7 +34,7 @@ jobs:
       - name: Install Dependencies
         run: flutter pub get
 
-      - run: flutter build ipa --no-codesign
+      - run: flutter build ios --no-codesign
 
       - name: Upload to Firebase Distribution
         run: |
