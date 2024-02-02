@@ -51,11 +51,18 @@ jobs:
       - name: Install Dependencies
         run: flutter pub get
 
-      - run: flutter build ipa --release --no-codesign
+      - name: Build iOS app
+        run: flutter build ios --release --no-codesign
+
+      - name: Archive the app
+        run: xcodebuild -workspace ios/Runner.xcworkspace -scheme Runner -configuration Release -archivePath build/ios/Runner.xcarchive archive
+
+      - name: Export IPA
+        run: xcodebuild -exportArchive -archivePath build/ios/Runner.xcarchive -exportPath build/ios/RunnerExport -exportOptionsPlist ExportOptions.plist
 
       - name: Upload to Firebase Distribution
         run: |
-          firebase appdistribution:distribute "build/ios/archive/Runner.xcarchive" --token "${{secrets.FIREBASE_TOKEN}}" --app "${{secrets.FIREBASE_APP_ID_IOS}}" --groups 'testers'
+          firebase appdistribution:distribute "build/ios/RunnerExport/Runner.ipa" --token "${{secrets.FIREBASE_TOKEN}}" --app "${{secrets.FIREBASE_APP_ID_IOS}}" --groups 'testers'
 
 
 
