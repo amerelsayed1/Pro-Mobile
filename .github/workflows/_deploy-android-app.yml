@@ -7,7 +7,6 @@ on:
     branches: [ master ]
 
 jobs:
-
   build_ios:
     name: Build Flutter (iOS)
     runs-on: macOS-latest
@@ -17,11 +16,3 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: '17'
-
-      - name: Install Firebase CLI
-        run: |
-          curl -sL https://firebase.tools | bash
-
-      - name: Log in to Firebase
-        run: |
-          echo "${{secrets.FIREBASE_TOKEN}}" | firebase login --interactive --no-localhost
