@@ -66,7 +66,7 @@ jobs:
 
       - name: Upload to Firebase Distribution
         run: |
-          firebase appdistribution:distribute "build/ios/RunnerExport/Runner.ipa" --token "${{secrets.FIREBASE_TOKEN}}" --app "${{secrets.FIREBASE_APP_ID_IOS}}" --groups 'testers'
+          firebase appdistribution:distribute "build/ios/iphoneos/FlutterIpaExport.ipa" --token "${{secrets.FIREBASE_TOKEN}}" --app "${{secrets.FIREBASE_APP_ID_IOS}}" --groups 'testers'
 
 
 
