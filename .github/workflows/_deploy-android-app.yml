@@ -27,6 +27,13 @@ jobs:
       - name: Install Dependencies
         run: flutter pub get
 
+      - name: Install Firebase CLI
+        run: |
+          curl -sL https://firebase.tools | bash
+
+      - name: Log in to Firebase
+        run: |
+          echo "${{secrets.FIREBASE_TOKEN}}" | firebase login:ci --no-localhost
 
       - run: flutter build ios --release --no-codesign
       - name: Upload iPA
@@ -34,15 +41,6 @@ jobs:
         with:
           name: ios-build
           path: build/ios/iphoneos
-
-      - name: Install Firebase CLI
-        run: |
-          curl -sL https://firebase.tools | bash
-
-      - name: Log in to Firebase
-        run: |
-          echo "${{secrets.FIREBASE_TOKEN}}" | firebase login --no-localhost
-
 
       - name: Upload to Firebase Distribution
         run: |
