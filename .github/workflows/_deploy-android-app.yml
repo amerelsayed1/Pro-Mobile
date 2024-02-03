@@ -84,6 +84,8 @@ jobs:
 
       - name: Build iOS app
         run: flutter build ipa --release
+        env:
+          XCODE_BUILD_SETTINGS_OVERRIDE: CODE_SIGNING_ALLOWED=YES
 
       - run: mkdir Payload
         working-directory: build/ios/iphoneos
