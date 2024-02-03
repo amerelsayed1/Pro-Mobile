@@ -24,6 +24,37 @@ jobs:
           GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
         run: echo "$GOOGLE_SERVICES_JSON" > android/app/google-services.json
 
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.13.0'
+
+      - name: Debug Service Account JSON
+        run: echo "${{ secrets.YOUR_SERVICE_ACCOUNT_CREDENTIALS }}"
+
+      - name: Install Dependencies
+        run: flutter pub get
+
+      - name : Build Release
+        run : flutter build apk
+
+      - name: Upload Android to TestApp.io
+        uses: testappio/github-action@v5
+        with:
+          api_token: ${{secrets.TESTAPPIO_API_TOKEN}}
+          app_id: ${{secrets.TESTAPPIO_APP_ID}}
+          file: build/app/outputs/flutter-apk/app-release.apk
+          release_notes: "Testing manual release notes..."
+          git_release_notes: true
+          include_git_commit_id: false
+          notify: true
+
+      - name: Upload to Firebase App Distribution
+        uses: wzieba/Firebase-Distribution-Github-Action@v1.7.0
+        with:
+          appId: ${{secrets.FIREBASE_APP_ID}}
+          serviceCredentialsFileContent: ${{secrets.GOOGLE_SERVICES_JSON}}
+          groups: testers
+          file: build/app/outputs/flutter-apk/app-release.apk
 
   build_ios:
     name: Build Flutter (iOS)
