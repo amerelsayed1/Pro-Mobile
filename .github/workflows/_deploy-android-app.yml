@@ -82,6 +82,12 @@ jobs:
       - name: Install Dependencies
         run: flutter pub get
 
+      - name: Install Apple Certificate
+        uses: apple-actions/import-codesign-certs@v1
+        with:
+          p12-file-base64: ${{ secrets.P12_BASE64 }}
+          p12-password: ${{ secrets.P12_PASSWORD }}
+
 
       - uses: yukiarrr/ios-build-action@v1.11.2
         with:
