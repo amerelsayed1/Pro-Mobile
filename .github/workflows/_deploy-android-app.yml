@@ -82,10 +82,14 @@ jobs:
       - name: Install Dependencies
         run: flutter pub get
 
-      - name: Build iOS app
-        run: flutter build ipa --release
-        env:
-          XCODE_BUILD_SETTINGS_OVERRIDE: CODE_SIGNING_ALLOWED=YES
+
+      - uses: yukiarrr/ios-build-action@v1.11.2
+        with:
+          project-path: Experts-Mobile.xcodeproj
+          p12-base64: ${{ secrets.P12_BASE64 }}
+          mobileprovision-base64: ${{ secrets.MOBILEPROVISION_BASE64 }}
+          code-signing-identity: ${{ secrets.CODE_SIGNING_IDENTITY }}
+          team-id: ${{ secrets.TEAM_ID }}
 
       - name: Sign iOS app
         run: |
