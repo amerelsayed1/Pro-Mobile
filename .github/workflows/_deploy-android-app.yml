@@ -89,9 +89,10 @@ jobs:
 
       - name: Sign iOS app
         run: |
+          cp ios/Release-ExportOptions.plist build/ios/
           xcodebuild -exportArchive -archivePath build/ios/archive/Runner.xcarchive \
           -exportPath build/ios/ipa \
-          -exportOptionsPlist Runner/Release-ExportOptions.plist
+          -exportOptionsPlist build/ios/Release-ExportOptions.plist
 
       - run: mkdir Payload
         working-directory: build/ios/iphoneos
