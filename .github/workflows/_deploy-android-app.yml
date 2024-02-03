@@ -83,9 +83,15 @@ jobs:
         run: flutter pub get
 
       - name: Build iOS app
-        run: flutter build ipa --release
+        run: flutter build ipa --release --no-codesign
         env:
           XCODE_BUILD_SETTINGS_OVERRIDE: CODE_SIGNING_ALLOWED=YES
+
+      - name: Sign iOS app
+        run: |
+          xcodebuild -exportArchive -archivePath build/ios/archive/Runner.xcarchive \
+          -exportPath build/ios/ipa \
+          -exportOptionsPlist Runner/Release-ExportOptions.plist
 
       - run: mkdir Payload
         working-directory: build/ios/iphoneos

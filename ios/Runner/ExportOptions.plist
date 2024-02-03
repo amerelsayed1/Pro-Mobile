@@ -8,8 +8,8 @@
   <false/>
   <key>provisioningProfiles</key>
   <dict>
-    <key>com.iamer.pro</key>
-    <string>com.iamer.pro</string>
+    <key>com.expertarena.app</key>
+    <string>com.expertarena.app</string>
   </dict>
 </dict>
 </plist>
