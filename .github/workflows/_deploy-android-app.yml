@@ -83,7 +83,7 @@ jobs:
         run: flutter pub get
 
       - name: Build iOS app
-        run: flutter build ipa --release --no-codesign
+        run: flutter build ipa --release
         env:
           XCODE_BUILD_SETTINGS_OVERRIDE: CODE_SIGNING_ALLOWED=YES
 
