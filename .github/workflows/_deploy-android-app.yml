@@ -41,7 +41,7 @@ jobs:
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
           working-directory: android
 
-      - run: bundle exec fastlane ${{ github.event.inputs.lane || 'upload_to_firebase' }}
+      - run: bundle exec fastlane ${{ github.event.inputs.lane || 'test' }}
         working-directory: android
 
       - name : Build Release
