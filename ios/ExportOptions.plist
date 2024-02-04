@@ -3,8 +3,6 @@
 <plist version="1.0">
 <dict>
     <key>method</key>
-    <string>app-store</string>
-    <key>teamID</key>
-    <string>V6ZP59REY7</string>
+    <string>development</string>
 </dict>
 </plist>
