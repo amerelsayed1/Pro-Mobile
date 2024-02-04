@@ -2,13 +2,7 @@ default_platform(:android)
 
 
 lane :upload_to_firebase
- #Step 1 — Build your app, my suggestion is gym
- #Step 2 — Upload to firebase app distribution
- firebase_app_distribution(
-   app: ${{secrets.FIREBASE_APP_ID}},
-   groups: testers,
-   release_notes: “RELEASE-NOTE”,
- )
+  sh "flutter build apk"
 end
 
 
