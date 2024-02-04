@@ -1,35 +1,38 @@
-# This file contains the fastlane.tools configuration
-# You can find the documentation at https://docs.fastlane.tools
-#
-# For a list of all available actions, check out
-#
-#     https://docs.fastlane.tools/actions
-#
-# For a list of all available plugins, check out
-#
-#     https://docs.fastlane.tools/plugins/available-plugins
-#
-
-# Uncomment the line if you want fastlane to automatically update itself
-# update_fastlane
-
 default_platform(:ios)
 
 platform :ios do
-  desc "Description of what the lane does"
-  lane :custom_lane do
-    # add actions here: https://docs.fastlane.tools/actions
+
+  lane :build_ios do
+    flutter(
+      cmd: "build ios",
+      export_options: {
+        method: "development", # or "app-store" for distribution
+        provisioningProfiles: {
+          "your.bundle.identifier": "com.expertarena.app"
+        }
+      }
+    )
   end
 
+  lane :build_ipa do
+    # Install necessary dependencies (you might not need this if you already have everything installed)
+    cocoapods
+    gym
 
-  lane delivery do
-       # disable auto signing
-       disable_automatic_code_signing(path: "Running.xcodeproj")
-        # build for app store / testflight
-       gym(scheme: "Runner",
-           workspace: "Runner.xcworkspace",
-           export_method: "app-store")
-
+    # Build the iOS app and create the IPA
+    gym(
+      workspace: "ios/Runner.xcworkspace",  # Update with your workspace path
+      scheme: "Runner",                     # Update with your scheme name
+      export_method: "ad-hoc",              # Choose export method: ad-hoc, app-store, enterprise, development
+      export_options: {
+        method: "ad-hoc",
+        signingStyle: "manual",
+        provisioningProfiles: {
+          "your_bundle_identifier" => "com.expertarena.app"
+        }
+      },
+      output_directory: "build",
+      output_name: "YourApp"
+    )
   end
-
 end

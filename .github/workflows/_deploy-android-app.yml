@@ -44,7 +44,7 @@ jobs:
       - run: bundle exec fastlane ${{ github.event.inputs.lane || 'test' }}
         working-directory: android
 
-      - run: bundle exec fastlane ${{ github.event.inputs.lane || 'build_ipa' }}
+      - run: bundle exec fastlane ${{ github.event.inputs.lane || 'build_ios' }}
         working-directory: ios
 
       - name : Build Release
