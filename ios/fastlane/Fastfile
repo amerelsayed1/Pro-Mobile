@@ -1,38 +1,15 @@
 default_platform(:ios)
 
 platform :ios do
-
-  lane :build_ios do
-    flutter(
-      cmd: "build ios",
-      export_options: {
-        method: "development", # or "app-store" for distribution
-        provisioningProfiles: {
-          "your.bundle.identifier": "com.expertarena.app"
-        }
-      }
-    )
-  end
-
-  lane :build_ipa do
-    # Install necessary dependencies (you might not need this if you already have everything installed)
+  before_all do
     cocoapods
-    gym
-
-    # Build the iOS app and create the IPA
-    gym(
-      workspace: "ios/Runner.xcworkspace",  # Update with your workspace path
-      scheme: "Runner",                     # Update with your scheme name
-      export_method: "ad-hoc",              # Choose export method: ad-hoc, app-store, enterprise, development
-      export_options: {
-        method: "ad-hoc",
-        signingStyle: "manual",
-        provisioningProfiles: {
-          "your_bundle_identifier" => "com.expertarena.app"
-        }
-      },
-      output_directory: "build",
-      output_name: "YourApp"
-    )
   end
-end
+
+  lane :release do
+    build_app(scheme: "Runner",
+              workspace: "Runner.xcworkspace",
+              include_bitcode: true)
+  end
+
+
+  end
